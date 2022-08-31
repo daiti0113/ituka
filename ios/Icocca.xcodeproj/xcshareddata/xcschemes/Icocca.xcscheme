@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Ituka.app"
-               BlueprintName = "Ituka"
-               ReferencedContainer = "container:Ituka.xcodeproj">
+               BuildableName = "Icocca.app"
+               BlueprintName = "Icocca"
+               ReferencedContainer = "container:Icocca.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "ItukaTests.xctest"
-               BlueprintName = "ItukaTests"
-               ReferencedContainer = "container:Ituka.xcodeproj">
+               BuildableName = "IcoccaTests.xctest"
+               BlueprintName = "IcoccaTests"
+               ReferencedContainer = "container:Icocca.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Ituka.app"
-            BlueprintName = "Ituka"
-            ReferencedContainer = "container:Ituka.xcodeproj">
+            BuildableName = "Icocca.app"
+            BlueprintName = "Icocca"
+            ReferencedContainer = "container:Icocca.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Ituka.app"
-            BlueprintName = "Ituka"
-            ReferencedContainer = "container:Ituka.xcodeproj">
+            BuildableName = "Icocca.app"
+            BlueprintName = "Icocca"
+            ReferencedContainer = "container:Icocca.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
