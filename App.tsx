@@ -1,5 +1,5 @@
 import React from "react"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { Button, Provider as PaperProvider, Text, TextInput } from "react-native-paper"
 import { NavigationContainer, useNavigation } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
@@ -36,7 +36,15 @@ const App = () => {
                 <NavigationContainer>
                     <PaperProvider>
                         <SafeAreaView style={{ flex: 1 }}>
-                            <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+                            <Stack.Navigator
+                                initialRouteName="Home"
+                                screenOptions={{header: () => (
+                                    <View style={{padding: 10}}>
+                                        <Text variant="headlineLarge">icocca</Text>
+                                        <Text style={styles.subTitle}>いつか行きたいとこリスト</Text>
+                                    </View>
+                                )}}
+                            >
                                 <Stack.Screen name="Home" component={HomeScreen} />
                                 <Stack.Screen name="Details" component={DetailsScreen} />
                             </Stack.Navigator>
@@ -49,3 +57,9 @@ const App = () => {
 }
 
 export default App
+
+const styles = StyleSheet.create({
+    subTitle: {
+        color: "#3C3C3C"
+    }
+})
