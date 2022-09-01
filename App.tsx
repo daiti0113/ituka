@@ -7,6 +7,7 @@ import { Provider as ReduxProvider } from "react-redux"
 import { store } from "./src/store"
 import { HomeScreen } from "./src/screens/HomeScreen"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
+import { palette } from "./src/styles/colorPalette"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -16,10 +17,9 @@ const theme = {
     colors: {
         ...PaperDefaultTheme.colors,
         ...NavigationDefaultTheme.colors,
-        primary: "#74D4E1",
-        secondary: "#f1c40f",
-        tertiary: "#a1b2c3",
-        background: "#FFFFFF",
+        primary: palette.primary[500],
+        background: palette.neutral[50],
+        surfaceVariant: palette.primary[50],
     },
 }
 
