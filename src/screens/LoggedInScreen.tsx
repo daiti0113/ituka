@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator()
 export const LoggedInScreen = () => {
     return (
         <Tab.Navigator
-            tabBar={(props) => <BottomTabBar {...props} />}
+            tabBar={(props) => <BottomTabBar {...props} centerButtonProps={{icon: "plus"}} />}
             screenOptions={{
                 headerShown: false,
             }}

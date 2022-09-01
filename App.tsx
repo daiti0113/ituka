@@ -19,7 +19,7 @@ const theme = {
         ...NavigationDefaultTheme.colors,
         primary: palette.primary[500],
         background: palette.neutral[50],
-        surfaceVariant: palette.primary[50],
+        surfaceVariant: palette.primary[500],
     },
 }
 
