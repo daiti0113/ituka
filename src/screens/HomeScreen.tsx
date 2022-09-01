@@ -10,13 +10,18 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 const Tab = createMaterialTopTabNavigator()
 
-const data = [
+type data = Array<{
+    name: string
+    label: string
+}>
+
+const data: data = [
     {name: "Hitori", label: "一人で"},
     {name: "Koibito", label: "恋人と"},
     {name: "Tomodati", label: "友達と"},
 ]
 
-const createTabs = (data) => data.map(({name, label}) => <Tab.Screen name={name} key={name} options={{tabBarLabel: label}} component={ToDoListScene} />)
+const createTabs = (data: data) => data.map(({name, label}) => <Tab.Screen name={name} key={name} options={{tabBarLabel: label}} component={ToDoListScene} />)
 
 export const HomeScreen = () => {
     const tabs = createTabs(data)
