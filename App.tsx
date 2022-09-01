@@ -5,9 +5,9 @@ import { NavigationContainer, useNavigation, DefaultTheme as NavigationDefaultTh
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { Provider as ReduxProvider } from "react-redux"
 import { store } from "./src/store"
-import { HomeScreen } from "./src/screens/HomeScreen"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { palette } from "./src/styles/colorPalette"
+import { LoggedInScreen } from "./src/screens/LoggedInScreen"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -24,21 +24,21 @@ const theme = {
 }
 
 export type RootStackParamList = {
-    Home: undefined
-    Details: undefined
+    LoggedIn: undefined
+    Login: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-type DetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>
+type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>
 
-const DetailsScreen = () => {
-    const navigation = useNavigation<DetailsScreenNavigationProp>()
+const LoginScreen = () => {
+    const navigation = useNavigation<LoginScreenNavigationProp>()
     return (
         <View style={{ flex: 1, justifyContent: "center", padding: 10 }}>
-            <Text>Details Screen</Text>
-            <TextInput label="Detail" />
-            <Button onPress={() => navigation.navigate("Home")}>Go to Home</Button>
+            <Text>Login Screen</Text>
+            <TextInput label="Login" />
+            <Button onPress={() => navigation.navigate("LoggedIn")}>Go to Home</Button>
         </View>
     )
 }
@@ -51,7 +51,7 @@ const App = () => {
                     <NavigationContainer theme={theme}>
                         <SafeAreaView style={{ flex: 1 }}>
                             <Stack.Navigator
-                                initialRouteName="Home"
+                                initialRouteName="LoggedIn"
                                 screenOptions={{header: () => (
                                     <View style={{padding: 10}}>
                                         <Text variant="headlineLarge">icocca</Text>
@@ -59,8 +59,8 @@ const App = () => {
                                     </View>
                                 )}}
                             >
-                                <Stack.Screen name="Home" component={HomeScreen} />
-                                <Stack.Screen name="Details" component={DetailsScreen} />
+                                <Stack.Screen name="LoggedIn" component={LoggedInScreen} />
+                                <Stack.Screen name="Login" component={LoginScreen} />
                             </Stack.Navigator>
                         </SafeAreaView>
                     </NavigationContainer>
