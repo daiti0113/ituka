@@ -4,13 +4,13 @@ import { ToDoListItem } from "../../components/ToDoListItem"
 import { useAppSelector } from "../../helpers/store"
 
 export const ToDoListScene = () => {
-    const {toDoList} = useAppSelector(({toDo: {toDoList}}) => ({toDoList}))
+    const {toDoItems} = useAppSelector(({toDo: {toDoItems}}) => ({toDoItems}))
     return (
         <ScrollView style={{ padding: 10 }}>
             <View>
-                {toDoList.map((toDo) => {
+                {toDoItems.map((item) => {
                     return (
-                        <ToDoListItem key={toDo.title} {...toDo} />
+                        <ToDoListItem key={item.title} {...item} />
                     )
                 })}
             </View>

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { BottomTabNavigationProp, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { HomeScreen } from "./HomeScreen"
 import { BottomTabBar } from "../components/BottomTabBar"
 import { View } from "react-native"
@@ -8,7 +8,13 @@ import { Select } from "../components/Select"
 import { useNavigation } from "@react-navigation/native"
 import { LoginScreenNavigationProp } from "../../App"
 
-const Tab = createBottomTabNavigator()
+export type BottomTabParamList = {
+    Home: undefined
+    MyPage: undefined
+}
+export type LoggedInScreenNavigationProp = BottomTabNavigationProp<BottomTabParamList>
+
+const Tab = createBottomTabNavigator<BottomTabParamList>()
 
 export const LoggedInScreen = () => {
     const navigation = useNavigation<LoginScreenNavigationProp>()

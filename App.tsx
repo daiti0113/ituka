@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View } from "react-native"
+import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Provider as PaperProvider, Text, TextInput, MD3LightTheme as PaperDefaultTheme } from "react-native-paper"
 import { NavigationContainer, useNavigation, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
@@ -62,26 +62,31 @@ const AppHeader = () => {
 
 const App = () => {
     return (
-        <SafeAreaProvider>
-            <ReduxProvider store={store}>
-                <PaperProvider theme={theme}>
-                    <NavigationContainer theme={theme}>
-                        <SafeAreaView style={{ flex: 1 }}>
-                            <Stack.Navigator
-                                initialRouteName="LoggedIn"
-                                screenOptions={{
-                                    header: ({route}) => route.name !== "AddToDo" ? <AppHeader /> : null
-                                }}
-                            >
-                                <Stack.Screen name="LoggedIn" component={LoggedInScreen} />
-                                <Stack.Screen name="Login" component={LoginScreen} />
-                                <Stack.Screen name="AddToDo" component={AddToDoScreen} />
-                            </Stack.Navigator>
-                        </SafeAreaView>
-                    </NavigationContainer>
-                </PaperProvider>
-            </ReduxProvider>
-        </SafeAreaProvider>
+        <TouchableWithoutFeedback
+            style={{ flex: 1 }}
+            onPress={() => Keyboard.dismiss()}
+        >
+            <SafeAreaProvider>
+                <ReduxProvider store={store}>
+                    <PaperProvider theme={theme}>
+                        <NavigationContainer theme={theme}>
+                            <SafeAreaView style={{ flex: 1 }}>
+                                <Stack.Navigator
+                                    initialRouteName="LoggedIn"
+                                    screenOptions={{
+                                        header: ({route}) => route.name !== "AddToDo" ? <AppHeader /> : null
+                                    }}
+                                >
+                                    <Stack.Screen name="LoggedIn" component={LoggedInScreen} />
+                                    <Stack.Screen name="Login" component={LoginScreen} />
+                                    <Stack.Screen name="AddToDo" component={AddToDoScreen} />
+                                </Stack.Navigator>
+                            </SafeAreaView>
+                        </NavigationContainer>
+                    </PaperProvider>
+                </ReduxProvider>
+            </SafeAreaProvider>
+        </TouchableWithoutFeedback>
     )
 }
 
