@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import { ScrollView } from "react-native"
 import { Chip, ChipProps } from "react-native-paper"
+import { palette } from "../styles/colorPalette"
 
 type SelectProps = {
     children?: React.ReactNode
@@ -17,17 +18,19 @@ type SelectItemProps = Omit<ChipProps, "theme"> & {
 type SelectItem = React.FC<SelectItemProps>
 
 
-const Item: SelectItem = ({children, onPress, value, ...props}) => {
+const Item: SelectItem = ({children, onPress, value, style, ...props}) => {
     const [selected, setSelected] = useState(false)
     const handlePress = () => {
         setSelected(!selected)
         onPress && onPress(value)
     }
+    const bgColor = useMemo(() => selected ? palette.primary[500] : palette.neutral[100], [selected])
 
     return (
         <Chip
             {...props}
             onPress={handlePress}
+            style={[{backgroundColor: bgColor}, style]}
         >
             {children}
         </Chip>
@@ -48,7 +51,7 @@ export const Select: Select = ({children, onChange}) => {
 
     return (
         <ScrollView horizontal>
-            {React.Children.map(children, (child) => {
+            {React.Children.map(children, (child, index) => {
                 const item = child as React.ReactElement<React.PropsWithChildren<SelectItemProps>>
                 if (item.type === Item) {
                     const onPress = () => {
@@ -59,7 +62,8 @@ export const Select: Select = ({children, onChange}) => {
                         item.props.onPress?.()
                         onChange && onChange(updated)
                     }
-                    return React.cloneElement(item, { onPress })
+                    const style = React.Children.count(children) !== index - 1 ? { marginRight: 10 } : undefined
+                    return React.cloneElement(item, { onPress, style })
                 }
                 return child
             })}
