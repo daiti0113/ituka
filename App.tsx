@@ -8,6 +8,8 @@ import { store } from "./src/store"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { palette } from "./src/styles/colorPalette"
 import { LoggedInScreen } from "./src/screens/LoggedInScreen"
+import Storage from "react-native-storage"
+import AsyncStorage from "@react-native-community/async-storage"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -22,6 +24,10 @@ const theme = {
         surfaceVariant: palette.primary[500],
     },
 }
+
+export const storage = new Storage({
+    storageBackend: AsyncStorage
+})
 
 export type RootStackParamList = {
     LoggedIn: undefined
