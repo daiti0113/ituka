@@ -1,6 +1,6 @@
 import React from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import { ToDoListScene } from "../scenes/ToDoListScene"
+import { ToDoListScene } from "../scenes/Home/ToDoListScene"
 
 const Tab = createMaterialTopTabNavigator()
 

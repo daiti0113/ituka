@@ -4,16 +4,16 @@ import { HomeScreen } from "./HomeScreen"
 import { BottomTabBar } from "../components/BottomTabBar"
 import { View } from "react-native"
 import { Text } from "react-native-paper"
-import { useAppDispatch } from "../helpers/store"
-import { addToDo } from "../slices/toDo"
 import { Select } from "../components/Select"
+import { useNavigation } from "@react-navigation/native"
+import { LoginScreenNavigationProp } from "../../App"
 
 const Tab = createBottomTabNavigator()
 
 export const LoggedInScreen = () => {
-    const dispatch = useAppDispatch()
+    const navigation = useNavigation<LoginScreenNavigationProp>()
     const onPress = () => {
-        dispatch(addToDo())
+        navigation.navigate("AddToDo")
     }
 
     return (

@@ -10,6 +10,7 @@ import { palette } from "./src/styles/colorPalette"
 import { LoggedInScreen } from "./src/screens/LoggedInScreen"
 import Storage from "react-native-storage"
 import AsyncStorage from "@react-native-community/async-storage"
+import { AddToDoScreen } from "./src/screens/AddToDoScreen"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -32,11 +33,12 @@ export const storage = new Storage({
 export type RootStackParamList = {
     LoggedIn: undefined
     Login: undefined
+    AddToDo: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>
+export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>
 
 const LoginScreen = () => {
     const navigation = useNavigation<LoginScreenNavigationProp>()
@@ -45,6 +47,15 @@ const LoginScreen = () => {
             <Text>Login Screen</Text>
             <TextInput label="Login" />
             <Button onPress={() => navigation.navigate("LoggedIn")}>Go to Home</Button>
+        </View>
+    )
+}
+
+const AppHeader = () => {
+    return (
+        <View style={{padding: 10}}>
+            <Text variant="headlineLarge">icocca</Text>
+            <Text style={styles.subTitle}>いつか行きたいとこリスト</Text>
         </View>
     )
 }
@@ -58,15 +69,13 @@ const App = () => {
                         <SafeAreaView style={{ flex: 1 }}>
                             <Stack.Navigator
                                 initialRouteName="LoggedIn"
-                                screenOptions={{header: () => (
-                                    <View style={{padding: 10}}>
-                                        <Text variant="headlineLarge">icocca</Text>
-                                        <Text style={styles.subTitle}>いつか行きたいとこリスト</Text>
-                                    </View>
-                                )}}
+                                screenOptions={{
+                                    header: ({route}) => route.name !== "AddToDo" ? <AppHeader /> : null
+                                }}
                             >
                                 <Stack.Screen name="LoggedIn" component={LoggedInScreen} />
                                 <Stack.Screen name="Login" component={LoginScreen} />
+                                <Stack.Screen name="AddToDo" component={AddToDoScreen} />
                             </Stack.Navigator>
                         </SafeAreaView>
                     </NavigationContainer>
