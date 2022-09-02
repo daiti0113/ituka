@@ -1,9 +1,10 @@
 import React from "react"
-import { View, TouchableOpacity, StyleSheet } from "react-native"
+import { View, TouchableOpacity, StyleSheet, useWindowDimensions } from "react-native"
 import { palette } from "../styles/colorPalette"
 import { BottomTabBarProps as NavigationBottomTabBarProps } from "@react-navigation/bottom-tabs"
 import { IconButton, IconButtonProps, Text, useTheme } from "react-native-paper"
 import LinearGradient from "react-native-linear-gradient"
+import Svg, { Path } from "react-native-svg"
 
 type BottomTabBarProps = NavigationBottomTabBarProps & {
     centerButtonProps?: Omit<IconButtonProps, "theme">
@@ -11,13 +12,13 @@ type BottomTabBarProps = NavigationBottomTabBarProps & {
 
 export const BottomTabBar: React.FC<BottomTabBarProps> = ({ centerButtonProps, ...props }) => {
     return (
-        <View>
+        <View style={styles.container}>
             {centerButtonProps && <CenterButton {...centerButtonProps} />}
             <LinearGradient
-                colors={[palette.neutral[300], palette.neutral[50]]}
-                start={{x: 0, y: 1}}
-                end={{x: 0, y: 0}}
-                style={styles.container}
+                colors={["#FFFFFF00", palette.neutral[300]]}
+                start={{x: 0, y: 0}}
+                end={{x: 0, y: 1}}
+                style={styles.gradient}
             >
                 <View>
                     <Tabs {...props} />
@@ -33,13 +34,16 @@ const CenterButton: React.FC<BottomTabBarProps["centerButtonProps"]> = (props) =
     if (!props) return null
 
     return (
-        <View style={styles.centerButton}>
-            <IconButton
-                {...props}
-                iconColor={palette.neutral[50]}
-                mode="contained"
-                theme={theme}
-            />
+        <View style={styles.centerButtonContainer}>
+            <View style={styles.centerButton}>
+                <IconButton
+                    {...props}
+                    iconColor={palette.neutral[600]}
+                    mode="contained"
+                    theme={theme}
+                    size={34}
+                />
+            </View>
         </View>
     )
 }
@@ -47,6 +51,7 @@ const CenterButton: React.FC<BottomTabBarProps["centerButtonProps"]> = (props) =
 const Tabs: React.FC<NavigationBottomTabBarProps> = ({state, descriptors, navigation}) => {
     return (
         <View style={styles.tabs}>
+            <TabsBackground />
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key]
                 const label = options.tabBarLabel ? options.tabBarLabel : options.title ? options.title : route.name
@@ -97,24 +102,55 @@ const Tabs: React.FC<NavigationBottomTabBarProps> = ({state, descriptors, naviga
     )
 }
 
+const TabsBackground = () => {
+    const width = useWindowDimensions().width
+    const bgStyles = createBackgroundStyles(width)
+
+    // 中央にSVGを利用するため、左、中央、右に分けている
+    return (
+        <View style={bgStyles.bg}>
+            <View style={bgStyles.bgLeft} />
+            <View style={bgStyles.bgCenter}>
+                <Svg
+                    width={76}
+                    height={34}
+                    viewBox="0 0 76 34"
+                >
+                    <Path
+                        d="M75.2 0v61H0V0c4.1 0 7.4 3.1 7.9 7.1C10 21.7 22.5 33 37.7 33c15.2 0 27.7-11.3 29.7-25.9.5-4 3.9-7.1 7.9-7.1h-.1z"
+                        fill={palette.neutral[50]}
+                    />
+                </Svg>
+            </View>
+            <View style={bgStyles.bgRight} />
+        </View>
+    )
+}
+
 const styles = StyleSheet.create({
     container: {
-        height: 64,
-        justifyContent: "flex-end"
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        left: 0,
+    },
+    gradient: {
+        height: 68,
+        justifyContent: "flex-end",
     },
     tabs: {
         flexDirection: "row",
-        backgroundColor: palette.neutral[50],
-        height: 40,
         borderTopRightRadius: 24,
         borderTopLeftRadius: 24,
     },
-    centerButton: {
-        // position: "absolute",
-        // bottom: 0,
-        // width: "100%",
-        
+    centerButtonContainer: {
+        position: "absolute",
+        zIndex: 100,
         alignSelf: "center",
+        borderRadius: 50,
+        padding: 4,
+    },
+    centerButton: {
         /* shadow */
         shadowColor: "#000",
         shadowOffset: {
@@ -130,4 +166,31 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-end",
     },
+})
+
+const createBackgroundStyles = (width: number) => StyleSheet.create({
+    bg: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+    },
+    bgCenter: {
+        alignItems: "center",
+    },
+    bgLeft: {
+        position: "absolute",
+        backgroundColor: palette.neutral[50],
+        bottom: 0,
+        height: 34,
+        width: width / 2 - 36,
+    },
+    bgRight: {
+        position: "absolute",
+        backgroundColor: palette.neutral[50],
+        right: 0,
+        bottom: 0,
+        height: 34,
+        width: width / 2 - 34,
+    }
 })
