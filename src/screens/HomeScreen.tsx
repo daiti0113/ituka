@@ -6,17 +6,19 @@ import { setModalContent, toggleModalVisible } from "../slices/app"
 import { Button, Text, TextInput } from "react-native-paper"
 import { StyleSheet, View } from "react-native"
 import { palette } from "../styles/colorPalette"
-import { addList, list } from "../slices/toDo"
+import { addList, list, updateList } from "../slices/toDo"
 import { getKey } from "../helpers/getKey"
 
 const Tab = createMaterialTopTabNavigator()
 
 const useCreateTabs = (data: Array<list>) => {
     const {toDoItems} = useAppSelector(({toDo: {toDoItems}}) => ({toDoItems}))
+    const dispatch = useAppDispatch()
 
     return data.map(({id, name}) => {
         const filteredToDoItems = toDoItems.filter((toDoItem) => toDoItem.listIdList.includes(id))
         const Scene = () => <ToDoListScene toDoItems={filteredToDoItems} />
+        const EditListModal = () => <EditListModalInner id={id} name={name} />
         
         return (
             <Tab.Screen
@@ -28,10 +30,47 @@ const useCreateTabs = (data: Array<list>) => {
                     tabBarScrollEnabled: true,
                     tabBarLabelStyle: {textTransform: "none"}
                 }}
+                listeners={() => ({
+                    tabLongPress: () => {
+                        dispatch(setModalContent(EditListModal))
+                        dispatch(toggleModalVisible(true))
+                    },
+                })}
                 component={Scene}
             />
         )
     })
+}
+
+const EditListModalInner: React.FC<list> = ({id, name}) => {
+    const [newName, setNewName] = useState<string | null>(null)
+    const dispatch = useAppDispatch()
+
+    const onSubmit = () => {
+        if (newName) {
+            dispatch(updateList({name: newName, id}))
+            dispatch(toggleModalVisible(false))
+        }
+    }
+
+    return (
+        <View>
+            <Text variant="titleMedium">名前の変更</Text>
+            <TextInput
+                style={styles.textInput}
+                underlineColor={palette.neutral[300]}
+                defaultValue={name}
+                placeholder="雨の日にやりたいこと"
+                onChangeText={setNewName}
+            />
+            <Button
+                mode="contained"
+                style={styles.submit}
+                disabled={!name}
+                onPress={onSubmit}
+            >変更する</Button>
+        </View>
+    )
 }
 
 const AddListModal = () => {
@@ -85,10 +124,9 @@ export const HomeScreen = () => {
                 name="＋リストを追加"
                 key="AddList"
                 component={None}
-                listeners={({navigation}) => ({
+                listeners={() => ({
                     tabPress: (e) => {
                         e.preventDefault()
-                        console.log(navigation.navigate)
                         dispatch(setModalContent(AddListModal))
                         dispatch(toggleModalVisible(true))
                     },

@@ -44,10 +44,20 @@ export const toDoSlice = createSlice({
         },
         deleteList: (state, {payload}: {payload: string}) => {
             state.lists = state.lists.filter((list) => list.id !== payload)
+            state.toDoItems = state.toDoItems.filter((toDo) => !toDo.listIdList.includes(payload))
         },
+        updateList: (state, {payload: {id, name}}) => {
+            state.lists = state.lists.map((list) => list.id === id ? {id, name} : list)
+        }
     },
 })
 
-export const { addToDo, deleteToDo, addList, deleteList } = toDoSlice.actions
+export const {
+    addToDo,
+    deleteToDo,
+    addList,
+    deleteList,
+    updateList,
+} = toDoSlice.actions
 
 export default toDoSlice.reducer
