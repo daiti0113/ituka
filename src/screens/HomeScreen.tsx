@@ -82,7 +82,7 @@ export const HomeScreen = () => {
         >
             {tabs}
             <Tab.Screen
-                name="追加する"
+                name="＋リストを追加"
                 key="AddList"
                 component={None}
                 listeners={({navigation}) => ({
@@ -93,6 +93,12 @@ export const HomeScreen = () => {
                         dispatch(toggleModalVisible(true))
                     },
                 })}
+                options={{
+                    tabBarLabelStyle: {
+                        fontSize: 14,
+                        color: palette.primary[600],
+                    }
+                }}
             />
         </Tab.Navigator>
     )
