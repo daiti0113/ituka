@@ -1,6 +1,6 @@
 import React from "react"
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
-import { Button, Provider as PaperProvider, Text, TextInput, MD3LightTheme as PaperDefaultTheme } from "react-native-paper"
+import { Button, Provider as PaperProvider, Text, TextInput, MD3LightTheme as PaperDefaultTheme, Portal, Modal as PaperModal } from "react-native-paper"
 import { NavigationContainer, useNavigation, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { Provider as ReduxProvider } from "react-redux"
@@ -10,6 +10,8 @@ import { LoggedInScreen } from "./src/screens/LoggedInScreen"
 import { AddToDoScreen } from "./src/screens/AddToDoScreen"
 import { persistor, store } from "./src/store"
 import { PersistGate } from "redux-persist/integration/react"
+import { useAppDispatch, useAppSelector } from "./src/helpers/store"
+import { toggleModalVisible } from "./src/slices/app"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -72,6 +74,7 @@ const App = () => {
                             <PaperProvider theme={theme}>
                                 <NavigationContainer theme={theme}>
                                     <SafeAreaView style={{ flex: 1 }}>
+                                        <Modal />
                                         <Stack.Navigator
                                             initialRouteName="LoggedIn"
                                             screenOptions={{
@@ -93,6 +96,22 @@ const App = () => {
     )
 }
 
+const Modal = () => {
+    const {modalVisible} = useAppSelector(({app: {modalVisible}}) => ({modalVisible}))
+    const dispatch = useAppDispatch()
+
+    return (
+        <Portal>
+            <PaperModal
+                visible={modalVisible}
+                onDismiss={() => dispatch(toggleModalVisible(false))} contentContainerStyle={styles.modal}>
+                <Text>Example Modal.  Click outside this area to dismiss.</Text>
+            </PaperModal>
+        </Portal>
+
+    )
+}
+
 export default App
 
 const styles = StyleSheet.create({
@@ -101,5 +120,9 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         color: "#3C3C3C",
+    },
+    modal: {
+        backgroundColor: palette.neutral[50],
+        padding: 20,
     }
 })

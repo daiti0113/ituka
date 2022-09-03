@@ -1,7 +1,8 @@
 import React, { useMemo } from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { ToDoListScene } from "../scenes/Home/ToDoListScene"
-import { useAppSelector } from "../helpers/store"
+import { useAppDispatch, useAppSelector } from "../helpers/store"
+import { toggleModalVisible } from "../slices/app"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -41,13 +42,29 @@ const useCreateTabs = (data: data) => {
 
 export const HomeScreen = () => {
     const tabs = useCreateTabs(data)
+    const dispatch = useAppDispatch()
+    const None = () => null
 
     return (
         <Tab.Navigator
             initialRouteName={data[0].name}
-            screenOptions={{tabBarIndicator: () => null}}
+            screenOptions={{
+                tabBarIndicator: () => null
+                
+            }}
         >
             {tabs}
+            <Tab.Screen
+                name="追加する"
+                key="AddList"
+                component={None}
+                listeners={() => ({
+                    tabPress: (e) => {
+                        e.preventDefault()
+                        dispatch(toggleModalVisible(true))
+                    },
+                })}
+            />
         </Tab.Navigator>
     )
 }
