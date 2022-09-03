@@ -1,11 +1,14 @@
 import React from "react"
 import { ScrollView, View } from "react-native"
 import { ToDoListItem } from "../../components/ToDoListItem"
-import { useAppDispatch, useAppSelector } from "../../helpers/store"
-import { deleteToDo, toDoItem } from "../../slices/toDo"
+import { useAppDispatch } from "../../helpers/store"
+import { deleteToDo, toDoItem, toDoState } from "../../slices/toDo"
 
-export const ToDoListScene = () => {
-    const {toDoItems} = useAppSelector(({toDo: {toDoItems}}) => ({toDoItems}))
+type ToDoListSceneProps = {
+    toDoItems: toDoState["toDoItems"]
+}
+
+export const ToDoListScene: React.FC<ToDoListSceneProps> = ({toDoItems}) => {
     const dispatch = useAppDispatch()
     const onDelete = (id: toDoItem["id"]) => () => {
         dispatch(deleteToDo({id}))

@@ -1,38 +1,46 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { ToDoListScene } from "../scenes/Home/ToDoListScene"
+import { useAppSelector } from "../helpers/store"
 
 const Tab = createMaterialTopTabNavigator()
 
 type data = Array<{
+    id: string,
     name: string
     label: string
 }>
 
 const data: data = [
-    {name: "Hitori", label: "一人で"},
-    {name: "Koibito", label: "恋人と"},
-    {name: "Tomodati", label: "友達と"},
+    {id: "1", name: "Hitori", label: "一人で"},
+    {id: "2", name: "Koibito", label: "恋人と"},
+    {id: "3", name: "Tomodati", label: "友達と"},
 ]
 
-const createTabs = (data: data) => {
-    return data.map(({name, label}) => {
+const useCreateTabs = (data: data) => {
+    const {toDoItems} = useAppSelector(({toDo: {toDoItems}}) => ({toDoItems}))
+
+    return data.map(({id, name, label}) => {
+        const filteredToDoItems = useMemo(() => toDoItems.filter((toDoItem) => toDoItem.listIdList.includes(id)), [toDoItems])
+        const Scene = () => <ToDoListScene toDoItems={filteredToDoItems} />
+        
         return (
             <Tab.Screen
                 name={name}
-                key={name}
+                key={id}
                 options={{
                     tabBarLabel: label,
                     swipeEnabled: false,
+                    tabBarScrollEnabled: true,
                 }}
-                component={ToDoListScene}
+                component={Scene}
             />
         )
     })
 }
 
 export const HomeScreen = () => {
-    const tabs = createTabs(data)
+    const tabs = useCreateTabs(data)
 
     return (
         <Tab.Navigator
