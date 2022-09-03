@@ -21,7 +21,10 @@ const createTabs = (data: data) => {
             <Tab.Screen
                 name={name}
                 key={name}
-                options={{tabBarLabel: label}}
+                options={{
+                    tabBarLabel: label,
+                    swipeEnabled: false,
+                }}
                 component={ToDoListScene}
             />
         )
