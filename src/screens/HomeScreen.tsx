@@ -6,7 +6,7 @@ import { setModalContent, toggleModalVisible } from "../slices/app"
 import { Button, Text, TextInput } from "react-native-paper"
 import { StyleSheet, View } from "react-native"
 import { palette } from "../styles/colorPalette"
-import { addList, list, updateList } from "../slices/toDo"
+import { addList, deleteList, list, updateList } from "../slices/toDo"
 import { getKey } from "../helpers/getKey"
 
 const Tab = createMaterialTopTabNavigator()
@@ -53,6 +53,11 @@ const EditListModalInner: React.FC<list> = ({id, name}) => {
         }
     }
 
+    const onDelete = () => {
+        dispatch(deleteList(id))
+        dispatch(toggleModalVisible(false))
+    }
+
     return (
         <View>
             <Text variant="titleMedium">名前の変更</Text>
@@ -68,7 +73,18 @@ const EditListModalInner: React.FC<list> = ({id, name}) => {
                 style={styles.submit}
                 disabled={!name}
                 onPress={onSubmit}
-            >変更する</Button>
+            >
+                変更する
+            </Button>
+            <Text style={styles.label}>もしくは</Text>
+            <Button
+                mode="contained"
+                style={styles.delete}
+                disabled={!name}
+                onPress={onDelete}
+            >
+                削除する
+            </Button>
         </View>
     )
 }
@@ -148,6 +164,14 @@ const styles = StyleSheet.create({
     },
     submit: {
         borderRadius: 50,
-        marginTop: 40,
+        marginTop: 20,
+    },
+    label: {
+        marginTop: 20,
+    },
+    delete: {
+        borderRadius: 50,
+        marginTop: 20,
+        backgroundColor: "#FF8A81"
     }
 })
