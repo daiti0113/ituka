@@ -61,7 +61,8 @@ const App = () => {
             style={{ flex: 1 }}
             onPress={() => Keyboard.dismiss()}
         >
-            <SafeAreaProvider>
+            {/* TODO: Dark ModeのThemeを要したら、SafeAreaProviderのstyleは削除すること */}
+            <SafeAreaProvider style={{backgroundColor: palette.neutral[50]}}>
                 <ReduxProvider store={store}>
                     <PersistGate loading={null} persistor={persistor}>
                         <PaperProvider theme={theme}>
