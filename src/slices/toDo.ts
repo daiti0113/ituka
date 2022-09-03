@@ -8,15 +8,18 @@ export type toDoItem = {
     description?: string
     url?: string
 }
+export type list = {
+    name: string,
+    id: string
+}
 export type toDoState = {
-    lists: Array<{name: string, id: string}>
+    lists: Array<list>
     toDoItems: Array<toDoItem>
 }
 
 export const isToDoItem = (value: any): value is toDoItem => {
     return value !== undefined && value?.listIdList?.length > 0 && value?.title?.length > 0
 }
-
 export const toDoSlice = createSlice({
     name: "toDo",
     initialState: {
@@ -33,12 +36,18 @@ export const toDoSlice = createSlice({
         addToDo: (state, {payload}) => {
             state.toDoItems = [...state.toDoItems, payload]
         },
-        deleteToDo: (state, {payload: {id}}) => {
-            state.toDoItems = state.toDoItems.filter((toDo) => toDo.id !== id)
-        }
+        deleteToDo: (state, {payload}: {payload: string}) => {
+            state.toDoItems = state.toDoItems.filter((toDo) => toDo.id !== payload)
+        },
+        addList: (state, {payload}: {payload: list}) => {
+            state.lists = [...state.lists, payload]
+        },
+        deleteList: (state, {payload}: {payload: string}) => {
+            state.lists = state.lists.filter((list) => list.id !== payload)
+        },
     },
 })
 
-export const { addToDo, deleteToDo } = toDoSlice.actions
+export const { addToDo, deleteToDo, addList, deleteList } = toDoSlice.actions
 
 export default toDoSlice.reducer

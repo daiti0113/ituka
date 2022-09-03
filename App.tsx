@@ -97,15 +97,17 @@ const App = () => {
 }
 
 const Modal = () => {
-    const {modalVisible} = useAppSelector(({app: {modalVisible}}) => ({modalVisible}))
+    const {modalVisible, modalContent: ModalContent} = useAppSelector(({app: {modalVisible, modalContent}}) => ({modalVisible, modalContent}))
     const dispatch = useAppDispatch()
 
     return (
         <Portal>
             <PaperModal
                 visible={modalVisible}
-                onDismiss={() => dispatch(toggleModalVisible(false))} contentContainerStyle={styles.modal}>
-                <Text>Example Modal.  Click outside this area to dismiss.</Text>
+                onDismiss={() => dispatch(toggleModalVisible(false))}
+                contentContainerStyle={styles.modal}
+            >
+                {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
             </PaperModal>
         </Portal>
 
@@ -124,5 +126,8 @@ const styles = StyleSheet.create({
     modal: {
         backgroundColor: palette.neutral[50],
         padding: 20,
+        margin: 20,
+        justifyContent: "flex-start",
+        borderRadius: 14,
     }
 })

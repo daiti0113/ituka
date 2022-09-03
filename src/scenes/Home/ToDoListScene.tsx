@@ -11,7 +11,7 @@ type ToDoListSceneProps = {
 export const ToDoListScene: React.FC<ToDoListSceneProps> = ({toDoItems}) => {
     const dispatch = useAppDispatch()
     const onDelete = (id: toDoItem["id"]) => () => {
-        dispatch(deleteToDo({id}))
+        dispatch(deleteToDo(id))
     }
 
     return (
