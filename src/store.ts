@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { syncStorage } from "./middleware/syncStorage"
 import authReducer from "./slices/auth"
 import toDoReducer from "./slices/toDo"
 
@@ -8,9 +7,6 @@ export const store = configureStore({
         auth: authReducer,
         toDo: toDoReducer,
     },
-    middleware: [
-        syncStorage,
-    ]
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
