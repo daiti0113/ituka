@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { Image, Pressable, StyleSheet, View } from "react-native"
-import { Button, Checkbox, Text } from "react-native-paper"
+import { Image, Pressable, StyleSheet, TouchableOpacity, View } from "react-native"
+import { Checkbox, Text } from "react-native-paper"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import { palette } from "../styles/colorPalette"
 
@@ -15,10 +15,9 @@ const sampleImage = "https://scontent-itm1-1.cdninstagram.com/v/t51.2885-15/2997
 
 const renderRightActions = (onDelete: ToDoListItemProps["onDelete"]) => {
     return (
-        <View
-            style={styles.deleteButton}>
-            <Button theme={{colors: {primary: palette.neutral[900]}}} onPress={onDelete}>削除</Button>
-        </View>
+        <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
+            <Text>削除</Text>
+        </TouchableOpacity>
     )
 }
 
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         marginBottom: 16,
-        alignContent: "center",
+        alignItems: "center",
         justifyContent: "center",
         width: 70,
         backgroundColor: "#FF8A81"
