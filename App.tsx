@@ -4,11 +4,12 @@ import { Button, Provider as PaperProvider, Text, TextInput, MD3LightTheme as Pa
 import { NavigationContainer, useNavigation, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { Provider as ReduxProvider } from "react-redux"
-import { store } from "./src/store"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { palette } from "./src/styles/colorPalette"
 import { LoggedInScreen } from "./src/screens/LoggedInScreen"
 import { AddToDoScreen } from "./src/screens/AddToDoScreen"
+import { persistor, store } from "./src/store"
+import { PersistGate } from "redux-persist/integration/react"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -62,22 +63,24 @@ const App = () => {
         >
             <SafeAreaProvider>
                 <ReduxProvider store={store}>
-                    <PaperProvider theme={theme}>
-                        <NavigationContainer theme={theme}>
-                            <SafeAreaView style={{ flex: 1 }}>
-                                <Stack.Navigator
-                                    initialRouteName="LoggedIn"
-                                    screenOptions={{
-                                        header: ({route}) => route.name !== "AddToDo" ? <AppHeader /> : null
-                                    }}
-                                >
-                                    <Stack.Screen name="LoggedIn" component={LoggedInScreen} />
-                                    <Stack.Screen name="Login" component={LoginScreen} />
-                                    <Stack.Screen name="AddToDo" component={AddToDoScreen} />
-                                </Stack.Navigator>
-                            </SafeAreaView>
-                        </NavigationContainer>
-                    </PaperProvider>
+                    <PersistGate loading={null} persistor={persistor}>
+                        <PaperProvider theme={theme}>
+                            <NavigationContainer theme={theme}>
+                                <SafeAreaView style={{ flex: 1 }}>
+                                    <Stack.Navigator
+                                        initialRouteName="LoggedIn"
+                                        screenOptions={{
+                                            header: ({route}) => route.name !== "AddToDo" ? <AppHeader /> : null
+                                        }}
+                                    >
+                                        <Stack.Screen name="LoggedIn" component={LoggedInScreen} />
+                                        <Stack.Screen name="Login" component={LoginScreen} />
+                                        <Stack.Screen name="AddToDo" component={AddToDoScreen} />
+                                    </Stack.Navigator>
+                                </SafeAreaView>
+                            </NavigationContainer>
+                        </PaperProvider>
+                    </PersistGate>
                 </ReduxProvider>
             </SafeAreaProvider>
         </TouchableWithoutFeedback>

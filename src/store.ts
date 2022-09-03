@@ -1,15 +1,34 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import authReducer from "./slices/auth"
 import toDoReducer from "./slices/toDo"
+import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist"
+import AsyncStorage from "@react-native-community/async-storage"
 
-export const store = configureStore({
-    reducer: {
-        auth: authReducer,
-        toDo: toDoReducer,
-    },
+const persistConfig = {
+    key: "root",
+    storage: AsyncStorage,
+}
+
+const rootReducer = combineReducers({
+    auth: authReducer,
+    toDo: toDoReducer,
 })
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
+})
+
+const persistor = persistStore(store)
+
 export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
+
+export {store, persistor}
