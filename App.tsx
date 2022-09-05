@@ -1,5 +1,5 @@
 import React from "react"
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
+import { Keyboard, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import { Button, Provider as PaperProvider, Text, TextInput, MD3LightTheme as PaperDefaultTheme, Portal, Modal as PaperModal } from "react-native-paper"
 import { NavigationContainer, useNavigation, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
@@ -63,6 +63,7 @@ const App = () => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
         >
+            <StatusBar backgroundColor={palette.neutral[50]} barStyle="dark-content" />
             <TouchableWithoutFeedback
                 style={{ flex: 1 }}
                 onPress={() => Keyboard.dismiss()}
