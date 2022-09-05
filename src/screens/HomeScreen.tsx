@@ -17,7 +17,7 @@ const useCreateTabs = (data: Array<list>) => {
 
     return data.map(({id, name}) => {
         const filteredToDoItems = toDoItems.filter((toDoItem) => toDoItem.listIdList.includes(id))
-        const Scene = () => <ToDoListScene toDoItems={filteredToDoItems} />
+        const Scene = () => <ToDoListScene listId={id} toDoItems={filteredToDoItems} />
         const EditListModal = () => <EditListModalInner id={id} name={name} />
         
         return (
