@@ -60,12 +60,21 @@ export const toDoSlice = createSlice({
         addList: (state, {payload}: {payload: list}) => {
             state.lists = [...state.lists, payload]
         },
-        deleteList: (state, {payload}: {payload: string}) => {
-            state.lists = state.lists.filter((list) => list.id !== payload)
-            state.toDoItems = state.toDoItems.filter((toDo) => !toDo.listIdList.includes(payload))
+        deleteList: (state, {payload: {listId}}) => {
+            state.lists = state.lists.filter((list) => list.id !== listId)
+            let temp = state.toDoItems
+            // 削除対象リストに入っていたやりたいことのID一覧
+            const deleteTargetToDoList = temp
+                .map((toDo) => toDo.listIdList.includes(listId) && toDo.id)
+                .filter((id): id is toDoItem["id"] => typeof id == "string")
+            // やりたいことが属しているリスト一覧から削除対象リストを削除
+            deleteTargetToDoList.forEach((id) => {
+                temp = deleteToDoLogic(temp, listId, id)
+            })
+            state.toDoItems = temp
         },
-        updateList: (state, {payload: {id, name}}) => {
-            state.lists = state.lists.map((list) => list.id === id ? {id, name} : list)
+        updateList: (state, {payload: {listId, name}}) => {
+            state.lists = state.lists.map((list) => list.id === listId ? {id: listId, name} : list)
         }
     },
 })

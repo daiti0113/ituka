@@ -42,19 +42,19 @@ const useCreateTabs = (data: Array<list>) => {
     })
 }
 
-const EditListModalInner: React.FC<list> = ({id, name}) => {
+const EditListModalInner: React.FC<list> = ({id: listId, name}) => {
     const [newName, setNewName] = useState<string | null>(null)
     const dispatch = useAppDispatch()
 
     const onSubmit = () => {
         if (newName) {
-            dispatch(updateList({name: newName, id}))
+            dispatch(updateList({name: newName, listId}))
             dispatch(toggleModalVisible(false))
         }
     }
 
     const onDelete = () => {
-        dispatch(deleteList(id))
+        dispatch(deleteList({listId}))
         dispatch(toggleModalVisible(false))
     }
 
