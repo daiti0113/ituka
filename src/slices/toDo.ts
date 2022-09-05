@@ -20,6 +20,23 @@ export type toDoState = {
 export const isToDoItem = (value: any): value is toDoItem => {
     return value !== undefined && value?.listIdList?.length > 0 && value?.title?.length > 0
 }
+
+const deleteToDoLogic = (
+    toDoItems: toDoState["toDoItems"],
+    listId: list["id"],
+    toDoId: toDoItem["id"]
+) => {
+    // listIdListから削除
+    const temp = toDoItems.map((toDo) => {
+        if (toDo.id === toDoId) {
+            return {...toDo, listIdList: toDo.listIdList.filter((id) => id !== listId)}
+        }
+        return toDo
+    })
+    // listIdListが空のものを削除
+    return temp.filter((toDo) => toDo.listIdList.length !== 0)
+}
+
 export const toDoSlice = createSlice({
     name: "toDo",
     initialState: {
@@ -37,15 +54,8 @@ export const toDoSlice = createSlice({
             state.toDoItems = [...state.toDoItems, payload]
         },
         deleteToDo: (state, {payload: {listId, toDoId}}) => {
-            // listIdListから削除
-            const temp = state.toDoItems.map((toDo) => {
-                if (toDo.id === toDoId) {
-                    return {...toDo, listIdList: toDo.listIdList.filter((id) => id !== listId)}
-                }
-                return toDo
-            })
-            // listIdListが空のものを削除
-            state.toDoItems = temp.filter((toDo) => toDo.listIdList.length !== 0)
+            const updated = deleteToDoLogic(state.toDoItems, listId, toDoId)
+            state.toDoItems = updated
         },
         addList: (state, {payload}: {payload: list}) => {
             state.lists = [...state.lists, payload]
