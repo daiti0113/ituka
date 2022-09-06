@@ -33,9 +33,9 @@ export const ToDoListItem: React.FC<ToDoListItemProps> = ({
         >
             <Pressable style={styles.container} onPress={onPress}>
                 <Thumbnail src={thumbnail} />
-                <View>
+                <View style={styles.titleContainer}>
                     <Text variant="bodyLarge">{title}</Text>
-                    <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{description}</Text>
+                    {description && <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{description}</Text>}
                 </View>
                 <View style={styles.checkbox}>
                     <Checkbox status={checked ? "checked" : "unchecked"} />
@@ -66,6 +66,9 @@ const styles = StyleSheet.create({
         height: 56,
         borderRadius: 14,
         marginRight: 10,
+    },
+    titleContainer: {
+        justifyContent: "center",
     },
     checkbox: {
         alignSelf: "center",
