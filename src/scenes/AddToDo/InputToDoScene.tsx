@@ -19,7 +19,7 @@ export const InputToDoScene = () => {
     const selectItems = useMemo(() => createSelectItems(lists), [lists])
     const navigation = useNavigation<LoggedInScreenNavigationProp>()
     const id = getKey()
-    const [toDo, setToDo] = useState<Partial<toDoItem>>({id})
+    const [toDo, setToDo] = useState<Partial<toDoItem>>({id, isDone: false})
 
     const onSubmit = () => {
         if (isToDoItem(toDo)) {

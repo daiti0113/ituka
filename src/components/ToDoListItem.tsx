@@ -1,14 +1,17 @@
-import React, { useState } from "react"
+import React from "react"
 import { Image, Pressable, StyleSheet, TouchableOpacity, View } from "react-native"
 import { Checkbox, Text } from "react-native-paper"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import { palette } from "../styles/colorPalette"
 
-type ToDoListItemProps = {
+export type ToDoListItemProps = {
     title: string
+    checked: boolean,
+    id: string,
     description?: string
     thumbnail?: string
     onDelete?: () => void
+    onPress?: () => void
 }
 
 const sampleImage = "https://scontent-itm1-1.cdninstagram.com/v/t51.2885-15/299783757_2092631190927482_571943387086778334_n.jpg?stp=dst-jpg_e15_fr_s1080x1080&_nc_ht=scontent-itm1-1.cdninstagram.com&_nc_cat=102&_nc_ohc=rgRftQ3u4RwAX8QLFMy&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=MjkwNjA5MjAyNjk3MTA1MzA2Mg%3D%3D.2-ccb7-5&oh=00_AT_M4VoEIzRw7iL4adymQYewfZqDiKLOCXL6GObp4SFvXA&oe=63183464&_nc_sid=30a2ef"
@@ -21,14 +24,14 @@ const renderRightActions = (onDelete: ToDoListItemProps["onDelete"]) => {
     )
 }
 
-export const ToDoListItem: React.FC<ToDoListItemProps> = ({title, description, thumbnail=sampleImage, onDelete}) => {
-    const [checked, setChecked] = useState(false)
-
+export const ToDoListItem: React.FC<ToDoListItemProps> = ({
+    title, description, thumbnail=sampleImage, onDelete, onPress, checked
+}) => {
     return (
         <Swipeable
             renderRightActions={() => renderRightActions(onDelete)}
         >
-            <Pressable style={styles.container} onPress={() => setChecked(!checked)}>
+            <Pressable style={styles.container} onPress={onPress}>
                 <Thumbnail src={thumbnail} />
                 <View>
                     <Text variant="bodyLarge">{title}</Text>

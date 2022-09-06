@@ -5,6 +5,7 @@ export type toDoItem = {
     id: string
     listIdList: Array<string>
     title: string
+    isDone: boolean
     description?: string
     url?: string
 }
@@ -57,6 +58,12 @@ export const toDoSlice = createSlice({
             const updated = deleteToDoLogic(state.toDoItems, listId, toDoId)
             state.toDoItems = updated
         },
+        // TODO: パフォーマンスが悪いのでAPIになったらすぐに修正すること
+        toggleToDo: (state, {payload: {toDoId}}) => {
+            const index = state.toDoItems.findIndex((toDo) => toDo.id === toDoId)
+            const target = state.toDoItems[index]
+            state.toDoItems[index] = {...target, isDone: !target.isDone}
+        },
         addList: (state, {payload}: {payload: list}) => {
             state.lists = [...state.lists, payload]
         },
@@ -82,6 +89,7 @@ export const toDoSlice = createSlice({
 export const {
     addToDo,
     deleteToDo,
+    toggleToDo,
     addList,
     deleteList,
     updateList,
