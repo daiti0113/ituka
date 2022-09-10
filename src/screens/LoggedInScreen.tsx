@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator<BottomTabParamList>()
 export const LoggedInScreen = () => {
     const navigation = useNavigation<LoginScreenNavigationProp>()
     const onPress = () => {
-        navigation.navigate("AddToDo")
+        navigation.navigate("AddToDoScreen")
     }
 
     return (

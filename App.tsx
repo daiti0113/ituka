@@ -1,7 +1,7 @@
 import React from "react"
 import { Keyboard, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
-import { Button, Provider as PaperProvider, Text, TextInput, MD3LightTheme as PaperDefaultTheme, Portal, Modal as PaperModal } from "react-native-paper"
-import { NavigationContainer, useNavigation, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
+import { Provider as PaperProvider, Text, MD3LightTheme as PaperDefaultTheme, Portal, Modal as PaperModal } from "react-native-paper"
+import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { Provider as ReduxProvider } from "react-redux"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
@@ -12,6 +12,7 @@ import { persistor, store } from "./src/store"
 import { PersistGate } from "redux-persist/integration/react"
 import { useAppDispatch, useAppSelector } from "./src/helpers/store"
 import { toggleModalVisible } from "./src/slices/app"
+import { LoginScreen } from "./src/screens/LoginScreen"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -28,25 +29,14 @@ const theme = {
 }
 
 export type RootStackParamList = {
-    LoggedIn: undefined
-    Login: undefined
-    AddToDo: undefined
+    LoggedInScreen: undefined
+    LoginScreen: undefined
+    AddToDoScreen: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>
-
-const LoginScreen = () => {
-    const navigation = useNavigation<LoginScreenNavigationProp>()
-    return (
-        <View style={{ flex: 1, justifyContent: "center", padding: 10 }}>
-            <Text>Login Screen</Text>
-            <TextInput label="Login" />
-            <Button onPress={() => navigation.navigate("LoggedIn")}>Go to Home</Button>
-        </View>
-    )
-}
 
 const AppHeader = () => {
     return (
@@ -77,14 +67,14 @@ const App = () => {
                                     <SafeAreaView style={{ flex: 1 }}>
                                         <Modal />
                                         <Stack.Navigator
-                                            initialRouteName="LoggedIn"
+                                            initialRouteName="LoginScreen"
                                             screenOptions={{
-                                                header: ({route}) => route.name !== "AddToDo" ? <AppHeader /> : null
+                                                header: ({route}) => route.name === "Home" ? <AppHeader /> : null
                                             }}
                                         >
-                                            <Stack.Screen name="LoggedIn" component={LoggedInScreen} />
-                                            <Stack.Screen name="Login" component={LoginScreen} />
-                                            <Stack.Screen name="AddToDo" component={AddToDoScreen} />
+                                            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                                            <Stack.Screen name="LoggedInScreen" component={LoggedInScreen} />
+                                            <Stack.Screen name="AddToDoScreen" component={AddToDoScreen} />
                                         </Stack.Navigator>
                                     </SafeAreaView>
                                 </NavigationContainer>
