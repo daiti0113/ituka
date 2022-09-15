@@ -5,13 +5,6 @@ module.exports = {
         production: {
             plugins: [
                 "react-native-paper/babel",
-                [
-                    "module:react-native-dotenv",
-                    {
-                        moduleName: "@env",
-                        path: ".env",
-                    },
-                ],
             ],
         },
     },
