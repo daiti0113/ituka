@@ -1,41 +1,42 @@
-import { initializeApp } from "firebase/app"
-import { getAuth, signInWithPopup } from "firebase/auth"
-// import Config from "react-native-config"
-import { GoogleAuthProvider } from "firebase/auth"
+import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-signin"
 
-const firebaseConfig = {
-    // apiKey: Config.API_KEY,
-    // authDomain: Config.AUTH_DOMAIN,
-    // projectId: Config.PROJECT_ID,
-    // storageBucket: Config.STORAGE_BUCKET,
-    // messagingSenderId: Config.MESSAGING_SENDER_ID,
-    // appId: Config.APP_ID,
-    // measurementId: Config.MEASUREMENT_ID,
-}
+GoogleSignin.configure({
+    webClientId: "20446199492-5ml20n4qkpo21s4sso6b5bqdudfb2deg.apps.googleusercontent.com",
+})
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig)
-export const auth = getAuth(app)
+export const onGoogleButtonPress = async() => {
+    try {
+        console.log({GoogleSignin})
+        await GoogleSignin.hasPlayServices()
+        const userInfo = await GoogleSignin.signIn()
+        console.log({userInfo})
+    } catch (error: any) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            // user cancelled the login flow
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+            // operation (e.g. sign in) is in progress already
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+            // play services not available or outdated
+        } else {
+            // some other error happened
+        }
+    }}
 
-const authProvider = {
-    google: new GoogleAuthProvider()
-}
-
-export const googleSignin = async () => {
-    return signInWithPopup(auth, authProvider.google)
-        .then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result)
-            const token = credential?.accessToken
-            console.log({user: result.user, token})
-            return {user: result.user, token}
-        }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code
-            const errorMessage = error.message
-            // The email of the user's account used.
-            const email = error.customData.email
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error)
-        })
-}
+// export const googleSignin = async () => {
+//     return signInWithPopup(auth, authProvider.google)
+//         .then((result) => {
+//             // This gives you a Google Access Token. You can use it to access the Google API.
+//             const credential = GoogleAuthProvider.credentialFromResult(result)
+//             const token = credential?.accessToken
+//             console.log({result, token})
+//             // return {user: result.user, token}
+//         }).catch((error) => {
+//             // Handle Errors here.
+//             const errorCode = error.code
+//             const errorMessage = error.message
+//             // The email of the user's account used.
+//             const email = error.customData.email
+//             // The AuthCredential type that was used.
+//             const credential = GoogleAuthProvider.credentialFromError(error)
+//         })
+// }

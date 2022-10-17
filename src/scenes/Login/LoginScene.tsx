@@ -1,7 +1,7 @@
 import React from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { Button, Text } from "react-native-paper"
-import { googleSignin } from "../../helpers/firebase"
+import { onGoogleButtonPress } from "../../helpers/firebase"
 import { palette } from "../../styles/colorPalette"
 
 export const Login = () => {
@@ -46,7 +46,7 @@ const Buttons = () => {
                 textColor="#3C3C3C"
                 style={styles.button}
                 labelStyle={styles.socialLabel}
-                onPress={async () => await googleSignin()}
+                onPress={async () => await onGoogleButtonPress()}
             >
                 Googleでログインする
             </Button>
