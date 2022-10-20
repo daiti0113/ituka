@@ -29,7 +29,7 @@ const Buttons = () => {
             >
                 Twitterでログインする
             </Button>
-            <Button
+            {/* <Button
                 mode="contained"
                 buttonColor="#1877F2"
                 icon={FacebookIcon}
@@ -38,7 +38,7 @@ const Buttons = () => {
                 onPress={() => undefined}
             >
                 Facebookでログインする
-            </Button>
+            </Button> */}
             <Button
                 mode="contained"
                 buttonColor="#FFFFFF"
