@@ -6,4 +6,6 @@ declare module "@env" {
     export const MESSAGING_SENDER_ID: string
     export const APP_ID: string
     export const MEASUREMENT_ID: string
+    export const TWITTER_COMSUMER_KEY: string
+    export const TWITTER_CONSUMER_SECRET: string
 }

@@ -1,7 +1,7 @@
 import React from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { Button, Text } from "react-native-paper"
-import { onAppleButtonPress, onGoogleButtonPress } from "../../helpers/firebase"
+import { onAppleButtonPress, onGoogleButtonPress, onTwitterButtonPress } from "../../helpers/firebase"
 import { palette } from "../../styles/colorPalette"
 
 export const Login = () => {
@@ -25,7 +25,7 @@ const Buttons = () => {
                 icon={TwitterIcon}
                 style={styles.button}
                 labelStyle={styles.socialLabel}
-                onPress={() => undefined}
+                onPress={async () => await onTwitterButtonPress()}
             >
                 Twitterでログインする
             </Button>

@@ -1,5 +1,7 @@
 import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-signin"
 import { appleAuth } from "@invertase/react-native-apple-authentication"
+import RNTwitterSignIn from "@react-native-twitter-signin/twitter-signin"
+import Config from "react-native-config"
 
 GoogleSignin.configure({
     webClientId: "20446199492-5ml20n4qkpo21s4sso6b5bqdudfb2deg.apps.googleusercontent.com",
@@ -48,3 +50,23 @@ TODO: Appleのログアウト実装
 There is an operation appleAuth.Operation.LOGOUT, however it does not work as expected and is not even being used by Apple in their example code. See this issue for more information
 So it is recommended when logging out to just clear all data you have from a user, collected during appleAuth.Operation.LOGIN.
 */
+
+
+export const onTwitterButtonPress = async () => {
+    RNTwitterSignIn.init(
+        Config.TWITTER_COMSUMER_KEY || "",
+        Config.TWITTER_CONSUMER_SECRET || "",
+    )
+
+    RNTwitterSignIn.logIn()
+        .then(loginData => {
+            console.log(loginData)
+            const {authToken, authTokenSecret} = loginData
+            if (authToken && authTokenSecret) {
+                console.log("LOGGED IN !!!")
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}
