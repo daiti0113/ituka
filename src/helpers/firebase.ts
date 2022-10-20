@@ -1,4 +1,5 @@
 import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-signin"
+import { appleAuth } from "@invertase/react-native-apple-authentication"
 
 GoogleSignin.configure({
     webClientId: "20446199492-5ml20n4qkpo21s4sso6b5bqdudfb2deg.apps.googleusercontent.com",
@@ -22,21 +23,28 @@ export const onGoogleButtonPress = async() => {
         }
     }}
 
-// export const googleSignin = async () => {
-//     return signInWithPopup(auth, authProvider.google)
-//         .then((result) => {
-//             // This gives you a Google Access Token. You can use it to access the Google API.
-//             const credential = GoogleAuthProvider.credentialFromResult(result)
-//             const token = credential?.accessToken
-//             console.log({result, token})
-//             // return {user: result.user, token}
-//         }).catch((error) => {
-//             // Handle Errors here.
-//             const errorCode = error.code
-//             const errorMessage = error.message
-//             // The email of the user's account used.
-//             const email = error.customData.email
-//             // The AuthCredential type that was used.
-//             const credential = GoogleAuthProvider.credentialFromError(error)
-//         })
-// }
+
+export const onAppleButtonPress = async() => {
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        // Note: it appears putting FULL_NAME first is important, see issue #293
+        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    })
+    
+    // get current authentication state for user
+    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
+    
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+        // user is authenticated
+    }
+}
+
+
+/*
+TODO: Appleのログアウト実装
+There is an operation appleAuth.Operation.LOGOUT, however it does not work as expected and is not even being used by Apple in their example code. See this issue for more information
+So it is recommended when logging out to just clear all data you have from a user, collected during appleAuth.Operation.LOGIN.
+*/

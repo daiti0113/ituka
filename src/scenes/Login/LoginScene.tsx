@@ -1,7 +1,7 @@
 import React from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { Button, Text } from "react-native-paper"
-import { onGoogleButtonPress } from "../../helpers/firebase"
+import { onAppleButtonPress, onGoogleButtonPress } from "../../helpers/firebase"
 import { palette } from "../../styles/colorPalette"
 
 export const Login = () => {
@@ -50,6 +50,17 @@ const Buttons = () => {
             >
                 Googleでログインする
             </Button>
+            <Button
+                mode="contained"
+                buttonColor="#000000"
+                icon={AppleIcon}
+                textColor="#FFFFFF"
+                style={styles.button}
+                labelStyle={styles.socialLabel}
+                onPress={async () => await onAppleButtonPress()}
+            >
+                Appleでログインする
+            </Button>
             <Text style={styles.link}>初めての方はこちら</Text>
         </View>
     )
@@ -70,6 +81,12 @@ const FacebookIcon = () => {
 const GoogleIcon = () => {
     return (
         <Image style={styles.socialIcon} source={require("../../assets/logo-google.png")} />
+    )
+}
+
+const AppleIcon = () => {
+    return (
+        <Image style={[styles.socialIcon, {flex: 1}]} source={require("../../assets/logo-apple.png")} />
     )
 }
 
