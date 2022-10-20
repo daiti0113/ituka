@@ -2,6 +2,7 @@ import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-si
 import { appleAuth } from "@invertase/react-native-apple-authentication"
 import RNTwitterSignIn from "@react-native-twitter-signin/twitter-signin"
 import Config from "react-native-config"
+import auth from "@react-native-firebase/auth"
 
 GoogleSignin.configure({
     webClientId: "20446199492-5ml20n4qkpo21s4sso6b5bqdudfb2deg.apps.googleusercontent.com",
@@ -9,10 +10,12 @@ GoogleSignin.configure({
 
 export const onGoogleButtonPress = async() => {
     try {
-        console.log({GoogleSignin})
         await GoogleSignin.hasPlayServices()
-        const userInfo = await GoogleSignin.signIn()
-        console.log({userInfo})
+        const {idToken} = await GoogleSignin.signIn()
+        // Create a Google credential with the token
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken)
+        // Sign-in the user with the credential
+        return auth().signInWithCredential(googleCredential)
     } catch (error: any) {
         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
             // user cancelled the login flow

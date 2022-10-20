@@ -1359,14 +1359,19 @@
   resolved "https://registry.npmjs.org/@react-native-community/eslint-plugin/-/eslint-plugin-1.2.0.tgz"
   integrity sha512-o6aam+0Ug1xGK3ABYmBm0B1YuEKfM/5kaoZO0eHbZwSpw9UzDX4G5y4Nx/K20FHqUmJHkZmLvOUFYwN4N+HqKA==
 
-"@react-native-firebase/app@^15.4.0":
-  version "15.4.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-15.4.0.tgz#616a6d13956fbed1ee010ca05b9e62969d19b5c5"
-  integrity sha512-1Xf1Q0x6x6dZamRjIpDLCvj4CUwozr1mvH3sc3A4J1avjGUwgqD0RR58DGd7r9akU+JmEXLHB84EZ9Aa68AHDg==
+"@react-native-firebase/app@^16.1.0":
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-16.1.0.tgz#cf4d38e3cd13a469fa60c65b3abecb6c1a1eabac"
+  integrity sha512-cj1X9/htJzngpDJbkJ5ISEO4TTkrSOj22d9VwA5uv9l8yGUl/ebl9lgsiKFmSWCzG9C20rSXzBZqqFdV6NZ4+w==
   dependencies:
     "@expo/config-plugins" "^5.0.1"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
+
+"@react-native-firebase/auth@^16.1.0":
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-16.1.0.tgz#d5e3ea24552c3aa7521c20379f310ecdc1baecef"
+  integrity sha512-ZCMo5naMHyhxUmftaxf++htZyURoPUpuHhacyKvpB7x/PA5ZLDsAHfiCiXZsSUSn6/kASzHGmYaReRunFpBhYg==
 
 "@react-native-google-signin/google-signin@^8.0.1":
   version "8.0.1"

@@ -12,7 +12,8 @@
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.2.2",
     "@react-native-community/async-storage": "^1.12.1",
-    "@react-native-firebase/app": "^15.4.0",
+    "@react-native-firebase/app": "^16.1.0",
+    "@react-native-firebase/auth": "^16.1.0",
     "@react-native-google-signin/google-signin": "^8.0.1",
     "@react-native-twitter-signin/twitter-signin": "^1.2.0",
     "@react-navigation/bottom-tabs": "^6.3.3",
