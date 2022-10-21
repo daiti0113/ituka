@@ -66,15 +66,15 @@ export const onTwitterButtonPress = async () => {
         Config.TWITTER_CONSUMER_SECRET || "",
     )
 
-    RNTwitterSignIn.logIn()
-        .then(loginData => {
-            console.log(loginData)
-            const {authToken, authTokenSecret} = loginData
-            if (authToken && authTokenSecret) {
-                console.log("LOGGED IN !!!")
-            }
-        })
-        .catch(error => {
-            console.log(error)
-        })
+    try {
+        // Perform the login request
+        const { authToken, authTokenSecret } = await RNTwitterSignIn.logIn()
+        if (!authToken) throw new Error("authToken is undefined")
+        // Create a Twitter credential with the tokens
+        const twitterCredential = auth.TwitterAuthProvider.credential(authToken, authTokenSecret)
+        // Sign-in the user with the credential
+        return auth().signInWithCredential(twitterCredential)
+    } catch (error) {
+        console.log(error)
+    }
 }
