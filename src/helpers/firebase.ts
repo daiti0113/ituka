@@ -28,7 +28,6 @@ export const onGoogleButtonPress = async() => {
         }
     }}
 
-
 export const onAppleButtonPress = async() => {
     // performs login request
     const appleAuthRequestResponse = await appleAuth.performRequest({
@@ -36,16 +35,22 @@ export const onAppleButtonPress = async() => {
         // Note: it appears putting FULL_NAME first is important, see issue #293
         requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
     })
-    
-    // get current authentication state for user
-    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
-    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
-    
-    // use credentialState response to ensure the user is authenticated
-    if (credentialState === appleAuth.State.AUTHORIZED) {
-        // user is authenticated
-    }
+    // Create a Firebase credential from the response
+    const { identityToken, nonce } = appleAuthRequestResponse
+    const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
+
+    // Sign the user in with the credential
+    return auth().signInWithCredential(appleCredential)
 }
+
+// NOTE: たぶんログイン済み確認のときに使える
+// // get current authentication state for user
+// // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+// const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
+
+// // use credentialState response to ensure the user is authenticated
+// if (credentialState === appleAuth.State.AUTHORIZED) {
+//     // user is authenticated
 
 
 /*
