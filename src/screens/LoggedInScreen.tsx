@@ -6,7 +6,7 @@ import { View } from "react-native"
 import { Text } from "react-native-paper"
 import { Select } from "../components/Select"
 import { useNavigation } from "@react-navigation/native"
-import { LoginScreenNavigationProp } from "../../App"
+import { LoginScreenNavigationProp } from "./AppScreen"
 
 export type BottomTabParamList = {
     Home: undefined

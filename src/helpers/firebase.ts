@@ -5,8 +5,6 @@ import Config from "react-native-config"
 import auth from "@react-native-firebase/auth"
 import { useAppDispatch } from "./store"
 import { login } from "../slices/auth"
-import { useNavigation } from "@react-navigation/native"
-import { LoginScreenNavigationProp } from "../../App"
 
 GoogleSignin.configure({
     webClientId: "20446199492-5ml20n4qkpo21s4sso6b5bqdudfb2deg.apps.googleusercontent.com",
@@ -14,7 +12,6 @@ GoogleSignin.configure({
 
 export const useOnGoogleButtonPress = () => {
     const dispatch = useAppDispatch()
-    const navigation = useNavigation<LoginScreenNavigationProp>()
 
     return async() => {
         try {
@@ -25,7 +22,6 @@ export const useOnGoogleButtonPress = () => {
             // Sign-in the user with the credential
             auth().signInWithCredential(googleCredential)
             dispatch(login())
-            navigation.navigate("LoggedInScreen")
         } catch (error: any) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // user cancelled the login flow
@@ -42,7 +38,6 @@ export const useOnGoogleButtonPress = () => {
 
 export const useOnAppleButtonPress = () => {
     const dispatch = useAppDispatch()
-    const navigation = useNavigation<LoginScreenNavigationProp>()
 
     return async() => {
         // performs login request
@@ -58,7 +53,6 @@ export const useOnAppleButtonPress = () => {
         // Sign the user in with the credential
         auth().signInWithCredential(appleCredential)
         dispatch(login())
-        navigation.navigate("LoggedInScreen")
     }
 }
 
@@ -81,7 +75,6 @@ So it is recommended when logging out to just clear all data you have from a use
 
 export const useOnTwitterButtonPress = () => {
     const dispatch = useAppDispatch()
-    const navigation = useNavigation<LoginScreenNavigationProp>()
 
     return async () => {
         RNTwitterSignIn.init(
@@ -98,7 +91,6 @@ export const useOnTwitterButtonPress = () => {
             // Sign-in the user with the credential
             auth().signInWithCredential(twitterCredential)
             dispatch(login())
-            navigation.navigate("LoggedInScreen")
         } catch (error) {
             console.log(error)
         }
