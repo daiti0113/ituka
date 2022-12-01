@@ -3,44 +3,63 @@ import { appleAuth } from "@invertase/react-native-apple-authentication"
 import RNTwitterSignIn from "@react-native-twitter-signin/twitter-signin"
 import Config from "react-native-config"
 import auth from "@react-native-firebase/auth"
+import { useAppDispatch } from "./store"
+import { login } from "../slices/auth"
+import { useNavigation } from "@react-navigation/native"
+import { LoginScreenNavigationProp } from "../../App"
 
 GoogleSignin.configure({
     webClientId: "20446199492-5ml20n4qkpo21s4sso6b5bqdudfb2deg.apps.googleusercontent.com",
 })
 
-export const onGoogleButtonPress = async() => {
-    try {
-        await GoogleSignin.hasPlayServices()
-        const {idToken} = await GoogleSignin.signIn()
-        // Create a Google credential with the token
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken)
-        // Sign-in the user with the credential
-        return auth().signInWithCredential(googleCredential)
-    } catch (error: any) {
-        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            // user cancelled the login flow
-        } else if (error.code === statusCodes.IN_PROGRESS) {
-            // operation (e.g. sign in) is in progress already
-        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            // play services not available or outdated
-        } else {
-            // some other error happened
+export const useOnGoogleButtonPress = () => {
+    const dispatch = useAppDispatch()
+    const navigation = useNavigation<LoginScreenNavigationProp>()
+
+    return async() => {
+        try {
+            await GoogleSignin.hasPlayServices()
+            const {idToken} = await GoogleSignin.signIn()
+            // Create a Google credential with the token
+            const googleCredential = auth.GoogleAuthProvider.credential(idToken)
+            // Sign-in the user with the credential
+            auth().signInWithCredential(googleCredential)
+            dispatch(login())
+            navigation.navigate("LoggedInScreen")
+        } catch (error: any) {
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+                // user cancelled the login flow
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+                // operation (e.g. sign in) is in progress already
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                // play services not available or outdated
+            } else {
+                // some other error happened
+            }
         }
-    }}
+    }
+}
 
-export const onAppleButtonPress = async() => {
-    // performs login request
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-        requestedOperation: appleAuth.Operation.LOGIN,
-        // Note: it appears putting FULL_NAME first is important, see issue #293
-        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-    })
-    // Create a Firebase credential from the response
-    const { identityToken, nonce } = appleAuthRequestResponse
-    const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
+export const useOnAppleButtonPress = () => {
+    const dispatch = useAppDispatch()
+    const navigation = useNavigation<LoginScreenNavigationProp>()
 
-    // Sign the user in with the credential
-    return auth().signInWithCredential(appleCredential)
+    return async() => {
+        // performs login request
+        const appleAuthRequestResponse = await appleAuth.performRequest({
+            requestedOperation: appleAuth.Operation.LOGIN,
+            // Note: it appears putting FULL_NAME first is important, see issue #293
+            requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+        })
+        // Create a Firebase credential from the response
+        const { identityToken, nonce } = appleAuthRequestResponse
+        const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
+
+        // Sign the user in with the credential
+        auth().signInWithCredential(appleCredential)
+        dispatch(login())
+        navigation.navigate("LoggedInScreen")
+    }
 }
 
 // NOTE: たぶんログイン済み確認のときに使える
@@ -60,21 +79,28 @@ So it is recommended when logging out to just clear all data you have from a use
 */
 
 
-export const onTwitterButtonPress = async () => {
-    RNTwitterSignIn.init(
-        Config.TWITTER_COMSUMER_KEY || "",
-        Config.TWITTER_CONSUMER_SECRET || "",
-    )
+export const useOnTwitterButtonPress = () => {
+    const dispatch = useAppDispatch()
+    const navigation = useNavigation<LoginScreenNavigationProp>()
 
-    try {
-        // Perform the login request
-        const { authToken, authTokenSecret } = await RNTwitterSignIn.logIn()
-        if (!authToken) throw new Error("authToken is undefined")
-        // Create a Twitter credential with the tokens
-        const twitterCredential = auth.TwitterAuthProvider.credential(authToken, authTokenSecret)
-        // Sign-in the user with the credential
-        return auth().signInWithCredential(twitterCredential)
-    } catch (error) {
-        console.log(error)
+    return async () => {
+        RNTwitterSignIn.init(
+            Config.TWITTER_COMSUMER_KEY || "",
+            Config.TWITTER_CONSUMER_SECRET || "",
+        )
+
+        try {
+            // Perform the login request
+            const { authToken, authTokenSecret } = await RNTwitterSignIn.logIn()
+            if (!authToken) throw new Error("authToken is undefined")
+            // Create a Twitter credential with the tokens
+            const twitterCredential = auth.TwitterAuthProvider.credential(authToken, authTokenSecret)
+            // Sign-in the user with the credential
+            auth().signInWithCredential(twitterCredential)
+            dispatch(login())
+            navigation.navigate("LoggedInScreen")
+        } catch (error) {
+            console.log(error)
+        }
     }
 }

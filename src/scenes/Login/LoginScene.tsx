@@ -1,7 +1,7 @@
 import React from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { Button, Text } from "react-native-paper"
-import { onAppleButtonPress, onGoogleButtonPress, onTwitterButtonPress } from "../../helpers/firebase"
+import { useOnAppleButtonPress, useOnGoogleButtonPress, useOnTwitterButtonPress } from "../../helpers/firebase"
 import { palette } from "../../styles/colorPalette"
 
 export const Login = () => {
@@ -17,6 +17,10 @@ export const Login = () => {
 }
 
 const Buttons = () => {
+    const onTwitterButtonPress = useOnTwitterButtonPress()
+    const onGoogleButtonPress = useOnGoogleButtonPress()
+    const onAppleButtonPress = useOnAppleButtonPress()
+
     return(
         <View style={styles.buttonsContainer}>
             <Button
