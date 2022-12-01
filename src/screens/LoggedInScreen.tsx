@@ -1,12 +1,13 @@
-import React, { useState } from "react"
+import React from "react"
 import { BottomTabNavigationProp, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { HomeScreen } from "./HomeScreen"
 import { BottomTabBar } from "../components/BottomTabBar"
 import { View } from "react-native"
-import { Text } from "react-native-paper"
-import { Select } from "../components/Select"
+import { Button, Text } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { LoginScreenNavigationProp } from "./AppScreen"
+import { useAppDispatch } from "../helpers/store"
+import { logout } from "../slices/auth"
 
 export type BottomTabParamList = {
     Home: undefined
@@ -36,9 +37,12 @@ export const LoggedInScreen = () => {
 }
 
 const MyPageScreen = () => {
+    const dispatch = useAppDispatch()
+
     return (
         <View>
             <Text variant="headlineMedium">MyPage</Text>
+            <Button onPress={() => dispatch(logout())}>ログアウト</Button>
         </View>
     )
 }
