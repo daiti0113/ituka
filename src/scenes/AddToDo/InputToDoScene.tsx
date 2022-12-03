@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../helpers/store"
 import { LoggedInScreenNavigationProp } from "../../screens/LoggedInScreen"
 import { addToDo, isToDoItem, toDoItem } from "../../slices/toDo"
 import { palette } from "../../styles/colorPalette"
+import { addDoc, collection } from "firebase/firestore"
 
 const createSelectItems = (lists: Array<{name: string, id: string}>) => {
     return lists.map(({name, id}) => <Select.Item key={id} value={id}>{name}</Select.Item>)
