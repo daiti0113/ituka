@@ -13,7 +13,6 @@ import firestore from "@react-native-firebase/firestore"
 const Tab = createMaterialTopTabNavigator()
 
 const useCreateTabs = (data: Array<list>) => {
-    const {toDoItems} = useAppSelector(({toDo: {toDoItems}}) => ({toDoItems}))
     const dispatch = useAppDispatch()
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
     const [tasks, setTasks] = useState<any>([])
@@ -30,8 +29,8 @@ const useCreateTabs = (data: Array<list>) => {
     }, [])
 
     return data.map(({id, name}) => {
-        // const filteredToDoItems = tasks.filter((task) => task.listIdList.includes(id))
-        const Scene = () => <ToDoListScene listId={id} toDoItems={tasks} />
+        const filteredToDoItems = tasks.filter((task) => task.listIdList.includes(id))
+        const Scene = () => <ToDoListScene listId={id} toDoItems={filteredToDoItems} />
         const EditListModal = () => <EditListModalInner id={id} name={name} />
         
         return (
@@ -136,10 +135,26 @@ const AddListModal = () => {
 }
 
 export const HomeScreen = () => {
-    const {lists} = useAppSelector(({toDo: {lists}}) => ({lists}))
+    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
+    const [lists, setLists] = useState<any>([])
+    const getLists = async () => {
+        console.log("START GET LISTS")
+        console.log(uid.toString())
+        const res = await firestore().collection("users").doc(uid).collection("lists").get()
+        console.log(res.docs.map((doc) => ({id: doc.id, ...doc.data()})))
+        setLists(res.docs.map((doc) => ({id: doc.id, ...doc.data()})))
+    }
+
+    useEffect(() => {
+        getLists()
+    }, [])
+
+    // const {lists} = useAppSelector(({toDo: {lists}}) => ({lists}))
     const tabs = useCreateTabs(lists)
     const dispatch = useAppDispatch()
     const None = () => null
+
+    if (lists.length === 0) return null
 
     return (
         <Tab.Navigator
