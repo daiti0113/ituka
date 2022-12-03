@@ -23,8 +23,8 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, "app/setModalContent"],
-                ignoredPaths: ["app.modalContent"]
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, "app/setModalContent", "auth/login"],
+                ignoredPaths: ["app.modalContent", "auth.user"]
             },
         }),
 })

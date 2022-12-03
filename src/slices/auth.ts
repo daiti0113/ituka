@@ -1,7 +1,9 @@
+import { FirebaseAuthTypes } from "@react-native-firebase/auth"
 import { createSlice } from "@reduxjs/toolkit"
 
 export type authState = {
     isLoggedIn: boolean,
+    user: FirebaseAuthTypes.UserCredential["user"],
 }
 
 export const authSlice = createSlice({
@@ -10,8 +12,9 @@ export const authSlice = createSlice({
         isLoggedIn: false,
     } as authState,
     reducers: {
-        login: (state) => {
+        login: (state, {payload: {user}}: {payload: {user: FirebaseAuthTypes.UserCredential["user"]}}) => {
             state.isLoggedIn = true
+            state.user = user
         },
         logout: (state) => {
             state.isLoggedIn = false

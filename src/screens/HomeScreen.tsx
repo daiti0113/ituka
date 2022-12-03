@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { ToDoListScene } from "../scenes/Home/ToDoListScene"
 import { useAppDispatch, useAppSelector } from "../helpers/store"
@@ -8,16 +8,30 @@ import { StyleSheet, View } from "react-native"
 import { palette } from "../styles/colorPalette"
 import { addList, deleteList, list, updateList } from "../slices/toDo"
 import { getKey } from "../helpers/getKey"
+import firestore from "@react-native-firebase/firestore"
 
 const Tab = createMaterialTopTabNavigator()
 
 const useCreateTabs = (data: Array<list>) => {
     const {toDoItems} = useAppSelector(({toDo: {toDoItems}}) => ({toDoItems}))
     const dispatch = useAppDispatch()
+    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
+    const [tasks, setTasks] = useState<any>([])
+    const getTasks = async () => {
+        console.log("START")
+        console.log(uid.toString())
+        const res = await firestore().collection("users").doc(uid).collection("tasks").get()
+        console.log(res.docs)
+        setTasks(res.docs.map((doc) => doc.data()))
+    }
+
+    useEffect(() => {
+        getTasks()
+    }, [])
 
     return data.map(({id, name}) => {
-        const filteredToDoItems = toDoItems.filter((toDoItem) => toDoItem.listIdList.includes(id))
-        const Scene = () => <ToDoListScene listId={id} toDoItems={filteredToDoItems} />
+        // const filteredToDoItems = tasks.filter((task) => task.listIdList.includes(id))
+        const Scene = () => <ToDoListScene listId={id} toDoItems={tasks} />
         const EditListModal = () => <EditListModalInner id={id} name={name} />
         
         return (

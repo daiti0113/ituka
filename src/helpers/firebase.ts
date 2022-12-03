@@ -20,8 +20,8 @@ export const useOnGoogleButtonPress = () => {
             // Create a Google credential with the token
             const googleCredential = auth.GoogleAuthProvider.credential(idToken)
             // Sign-in the user with the credential
-            auth().signInWithCredential(googleCredential)
-            dispatch(login())
+            const {user} = await auth().signInWithCredential(googleCredential)
+            dispatch(login({user}))
         } catch (error: any) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // user cancelled the login flow
@@ -51,8 +51,8 @@ export const useOnAppleButtonPress = () => {
         const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
 
         // Sign the user in with the credential
-        auth().signInWithCredential(appleCredential)
-        dispatch(login())
+        const {user} = await auth().signInWithCredential(appleCredential)
+        dispatch(login({user}))
     }
 }
 
@@ -89,8 +89,8 @@ export const useOnTwitterButtonPress = () => {
             // Create a Twitter credential with the tokens
             const twitterCredential = auth.TwitterAuthProvider.credential(authToken, authTokenSecret)
             // Sign-in the user with the credential
-            auth().signInWithCredential(twitterCredential)
-            dispatch(login())
+            const {user} = await auth().signInWithCredential(twitterCredential)
+            dispatch(login({user}))
         } catch (error) {
             console.log(error)
         }
