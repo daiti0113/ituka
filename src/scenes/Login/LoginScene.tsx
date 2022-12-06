@@ -1,7 +1,7 @@
 import React from "react"
 import { Image, StyleSheet, View } from "react-native"
 import { Button, Text } from "react-native-paper"
-import { useOnAppleButtonPress, useOnGoogleButtonPress, useOnTwitterButtonPress } from "../../helpers/firebase"
+import { useOnAppleButtonPress, useOnGoogleButtonPress, useOnTwitterButtonPress } from "../../helpers/auth"
 import { palette } from "../../styles/colorPalette"
 
 export const Login = () => {
