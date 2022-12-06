@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { ToDoListScene } from "../scenes/Home/ToDoListScene"
-import { useAppDispatch, useAppSelector } from "../helpers/store"
+import { useAppDispatch } from "../helpers/store"
 import { setModalContent, toggleModalVisible } from "../slices/app"
 import { Button, Text, TextInput } from "react-native-paper"
 import { StyleSheet, View } from "react-native"
 import { palette } from "../styles/colorPalette"
 import { addList, deleteList, list, updateList } from "../slices/toDo"
 import { getKey } from "../helpers/getKey"
-import firestore from "@react-native-firebase/firestore"
+import { useGetLists, useGetTasks } from "../helpers/request"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -92,34 +92,15 @@ const AddListModal = () => {
 }
 
 export const HomeScreen = () => {
-    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
-    const [lists, setLists] = useState<any>([])
-    const [tasks, setTasks] = useState<any>([])
-    const getLists = async () => {
-        console.log("START GET LISTS")
-        console.log(uid.toString())
-        const res = await firestore().collection("users").doc(uid).collection("lists").get()
-        console.log(res.docs.map((doc) => ({id: doc.id, ...doc.data()})))
-        setLists(res.docs.map((doc) => ({id: doc.id, ...doc.data()})))
-    }
-    const getTasks = async () => {
-        console.log("START")
-        console.log(uid.toString())
-        const res = await firestore().collection("users").doc(uid).collection("tasks").get()
-        console.log(res.docs)
-        setTasks(res.docs.map((doc) => doc.data()))
-    }
+    const lists = useGetLists()
+    const tasks = useGetTasks()
 
-    useEffect(() => {
-        getLists()
-        getTasks()
-    }, [])
-
-    // const {lists} = useAppSelector(({toDo: {lists}}) => ({lists}))
     const dispatch = useAppDispatch()
     const None = () => null
 
     if (lists.length === 0) return null
+
+    console.log({lists})
 
     return (
         <Tab.Navigator
