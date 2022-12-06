@@ -12,49 +12,6 @@ import firestore from "@react-native-firebase/firestore"
 
 const Tab = createMaterialTopTabNavigator()
 
-const useCreateTabs = (data: Array<list>) => {
-    const dispatch = useAppDispatch()
-    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
-    const [tasks, setTasks] = useState<any>([])
-    const getTasks = async () => {
-        console.log("START")
-        console.log(uid.toString())
-        const res = await firestore().collection("users").doc(uid).collection("tasks").get()
-        console.log(res.docs)
-        setTasks(res.docs.map((doc) => doc.data()))
-    }
-
-    useEffect(() => {
-        getTasks()
-    }, [])
-
-    return data.map(({id, name}) => {
-        const filteredToDoItems = tasks.filter((task) => task.listIdList.includes(id))
-        const Scene = () => <ToDoListScene listId={id} toDoItems={filteredToDoItems} />
-        const EditListModal = () => <EditListModalInner id={id} name={name} />
-        
-        return (
-            <Tab.Screen
-                name={id}
-                key={id}
-                options={{
-                    tabBarLabel: name,
-                    swipeEnabled: false,
-                    tabBarScrollEnabled: true,
-                    tabBarLabelStyle: {textTransform: "none"}
-                }}
-                listeners={() => ({
-                    tabLongPress: () => {
-                        dispatch(setModalContent(EditListModal))
-                        dispatch(toggleModalVisible(true))
-                    },
-                })}
-                component={Scene}
-            />
-        )
-    })
-}
-
 const EditListModalInner: React.FC<list> = ({id: listId, name}) => {
     const [newName, setNewName] = useState<string | null>(null)
     const dispatch = useAppDispatch()
@@ -109,7 +66,7 @@ const AddListModal = () => {
     const onSubmit = () => {
         if (name) {
             const id = getKey()
-            dispatch(addList({name, id}))
+            dispatch(addList({name, id, order: 0}))
             dispatch(toggleModalVisible(false))
             // TODO: リスト作成後にその画面に遷移したかったが、この時点ではルートが生成されていないためnavigateできなかった
         }
@@ -137,6 +94,7 @@ const AddListModal = () => {
 export const HomeScreen = () => {
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
     const [lists, setLists] = useState<any>([])
+    const [tasks, setTasks] = useState<any>([])
     const getLists = async () => {
         console.log("START GET LISTS")
         console.log(uid.toString())
@@ -144,13 +102,20 @@ export const HomeScreen = () => {
         console.log(res.docs.map((doc) => ({id: doc.id, ...doc.data()})))
         setLists(res.docs.map((doc) => ({id: doc.id, ...doc.data()})))
     }
+    const getTasks = async () => {
+        console.log("START")
+        console.log(uid.toString())
+        const res = await firestore().collection("users").doc(uid).collection("tasks").get()
+        console.log(res.docs)
+        setTasks(res.docs.map((doc) => doc.data()))
+    }
 
     useEffect(() => {
         getLists()
+        getTasks()
     }, [])
 
     // const {lists} = useAppSelector(({toDo: {lists}}) => ({lists}))
-    const tabs = useCreateTabs(lists)
     const dispatch = useAppDispatch()
     const None = () => null
 
@@ -164,7 +129,31 @@ export const HomeScreen = () => {
                 
             }}
         >
-            {tabs}
+            {lists.map((list) => {
+            // const filteredToDoItems = tasks.filter((task) => task.listIdList.includes(list.id))
+                const Scene = () => <ToDoListScene listId={list.id} toDoItems={tasks} />
+                const EditListModal = () => <EditListModalInner {...list} />
+            
+                return (
+                    <Tab.Screen
+                        name={list.id}
+                        key={list.id}
+                        options={{
+                            tabBarLabel: list.name,
+                            swipeEnabled: false,
+                            tabBarScrollEnabled: true,
+                            tabBarLabelStyle: {textTransform: "none"}
+                        }}
+                        listeners={() => ({
+                            tabLongPress: () => {
+                                dispatch(setModalContent(EditListModal))
+                                dispatch(toggleModalVisible(true))
+                            },
+                        })}
+                        component={Scene}
+                    />
+                )
+            })}
             <Tab.Screen
                 name="＋リストを追加"
                 key="AddList"

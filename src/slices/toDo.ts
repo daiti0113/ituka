@@ -11,6 +11,7 @@ export type toDoItem = {
 }
 export type list = {
     name: string,
+    order: number,
     id: string
 }
 export type toDoState = {
@@ -80,8 +81,8 @@ export const toDoSlice = createSlice({
             })
             state.toDoItems = temp
         },
-        updateList: (state, {payload: {listId, name}}) => {
-            state.lists = state.lists.map((list) => list.id === listId ? {id: listId, name} : list)
+        updateList: (state, {payload: {listId, name, order}}) => {
+            state.lists = state.lists.map((list) => list.id === listId ? {id: listId, name, order} : list)
         }
     },
 })
