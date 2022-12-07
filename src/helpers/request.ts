@@ -8,13 +8,10 @@ export const useLists = () => {
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
     const [lists, setLists] = useState<Array<list>>([])
 
-    const getLists = async () => {
-        const res = await firestore().collection("users").doc(uid).collection("lists").get()
-        setLists(res.docs.map((doc) => ({id: doc.id, ...doc.data()} as list)))
-    }
-
     useEffect(() => {
-        getLists()
+        firestore().collection("users").doc(uid).collection("tasks").onSnapshot(querySnapshot => {
+            setLists(querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()} as list)))
+        })
     }, [])
 
     return lists
@@ -25,13 +22,10 @@ export const useTasks = () => {
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
     const [tasks, setTasks] = useState<Array<taskItem>>([])
 
-    const getTasks = async () => {
-        const res = await firestore().collection("users").doc(uid).collection("tasks").get()
-        setTasks(res.docs.map((doc) => doc.data() as taskItem))
-    }
-
     useEffect(() => {
-        getTasks()
+        firestore().collection("users").doc(uid).collection("tasks").onSnapshot(querySnapshot => {
+            setTasks(querySnapshot.docs.map(documentSnapshot => documentSnapshot.data() as taskItem))
+        })
     }, [])
 
     return tasks
