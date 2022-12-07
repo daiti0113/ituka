@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import { ToDoListScene } from "../scenes/Home/ToDoListScene"
+import { TasksScene } from "../scenes/Home/TasksScene"
 import { useAppDispatch } from "../helpers/store"
 import { setModalContent, toggleModalVisible } from "../slices/app"
 import { Button, Text, TextInput } from "react-native-paper"
 import { StyleSheet, View } from "react-native"
 import { palette } from "../styles/colorPalette"
-import { addList, deleteList, list, updateList } from "../slices/toDo"
+import { addList, deleteList, list, updateList } from "../slices/task"
 import { getKey } from "../helpers/getKey"
 import { useLists, useTasks } from "../helpers/request"
 
@@ -95,6 +95,7 @@ export const HomeScreen = () => {
     const lists = useLists()
     const tasks = useTasks()
 
+    // TODO: useModalを作る
     const dispatch = useAppDispatch()
     const None = () => null
 
@@ -111,8 +112,8 @@ export const HomeScreen = () => {
             }}
         >
             {lists.map((list) => {
-            // const filteredToDoItems = tasks.filter((task) => task.listIdList.includes(list.id))
-                const Scene = () => <ToDoListScene listId={list.id} toDoItems={tasks} />
+            // const filteredTaskItems = tasks.filter((task) => task.listIdList.includes(list.id))
+                const Scene = () => <TasksScene listId={list.id} taskItems={tasks} />
                 const EditListModal = () => <EditListModalInner {...list} />
             
                 return (

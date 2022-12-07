@@ -6,24 +6,24 @@ import { Select } from "../../components/Select"
 import { getKey } from "../../helpers/getKey"
 import { useAddTask, useLists } from "../../helpers/request"
 import { LoggedInScreenNavigationProp } from "../../screens/LoggedInScreen"
-import { isToDoItem, toDoItem } from "../../slices/toDo"
+import { isTaskItem, taskItem } from "../../slices/task"
 import { palette } from "../../styles/colorPalette"
 
 const createSelectItems = (lists: Array<{name: string, id: string}>) => {
     return lists.map(({name, id}) => <Select.Item key={id} value={id}>{name}</Select.Item>)
 }
 
-export const InputToDoScene = () => {
+export const InputTaskScene = () => {
     const addTask = useAddTask()
     const lists = useLists()
     const selectItems = useMemo(() => createSelectItems(lists), [lists])
     const navigation = useNavigation<LoggedInScreenNavigationProp>()
     const id = getKey()
-    const [toDo, setToDo] = useState<Partial<toDoItem>>({id, isDone: false})
+    const [task, setTask] = useState<Partial<taskItem>>({id, isDone: false})
 
     const onSubmit = () => {
-        if (isToDoItem(toDo)) {
-            addTask(toDo)
+        if (isTaskItem(task)) {
+            addTask(task)
         }
         navigation.navigate("Home")
     }
@@ -32,7 +32,7 @@ export const InputToDoScene = () => {
         <ScrollView style={styles.container}>
             <View style={styles.inputContainer}>
                 <Text style={styles.label} variant="titleSmall">リストを選ぶ</Text>
-                <Select onChange={(listIdList) => setToDo({...toDo, listIdList})}>{selectItems}</Select>
+                <Select onChange={(listIdList) => setTask({...task, listIdList})}>{selectItems}</Select>
             </View>
             <View style={styles.inputContainer}>
                 <Text style={styles.label} variant="titleSmall">なにする？</Text>
@@ -40,8 +40,8 @@ export const InputToDoScene = () => {
                     style={styles.textInput}
                     underlineColor={palette.neutral[300]}
                     placeholder="夜パフェを食べに行く"
-                    onChangeText={(title) => setToDo({...toDo, title})}
-                    error={toDo.title === ""}
+                    onChangeText={(title) => setTask({...task, title})}
+                    error={task.title === ""}
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -50,7 +50,7 @@ export const InputToDoScene = () => {
                     style={styles.textInput}
                     underlineColor={palette.neutral[300]}
                     placeholder="〇〇ってとこが美味しいらしい"
-                    onChangeText={(description) => setToDo({...toDo, description})}
+                    onChangeText={(description) => setTask({...task, description})}
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -59,13 +59,13 @@ export const InputToDoScene = () => {
                     style={styles.textInput}
                     underlineColor={palette.neutral[300]}
                     placeholder="https://icocca.info"
-                    onChangeText={(url) => setToDo({...toDo, url})}
+                    onChangeText={(url) => setTask({...task, url})}
                 />
             </View>
             <Button
                 mode="contained"
                 style={styles.submit}
-                disabled={!isToDoItem(toDo)}
+                disabled={!isTaskItem(task)}
                 onPress={onSubmit}
             >追加する</Button>
         </ScrollView>

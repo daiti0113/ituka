@@ -1,7 +1,7 @@
 import { useAppSelector } from "./store"
 import firestore from "@react-native-firebase/firestore"
 import { useEffect, useState } from "react"
-import { list, toDoItem } from "../slices/toDo"
+import { list, taskItem } from "../slices/task"
 
 // TODO: キャッシュ戦略を考える
 export const useLists = () => {
@@ -23,11 +23,11 @@ export const useLists = () => {
 
 export const useTasks = () => {
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
-    const [tasks, setTasks] = useState<Array<toDoItem>>([])
+    const [tasks, setTasks] = useState<Array<taskItem>>([])
 
     const getTasks = async () => {
         const res = await firestore().collection("users").doc(uid).collection("tasks").get()
-        setTasks(res.docs.map((doc) => doc.data() as toDoItem))
+        setTasks(res.docs.map((doc) => doc.data() as taskItem))
     }
 
     useEffect(() => {

@@ -3,14 +3,14 @@ import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { IconButton, Text } from "react-native-paper"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { useNavigation } from "@react-navigation/native"
-import { InputToDoScene } from "../scenes/AddToDo/InputToDoScene"
+import { InputTaskScene } from "../scenes/AddTask/InputTaskScene"
 
 
-export type AddToDoStackParamList = {
-    InputToDo: undefined
+export type AddTaskStackParamList = {
+    InputTask: undefined
 }
 
-const Stack = createNativeStackNavigator<AddToDoStackParamList>()
+const Stack = createNativeStackNavigator<AddTaskStackParamList>()
 
 
 const Header = () => {
@@ -29,15 +29,15 @@ const Header = () => {
     )
 }
 
-export const AddToDoScreen = () => {
+export const AddTaskScreen = () => {
     return (
         <Stack.Navigator
-            initialRouteName="InputToDo"
+            initialRouteName="InputTask"
             screenOptions={{
                 header: () => <Header />
             }}
         >
-            <Stack.Screen name="InputToDo" component={InputToDoScene} />
+            <Stack.Screen name="InputTask" component={InputTaskScene} />
         </Stack.Navigator>
     )
 }
