@@ -24,7 +24,7 @@ export const useTasks = () => {
 
     useEffect(() => {
         firestore().collection("users").doc(uid).collection("tasks").onSnapshot(querySnapshot => {
-            setTasks(querySnapshot.docs.map(documentSnapshot => documentSnapshot.data() as taskItem))
+            setTasks(querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}) as taskItem))
         })
     }, [])
 
@@ -36,5 +36,21 @@ export const useAddTask = () => {
 
     return async (values: Partial<list>) => {
         await firestore().collection("users").doc(uid).collection("tasks").add(values)
+    }
+}
+
+export const useUpdateTask = () => {
+    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
+
+    return async (taskId: taskItem["id"], values: Partial<list>) => {
+        await firestore().collection("users").doc(uid).collection("tasks").doc(taskId).set(values)
+    }
+}
+
+export const useDeleteTask = () => {
+    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
+
+    return async (taskId: taskItem["id"]) => {
+        await firestore().collection("users").doc(uid).collection("tasks").doc(taskId).delete()
     }
 }
