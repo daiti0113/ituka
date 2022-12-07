@@ -34,7 +34,7 @@ export const useTasks = () => {
 export const useAddTask = () => {
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
 
-    return async (values: Partial<list>) => {
+    return async (values: Partial<task>) => {
         await firestore().collection("users").doc(uid).collection("tasks").add(values)
     }
 }
