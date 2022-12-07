@@ -9,7 +9,7 @@ export const useLists = () => {
     const [lists, setLists] = useState<Array<list>>([])
 
     useEffect(() => {
-        firestore().collection("users").doc(uid).collection("tasks").onSnapshot(querySnapshot => {
+        firestore().collection("users").doc(uid).collection("lists").onSnapshot(querySnapshot => {
             setLists(querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()} as list)))
         })
     }, [])
