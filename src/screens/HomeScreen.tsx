@@ -7,7 +7,6 @@ import { Button, Text, TextInput } from "react-native-paper"
 import { StyleSheet, View } from "react-native"
 import { palette } from "../styles/colorPalette"
 import { addList, deleteList, list, updateList } from "../slices/task"
-import { getKey } from "../helpers/getKey"
 import { useLists, useTasks } from "../helpers/request"
 
 const Tab = createMaterialTopTabNavigator()
@@ -65,9 +64,8 @@ const AddListModal = () => {
 
     const onSubmit = () => {
         if (name) {
-            const id = getKey()
-            dispatch(addList({name, id, order: 0}))
-            dispatch(toggleModalVisible(false))
+            // dispatch(addList({name, order: 0}))
+            // dispatch(toggleModalVisible(false))
             // TODO: リスト作成後にその画面に遷移したかったが、この時点ではルートが生成されていないためnavigateできなかった
         }
     }

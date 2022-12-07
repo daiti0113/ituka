@@ -3,7 +3,6 @@ import React, { useMemo, useState } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
 import { Select } from "../../components/Select"
-import { getKey } from "../../helpers/getKey"
 import { useAddTask, useLists } from "../../helpers/request"
 import { LoggedInScreenNavigationProp } from "../../screens/LoggedInScreen"
 import { isTaskItem, taskItem } from "../../slices/task"
@@ -18,8 +17,7 @@ export const InputTaskScene = () => {
     const lists = useLists()
     const selectItems = useMemo(() => createSelectItems(lists), [lists])
     const navigation = useNavigation<LoggedInScreenNavigationProp>()
-    const id = getKey()
-    const [task, setTask] = useState<Partial<taskItem>>({id, isDone: false})
+    const [task, setTask] = useState<Partial<taskItem>>({isDone: false})
 
     const onSubmit = () => {
         if (isTaskItem(task)) {
