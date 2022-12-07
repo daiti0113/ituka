@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { list } from "../slices/toDo"
 
 // TODO: キャッシュ戦略を考える
-export const useGetLists = () => {
+export const useLists = () => {
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
     const [lists, setLists] = useState<any>([])
 
@@ -21,7 +21,7 @@ export const useGetLists = () => {
 }
 
 
-export const useGetTasks = () => {
+export const useTasks = () => {
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
     const [tasks, setTasks] = useState<any>([])
 

@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
 import { Select } from "../../components/Select"
 import { getKey } from "../../helpers/getKey"
-import { useAddTask, useGetLists } from "../../helpers/request"
+import { useAddTask, useLists } from "../../helpers/request"
 import { LoggedInScreenNavigationProp } from "../../screens/LoggedInScreen"
 import { isToDoItem, toDoItem } from "../../slices/toDo"
 import { palette } from "../../styles/colorPalette"
@@ -15,7 +15,7 @@ const createSelectItems = (lists: Array<{name: string, id: string}>) => {
 
 export const InputToDoScene = () => {
     const addTask = useAddTask()
-    const lists = useGetLists()
+    const lists = useLists()
     const selectItems = useMemo(() => createSelectItems(lists), [lists])
     const navigation = useNavigation<LoggedInScreenNavigationProp>()
     const id = getKey()

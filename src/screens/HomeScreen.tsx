@@ -8,7 +8,7 @@ import { StyleSheet, View } from "react-native"
 import { palette } from "../styles/colorPalette"
 import { addList, deleteList, list, updateList } from "../slices/toDo"
 import { getKey } from "../helpers/getKey"
-import { useGetLists, useGetTasks } from "../helpers/request"
+import { useLists, useTasks } from "../helpers/request"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -92,8 +92,8 @@ const AddListModal = () => {
 }
 
 export const HomeScreen = () => {
-    const lists = useGetLists()
-    const tasks = useGetTasks()
+    const lists = useLists()
+    const tasks = useTasks()
 
     const dispatch = useAppDispatch()
     const None = () => null
