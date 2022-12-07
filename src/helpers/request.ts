@@ -15,7 +15,7 @@ export const useLists = () => {
 
     useEffect(() => {
         getLists()
-    })
+    }, [])
 
     return lists
 }
