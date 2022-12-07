@@ -1,6 +1,7 @@
 import { useAppSelector } from "./store"
 import firestore from "@react-native-firebase/firestore"
 import { useEffect, useState } from "react"
+import { list } from "../slices/toDo"
 
 // TODO: キャッシュ戦略を考える
 export const useGetLists = () => {
@@ -34,4 +35,12 @@ export const useGetTasks = () => {
     }, [])
 
     return tasks
+}
+
+export const useAddTask = () => {
+    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
+
+    return async (values: Partial<list>) => {
+        await firestore().collection("users").doc(uid).collection("tasks").add(values)
+    }
 }

@@ -4,9 +4,9 @@ import { ScrollView, StyleSheet, View } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
 import { Select } from "../../components/Select"
 import { getKey } from "../../helpers/getKey"
-import { useAppDispatch, useAppSelector } from "../../helpers/store"
+import { useAddTask, useGetLists } from "../../helpers/request"
 import { LoggedInScreenNavigationProp } from "../../screens/LoggedInScreen"
-import { addToDo, isToDoItem, toDoItem } from "../../slices/toDo"
+import { isToDoItem, toDoItem } from "../../slices/toDo"
 import { palette } from "../../styles/colorPalette"
 
 const createSelectItems = (lists: Array<{name: string, id: string}>) => {
@@ -14,8 +14,8 @@ const createSelectItems = (lists: Array<{name: string, id: string}>) => {
 }
 
 export const InputToDoScene = () => {
-    const dispatch = useAppDispatch()
-    const {lists} = useAppSelector(({toDo: {lists}}) => ({lists}))
+    const addTask = useAddTask()
+    const lists = useGetLists()
     const selectItems = useMemo(() => createSelectItems(lists), [lists])
     const navigation = useNavigation<LoggedInScreenNavigationProp>()
     const id = getKey()
@@ -23,7 +23,7 @@ export const InputToDoScene = () => {
 
     const onSubmit = () => {
         if (isToDoItem(toDo)) {
-            dispatch(addToDo(toDo))
+            addTask(toDo)
         }
         navigation.navigate("Home")
     }
