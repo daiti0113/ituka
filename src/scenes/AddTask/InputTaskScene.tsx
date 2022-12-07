@@ -5,7 +5,7 @@ import { Button, Text, TextInput } from "react-native-paper"
 import { Select } from "../../components/Select"
 import { useAddTask, useLists } from "../../helpers/request"
 import { LoggedInScreenNavigationProp } from "../../screens/LoggedInScreen"
-import { isTaskItem, taskItem } from "../../slices/task"
+import { isTaskItem, task } from "../../slices/task"
 import { palette } from "../../styles/colorPalette"
 
 const createSelectItems = (lists: Array<{name: string, id: string}>) => {
@@ -17,7 +17,7 @@ export const InputTaskScene = () => {
     const lists = useLists()
     const selectItems = useMemo(() => createSelectItems(lists), [lists])
     const navigation = useNavigation<LoggedInScreenNavigationProp>()
-    const [task, setTask] = useState<Partial<taskItem>>({isDone: false})
+    const [task, setTask] = useState<Partial<task>>({isDone: false})
 
     const onSubmit = () => {
         if (isTaskItem(task)) {

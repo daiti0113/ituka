@@ -5,19 +5,19 @@ import { useDeleteTask } from "../../helpers/request"
 import { taskState } from "../../slices/task"
 
 type TasksSceneProps = {
-    taskItems: taskState["taskItems"]
+    tasks: taskState["tasks"]
 }
 
-export const TasksScene: React.FC<TasksSceneProps> = ({taskItems}) => {
+export const TasksScene: React.FC<TasksSceneProps> = ({tasks}) => {
     const deleteTask = useDeleteTask()
-    // const onPress = (taskId: taskItem["id"]) => () => {
+    // const onPress = (taskId: task["id"]) => () => {
     //     dispatch(toggleTask({taskId}))
     // }
 
     return (
         <ScrollView style={{ padding: 10 }}>
             <View>
-                {taskItems.map((task) => {
+                {tasks.map((task) => {
                     return (
                         <Task
                             key={task.id}

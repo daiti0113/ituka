@@ -111,7 +111,7 @@ export const HomeScreen = () => {
         >
             {lists.map((list) => {
             // const filteredTaskItems = tasks.filter((task) => task.listIdList.includes(list.id))
-                const Scene = () => <TasksScene taskItems={tasks} />
+                const Scene = () => <TasksScene tasks={tasks} />
                 const EditListModal = () => <EditListModalInner {...list} />
             
                 return (
