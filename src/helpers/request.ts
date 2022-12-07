@@ -54,3 +54,12 @@ export const useDeleteTask = () => {
         await firestore().collection("users").doc(uid).collection("tasks").doc(taskId).delete()
     }
 }
+
+export const useAddList = () => {
+    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
+
+    return async (values: Partial<Omit<list, "order">>) => {
+        const lists = await firestore().collection("users").doc(uid).collection("lists").get()
+        await firestore().collection("users").doc(uid).collection("lists").add({...values, order: lists.size})
+    }
+}
