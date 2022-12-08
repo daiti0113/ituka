@@ -63,3 +63,11 @@ export const useAddList = () => {
         await firestore().collection("users").doc(uid).collection("lists").add({...values, order: lists.size})
     }
 }
+
+export const useDeleteList = () => {
+    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
+
+    return async (listId: list["id"]) => {
+        await firestore().collection("users").doc(uid).collection("lists").doc(listId).delete()
+    }
+}
