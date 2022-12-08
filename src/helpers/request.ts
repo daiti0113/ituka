@@ -42,8 +42,8 @@ export const useAddTask = () => {
 export const useUpdateTask = () => {
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
 
-    return async (taskId: task["id"], values: Partial<list>) => {
-        await firestore().collection("users").doc(uid).collection("tasks").doc(taskId).set(values)
+    return async (taskId: task["id"], values: Partial<Omit<task, "id">>) => {
+        await firestore().collection("users").doc(uid).collection("tasks").doc(taskId).update(values)
     }
 }
 
