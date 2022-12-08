@@ -6,8 +6,8 @@ import { setModalContent, toggleModalVisible } from "../slices/app"
 import { Button, Text, TextInput } from "react-native-paper"
 import { StyleSheet, View } from "react-native"
 import { palette } from "../styles/colorPalette"
-import { list, updateList } from "../slices/task"
-import { useAddList, useDeleteList, useLists, useTasks } from "../helpers/request"
+import { list } from "../slices/task"
+import { useAddList, useDeleteList, useLists, useTasks, useUpdateList } from "../helpers/request"
 import { useDispatch } from "react-redux"
 
 const Tab = createMaterialTopTabNavigator()
@@ -15,11 +15,12 @@ const Tab = createMaterialTopTabNavigator()
 const EditListModalInner: React.FC<list> = ({id: listId, name}) => {
     const [newName, setNewName] = useState<string | null>(null)
     const dispatch = useAppDispatch()
+    const updateList = useUpdateList()
     const deleteList = useDeleteList()
 
     const onSubmit = () => {
         if (newName) {
-            dispatch(updateList({name: newName, listId}))
+            updateList(listId, {name: newName})
             dispatch(toggleModalVisible(false))
         }
     }

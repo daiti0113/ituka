@@ -71,3 +71,11 @@ export const useDeleteList = () => {
         await firestore().collection("users").doc(uid).collection("lists").doc(listId).delete()
     }
 }
+
+export const useUpdateList = () => {
+    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
+
+    return async (listId: list["id"], values: Partial<list>) => {
+        await firestore().collection("users").doc(uid).collection("lists").doc(listId).update(values)
+    }
+}
