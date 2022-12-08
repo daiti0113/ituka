@@ -17,7 +17,6 @@ export const useLists = () => {
     return lists
 }
 
-
 export const useTasks = () => {
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
     const [tasks, setTasks] = useState<Array<task>>([])
@@ -29,6 +28,19 @@ export const useTasks = () => {
     }, [])
 
     return tasks
+}
+
+export const useTask = (taskId: task["id"]) => {
+    const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
+    const [task, setTask] = useState<task>()
+
+    useEffect(() => {
+        firestore().collection("users").doc(uid).collection("tasks").doc(taskId).onSnapshot(querySnapshot => {
+            setTask({id: querySnapshot.id, ...querySnapshot.data()} as task)
+        })
+    }, [])
+
+    return task
 }
 
 export const useAddTask = () => {
