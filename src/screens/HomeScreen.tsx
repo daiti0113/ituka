@@ -114,8 +114,9 @@ export const HomeScreen = () => {
             }}
         >
             {lists.map((list) => {
-            // const filteredTaskItems = tasks.filter((task) => task.listIdList.includes(list.id))
-                const Scene = () => <TasksScene tasks={tasks} />
+                // TODO: クエリで絞り込んだほうがリアルタイムに反映でき、パフォーマンスが向上する
+                const filteredTasks = tasks.filter((task) => task.listIdList.includes(list.id))
+                const Scene = () => <TasksScene tasks={filteredTasks} />
                 const EditListModal = () => <EditListModalInner {...list} />
             
                 return (
