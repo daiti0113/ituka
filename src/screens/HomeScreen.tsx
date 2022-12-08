@@ -1,180 +1,27 @@
-import React, { useState } from "react"
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import { TasksScene } from "../scenes/Home/TasksScene"
-import { useAppDispatch } from "../helpers/store"
-import { setModalContent, toggleModalVisible } from "../slices/app"
-import { Button, Text, TextInput } from "react-native-paper"
-import { StyleSheet, View } from "react-native"
-import { palette } from "../styles/colorPalette"
-import { list } from "../slices/task"
-import { useAddList, useDeleteList, useLists, useTasks, useUpdateList } from "../helpers/request"
-import { useDispatch } from "react-redux"
+import React from "react"
+import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { ListsScreen } from "./ListsScreen"
+import { TaskDetailScene } from "../scenes/Home/TaskDetailScene"
+import { task } from "../slices/task"
 
-const Tab = createMaterialTopTabNavigator()
-
-const EditListModalInner: React.FC<list> = ({id: listId, name}) => {
-    const [newName, setNewName] = useState<string | null>(null)
-    const dispatch = useAppDispatch()
-    const updateList = useUpdateList()
-    const deleteList = useDeleteList()
-
-    const onSubmit = () => {
-        if (newName) {
-            updateList(listId, {name: newName})
-            dispatch(toggleModalVisible(false))
-        }
+export type HomeStackParamList = {
+    ListsScreen: undefined
+    TaskDetailScene: {
+        taskId: task["id"]
     }
-
-    const onDelete = () => {
-        deleteList(listId)
-        dispatch(toggleModalVisible(false))
-    }
-
-    return (
-        <View>
-            <Text variant="titleMedium">名前の変更</Text>
-            <TextInput
-                style={styles.textInput}
-                underlineColor={palette.neutral[300]}
-                defaultValue={name}
-                placeholder="雨の日にやりたいこと"
-                onChangeText={setNewName}
-            />
-            <Button
-                mode="contained"
-                style={styles.submit}
-                disabled={!name}
-                onPress={onSubmit}
-            >
-                変更する
-            </Button>
-            <Text style={styles.label}>もしくは</Text>
-            <Button
-                mode="contained"
-                style={styles.delete}
-                disabled={!name}
-                onPress={onDelete}
-            >
-                削除する
-            </Button>
-        </View>
-    )
 }
 
-const AddListModal = () => {
-    const [name, setName] = useState<string | null>(null)
-    const dispatch = useDispatch()
-    const addList = useAddList()
+const Stack = createNativeStackNavigator<HomeStackParamList>()
 
-    const onSubmit = () => {
-        if (name) {
-            addList({name})
-            dispatch(toggleModalVisible(false))
-            // TODO: リスト作成後にその画面に遷移したかったが、この時点ではルートが生成されていないためnavigateできなかった
-        }
-    }
-
-    return (
-        <View>
-            <Text variant="titleMedium">新しいリストの名前</Text>
-            <TextInput
-                style={styles.textInput}
-                underlineColor={palette.neutral[300]}
-                placeholder="雨の日にやりたいこと"
-                onChangeText={setName}
-            />
-            <Button
-                mode="contained"
-                style={styles.submit}
-                disabled={!name}
-                onPress={onSubmit}
-            >追加する</Button>
-        </View>
-    )
-}
+export type HomeScreenNavigationProp = NativeStackNavigationProp<HomeStackParamList>
 
 export const HomeScreen = () => {
-    const lists = useLists()
-    const tasks = useTasks()
-
-    // TODO: useModalを作る
-    const dispatch = useAppDispatch()
-    const None = () => null
-
-    if (lists.length === 0) return null
-
-    console.log({lists})
-
     return (
-        <Tab.Navigator
-            initialRouteName={lists[0].id}
-            screenOptions={{
-                tabBarIndicator: () => null
-                
-            }}
+        <Stack.Navigator
+            initialRouteName="ListsScreen"
         >
-            {lists.map((list) => {
-                // TODO: クエリで絞り込んだほうがリアルタイムに反映でき、パフォーマンスが向上する
-                const filteredTasks = tasks.filter((task) => task.listIdList.includes(list.id))
-                const Scene = () => <TasksScene tasks={filteredTasks} />
-                const EditListModal = () => <EditListModalInner {...list} />
-            
-                return (
-                    <Tab.Screen
-                        name={list.id}
-                        key={list.id}
-                        options={{
-                            tabBarLabel: list.name,
-                            swipeEnabled: false,
-                            tabBarScrollEnabled: true,
-                            tabBarLabelStyle: {textTransform: "none"}
-                        }}
-                        listeners={() => ({
-                            tabLongPress: () => {
-                                dispatch(setModalContent(EditListModal))
-                                dispatch(toggleModalVisible(true))
-                            },
-                        })}
-                        component={Scene}
-                    />
-                )
-            })}
-            <Tab.Screen
-                name="＋リストを追加"
-                key="AddList"
-                component={None}
-                listeners={() => ({
-                    tabPress: (e) => {
-                        e.preventDefault()
-                        dispatch(setModalContent(AddListModal))
-                        dispatch(toggleModalVisible(true))
-                    },
-                })}
-                options={{
-                    tabBarLabelStyle: {
-                        fontSize: 14,
-                        color: palette.primary[600],
-                    }
-                }}
-            />
-        </Tab.Navigator>
+            <Stack.Screen name="ListsScreen" component={ListsScreen} options={{headerShown: false}} />
+            <Stack.Screen name="TaskDetailScene" component={TaskDetailScene} />
+        </Stack.Navigator>
     )
 }
-
-const styles = StyleSheet.create({
-    textInput: {
-        backgroundColor: "transparent",
-    },
-    submit: {
-        borderRadius: 50,
-        marginTop: 20,
-    },
-    label: {
-        marginTop: 20,
-    },
-    delete: {
-        borderRadius: 50,
-        marginTop: 20,
-        backgroundColor: "#FF8A81"
-    }
-})

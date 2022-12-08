@@ -1,8 +1,10 @@
+import { useNavigation } from "@react-navigation/native"
 import React from "react"
 import { ScrollView, View } from "react-native"
 import { Task } from "../../components/Task"
 import { useDeleteTask } from "../../helpers/request"
-import { taskState } from "../../slices/task"
+import { HomeScreenNavigationProp } from "../../screens/HomeScreen"
+import { task, taskState } from "../../slices/task"
 
 type TasksSceneProps = {
     tasks: taskState["tasks"]
@@ -10,9 +12,10 @@ type TasksSceneProps = {
 
 export const TasksScene: React.FC<TasksSceneProps> = ({tasks}) => {
     const deleteTask = useDeleteTask()
-    // const onPress = (taskId: task["id"]) => () => {
-    //     dispatch(toggleTask({taskId}))
-    // }
+    const navigation = useNavigation<HomeScreenNavigationProp>()
+    const onPress = (taskId: task["id"]) => () => {
+        navigation.navigate("TaskDetailScene", {taskId})
+    }
 
     return (
         <ScrollView style={{ padding: 10 }}>
@@ -23,7 +26,7 @@ export const TasksScene: React.FC<TasksSceneProps> = ({tasks}) => {
                             key={task.id}
                             checked={task.isDone}
                             onDelete={() => deleteTask(task.id)}
-                            // onPress={onPress(task.id)}
+                            onPress={onPress(task.id)}
                             {...task}
                         />
                     )

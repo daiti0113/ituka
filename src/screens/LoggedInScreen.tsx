@@ -1,6 +1,5 @@
 import React from "react"
 import { BottomTabNavigationProp, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { HomeScreen } from "./HomeScreen"
 import { BottomTabBar } from "../components/BottomTabBar"
 import { View } from "react-native"
 import { Button, Text } from "react-native-paper"
@@ -8,6 +7,7 @@ import { useNavigation } from "@react-navigation/native"
 import { LoginScreenNavigationProp } from "./AppScreen"
 import { useAppDispatch } from "../helpers/store"
 import { logout } from "../slices/auth"
+import { HomeScreen } from "./HomeScreen"
 
 export type BottomTabParamList = {
     Home: undefined
