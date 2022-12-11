@@ -91,3 +91,15 @@ export const useUpdateList = () => {
         await firestore().collection("users").doc(uid).collection("lists").doc(listId).update(values)
     }
 }
+
+export const useCreateUser = () => {
+    return async (uid: string) => {
+        const document = await firestore().collection("users").doc(uid).get()
+        if (!document.exists) {
+        // Firestore にユーザー用のドキュメントが存在しなければ、新たに作成する
+            await firestore().collection("users").doc(uid).set({
+                name: "ユーザー名",
+            })
+        }
+    }
+}

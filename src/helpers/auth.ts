@@ -5,6 +5,7 @@ import Config from "react-native-config"
 import auth from "@react-native-firebase/auth"
 import { useAppDispatch } from "./store"
 import { login } from "../slices/auth"
+import { useCreateUser } from "./request"
 
 GoogleSignin.configure({
     webClientId: "20446199492-5ml20n4qkpo21s4sso6b5bqdudfb2deg.apps.googleusercontent.com",
@@ -12,6 +13,7 @@ GoogleSignin.configure({
 
 export const useOnGoogleButtonPress = () => {
     const dispatch = useAppDispatch()
+    const createUser = useCreateUser()
 
     return async() => {
         try {
@@ -21,6 +23,7 @@ export const useOnGoogleButtonPress = () => {
             const googleCredential = auth.GoogleAuthProvider.credential(idToken)
             // Sign-in the user with the credential
             const {user} = await auth().signInWithCredential(googleCredential)
+            await createUser(user.uid)
             dispatch(login({user}))
         } catch (error: any) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
