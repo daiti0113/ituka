@@ -1,9 +1,10 @@
-import { useNavigation } from "@react-navigation/native"
 import React from "react"
 import { ScrollView, View } from "react-native"
+import { Text } from "react-native-paper"
+import { useDispatch } from "react-redux"
 import { Task } from "../../components/Task"
 import { useDeleteTask } from "../../helpers/request"
-import { HomeScreenNavigationProp } from "../../screens/HomeScreen"
+import { setModalContent, toggleModalVisible } from "../../slices/app"
 import { task, taskState } from "../../slices/task"
 
 type TasksSceneProps = {
@@ -12,9 +13,10 @@ type TasksSceneProps = {
 
 export const TasksScene: React.FC<TasksSceneProps> = ({tasks}) => {
     const deleteTask = useDeleteTask()
-    const navigation = useNavigation<HomeScreenNavigationProp>()
+    const dispatch = useDispatch()
     const onPress = (taskId: task["id"]) => () => {
-        navigation.navigate("TaskDetailScene", {taskId})
+        dispatch(setModalContent({type: "slideIn", content: () => <Text>test</Text>}))
+        dispatch(toggleModalVisible({type: "slideIn", visible: true}))
     }
 
     return (
