@@ -21,13 +21,13 @@ const EditListModalInner: React.FC<list> = ({id: listId, name}) => {
     const onSubmit = () => {
         if (newName) {
             updateList(listId, {name: newName})
-            dispatch(toggleModalVisible(false))
+            dispatch(toggleModalVisible({visible: false}))
         }
     }
 
     const onDelete = () => {
         deleteList(listId)
-        dispatch(toggleModalVisible(false))
+        dispatch(toggleModalVisible({visible: false}))
     }
 
     return (
@@ -69,7 +69,7 @@ const AddListModal = () => {
     const onSubmit = () => {
         if (name) {
             addList({name})
-            dispatch(toggleModalVisible(false))
+            dispatch(toggleModalVisible({visible: false}))
             // TODO: リスト作成後にその画面に遷移したかったが、この時点ではルートが生成されていないためnavigateできなかった
         }
     }
@@ -130,8 +130,8 @@ export const ListsScreen = () => {
                         }}
                         listeners={() => ({
                             tabLongPress: () => {
-                                dispatch(setModalContent(EditListModal))
-                                dispatch(toggleModalVisible(true))
+                                dispatch(setModalContent({content: EditListModal}))
+                                dispatch(toggleModalVisible({visible: true}))
                             },
                         })}
                         component={Scene}
@@ -145,8 +145,8 @@ export const ListsScreen = () => {
                 listeners={() => ({
                     tabPress: (e) => {
                         e.preventDefault()
-                        dispatch(setModalContent(AddListModal))
-                        dispatch(toggleModalVisible(true))
+                        dispatch(setModalContent({content: AddListModal}))
+                        dispatch(toggleModalVisible({visible: true}))
                     },
                 })}
                 options={{

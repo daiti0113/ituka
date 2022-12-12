@@ -1,22 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 export type appState = {
-    modalVisible: boolean,
-    modalContent: () => JSX.Element | null,
+    popUpModalVisible: boolean,
+    popUpModalContent: () => JSX.Element | null,
+    slideInModalVisible: boolean,
+    slideInModalContent: () => JSX.Element | null,
 }
 
 export const appSlice = createSlice({
     name: "app",
     initialState: {
-        modalVisible: false,
-        modalContent: () => null,
+        popUpModalVisible: false,
+        popUpModalContent: () => null,
     } as appState,
     reducers: {
-        toggleModalVisible: (state, {payload}) => {
-            state.modalVisible = payload
+        toggleModalVisible: (state, {payload: {type="popUp", visible}}) => {
+            if (type === "popUp") {
+                state.popUpModalVisible = visible
+            } else {
+                state.slideInModalVisible = visible
+            }
         },
-        setModalContent: (state, {payload}) => {
-            state.modalContent = payload
+        setModalContent: (state, {payload: {type="popUp", content}}) => {
+            if (type === "popUp") {
+                state.popUpModalContent = content
+            } else {
+                state.slideInModalContent = content
+            }
         }
     },
 })

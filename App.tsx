@@ -1,5 +1,5 @@
-import React from "react"
-import { Keyboard, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, TouchableWithoutFeedback } from "react-native"
+import React, { useCallback } from "react"
+import { Keyboard, KeyboardAvoidingView, Modal, Platform, StatusBar, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import { Provider as PaperProvider, Text, MD3LightTheme as PaperDefaultTheme, Portal, Modal as PaperModal } from "react-native-paper"
 import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
 import { Provider as ReduxProvider } from "react-redux"
@@ -10,6 +10,7 @@ import { PersistGate } from "redux-persist/integration/react"
 import { useAppDispatch, useAppSelector } from "./src/helpers/store"
 import { toggleModalVisible } from "./src/slices/app"
 import { AppScreen } from "./src/screens/AppScreen"
+import GestureRecognizer from "react-native-swipe-gestures"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -43,7 +44,8 @@ const App = () => {
                             <PaperProvider theme={theme}>
                                 <NavigationContainer theme={theme}>
                                     <SafeAreaView style={{ flex: 1 }}>
-                                        <Modal />
+                                        <PopUpModal />
+                                        <SlideInModal />
                                         <AppScreen />
                                     </SafeAreaView>
                                 </NavigationContainer>
@@ -56,21 +58,49 @@ const App = () => {
     )
 }
 
-const Modal = () => {
-    const {modalVisible, modalContent: ModalContent} = useAppSelector(({app: {modalVisible, modalContent}}) => ({modalVisible, modalContent}))
+// TODO: 別ファイルに切り出す
+const PopUpModal = () => {
+    const {popUpModalVisible, popUpModalContent: ModalContent} = useAppSelector(({app: {popUpModalVisible, popUpModalContent}}) => ({popUpModalVisible, popUpModalContent}))
     const dispatch = useAppDispatch()
 
     return (
         <Portal>
             <PaperModal
-                visible={modalVisible}
-                onDismiss={() => dispatch(toggleModalVisible(false))}
+                visible={popUpModalVisible}
+                onDismiss={() => dispatch(toggleModalVisible({visible: false}))}
                 contentContainerStyle={styles.modal}
             >
                 {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
             </PaperModal>
         </Portal>
+    )
+}
 
+// TODO: 別ファイルに切り出す
+const SlideInModal = () => {
+    const {slideInModalVisible, slideInModalContent: ModalContent} = useAppSelector(({app: {slideInModalVisible, slideInModalContent}}) => ({slideInModalVisible, slideInModalContent}))
+    const dispatch = useAppDispatch()
+
+    return (
+        <Portal>
+            <GestureRecognizer
+                onSwipeDown={() => dispatch(toggleModalVisible({visible: false}))}
+            >
+                {slideInModalVisible && <View style={styles.slideInModalBackground}>
+                    <Modal
+                        animationType="slide"
+                        visible={slideInModalVisible}
+                        transparent={true}
+                        onDismiss={() => dispatch(toggleModalVisible({visible: false}))}
+                        onRequestClose={() => dispatch(toggleModalVisible({visible: false}))}
+                    >
+                        <View style={styles.slideInModal}>
+                            {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
+                        </View>
+                    </Modal>
+                </View>}
+            </GestureRecognizer>
+        </Portal>
     )
 }
 
@@ -89,5 +119,20 @@ const styles = StyleSheet.create({
         margin: 20,
         justifyContent: "flex-start",
         borderRadius: 14,
+    },
+    slideInModalBackground: {
+        zIndex: 300,
+        height: "100%",
+        backgroundColor: "#000",
+        opacity: 0.7,
+    },
+    slideInModal: {
+        backgroundColor: palette.neutral[50],
+        marginTop: "30%",
+        padding: 20,
+        height: "100%",
+        opacity: 1,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
     }
 })
