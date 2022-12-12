@@ -84,15 +84,15 @@ const SlideInModal = () => {
     return (
         <Portal>
             <GestureRecognizer
-                onSwipeDown={() => dispatch(toggleModalVisible({visible: false}))}
+                onSwipeDown={() => dispatch(toggleModalVisible({type: "slideIn", visible: false}))}
             >
                 {slideInModalVisible && <View style={styles.slideInModalBackground}>
                     <Modal
                         animationType="slide"
                         visible={slideInModalVisible}
                         transparent={true}
-                        onDismiss={() => dispatch(toggleModalVisible({visible: false}))}
-                        onRequestClose={() => dispatch(toggleModalVisible({visible: false}))}
+                        onDismiss={() => dispatch(toggleModalVisible({type: "slideIn", visible: false}))}
+                        onRequestClose={() => dispatch(toggleModalVisible({type: "slideIn", visible: false}))}
                     >
                         <View style={styles.slideInModal}>
                             {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
