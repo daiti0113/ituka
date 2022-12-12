@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 import { Keyboard, KeyboardAvoidingView, Modal, Platform, StatusBar, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import { Provider as PaperProvider, Text, MD3LightTheme as PaperDefaultTheme, Portal, Modal as PaperModal } from "react-native-paper"
 import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
