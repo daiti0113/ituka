@@ -8,6 +8,7 @@ export type task = {
     isDone: boolean
     description?: string
     url?: string
+    thumbnail?: string
 }
 export type list = {
     name: string,
