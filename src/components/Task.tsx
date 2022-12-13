@@ -1,8 +1,9 @@
 import React from "react"
-import { Image, Pressable, StyleSheet, TouchableOpacity, View } from "react-native"
+import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native"
 import { Checkbox, Text } from "react-native-paper"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import { palette } from "../styles/colorPalette"
+import { Thumbnail } from "./atoms/Thumbnail"
 
 export type TaskProps = {
     title: string
@@ -45,27 +46,11 @@ export const Task: React.FC<TaskProps> = ({
     )
 }
 
-type ThumbnailProps = {
-    src?: string
-}
-
-const Thumbnail: React.FC<ThumbnailProps> = ({src}) => {
-    return (
-        <Image source={{uri: src}} style={styles.thumbnail} />
-    )
-}
-
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         marginBottom: 16,
         backgroundColor: palette.neutral[50],
-    },
-    thumbnail: {
-        width: 56,
-        height: 56,
-        borderRadius: 14,
-        marginRight: 10,
     },
     titleContainer: {
         justifyContent: "center",
