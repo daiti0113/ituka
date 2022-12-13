@@ -1,7 +1,6 @@
 import React from "react"
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { ListsScreen } from "./ListsScreen"
-import { TaskDetailScene } from "../scenes/Home/TaskDetailScene"
 import { task } from "../slices/task"
 
 export type HomeStackParamList = {
@@ -21,7 +20,6 @@ export const HomeScreen = () => {
             initialRouteName="ListsScreen"
         >
             <Stack.Screen name="ListsScreen" component={ListsScreen} options={{headerShown: false}} />
-            <Stack.Screen name="TaskDetailScene" component={TaskDetailScene} />
         </Stack.Navigator>
     )
 }
