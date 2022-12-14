@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     },
     slideInModal: {
         backgroundColor: palette.neutral[50],
-        marginTop: "30%",
+        top: "10%",
         padding: 20,
         height: "100%",
         opacity: 1,
