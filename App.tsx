@@ -80,25 +80,28 @@ const PopUpModal = () => {
 const SlideInModal = () => {
     const {slideInModalVisible, slideInModalContent: ModalContent} = useAppSelector(({app: {slideInModalVisible, slideInModalContent}}) => ({slideInModalVisible, slideInModalContent}))
     const dispatch = useAppDispatch()
+    const closeModal = () => dispatch(toggleModalVisible({type: "slideIn", visible: false}))
 
     return (
         <Portal>
             <GestureRecognizer
                 onSwipeDown={() => dispatch(toggleModalVisible({type: "slideIn", visible: false}))}
             >
-                {slideInModalVisible && <View style={styles.slideInModalBackground}>
-                    <Modal
-                        animationType="slide"
-                        visible={slideInModalVisible}
-                        transparent={true}
-                        onDismiss={() => dispatch(toggleModalVisible({type: "slideIn", visible: false}))}
-                        onRequestClose={() => dispatch(toggleModalVisible({type: "slideIn", visible: false}))}
-                    >
-                        <View style={styles.slideInModal}>
-                            {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
-                        </View>
-                    </Modal>
-                </View>}
+                {slideInModalVisible && (
+                    <View style={styles.slideInModalBackground}>
+                        <Modal
+                            animationType="slide"
+                            visible={slideInModalVisible}
+                            transparent={true}
+                            onDismiss={closeModal}
+                            onRequestClose={closeModal}
+                        >
+                            <View style={styles.slideInModal}>
+                                {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
+                            </View>
+                        </Modal>
+                    </View>
+                )}
             </GestureRecognizer>
         </Portal>
     )
