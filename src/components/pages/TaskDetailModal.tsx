@@ -5,6 +5,7 @@ import { useLists, useTask } from "../../helpers/request"
 import { task } from "../../slices/task"
 import { palette } from "../../styles/colorPalette"
 import { Thumbnail } from "../atoms/Thumbnail"
+import { IconLabel } from "../molecules/IconLabel"
 
 type TaskDetailModalProps = {
     taskId: task["id"]
@@ -26,11 +27,30 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({taskId}) => {
                     <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{task.subTitle}</Text>
                 </View>
             </View>
-            <View style={styles.listNames}>
-                {filteredLists.map(({name, id}) => <Chip key={id} textStyle={styles.chipText} style={styles.chip} compact>{name}</Chip>)}
+            <View style={styles.iconHolder}>
+                <IconLabel icon="heart" label="20" />
+                <IconLabel icon="bookmark" label="20" />
+                <IconLabel icon="comment" label="20" />
+                <View style={styles.iconHolderLeft}>
+                    <IconLabel icon="eye" label="20" />
+                </View>
             </View>
-            <Text variant="titleSmall">{task?.description}</Text>
-            <Text variant="titleSmall">{task?.url}</Text>
+            <View style={styles.body}>
+                <View style={styles.row}>
+                    <Text variant="titleMedium" style={styles.rowTitle}>やることリスト</Text>
+                    <View style={styles.listNames}>
+                        {filteredLists.map(({name, id}) => <Chip key={id} textStyle={styles.chipText} style={styles.chip} compact>{name}</Chip>)}
+                    </View>
+                </View>
+                <View style={styles.row}>
+                    <Text variant="titleMedium" style={styles.rowTitle}>もうちょっと詳しく</Text>
+                    <Text variant="bodyMedium" style={{ color: palette.neutral[800]}}>{task?.description}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text variant="titleMedium" style={styles.rowTitle}>参考リンク</Text>
+                    <Text variant="titleSmall">{task?.url}</Text>
+                </View>
+            </View>
         </ScrollView>
     )
 }
@@ -45,7 +65,6 @@ const styles = StyleSheet.create({
     },
     listNames: {
         flexDirection: "row",
-        marginTop: 8,
     },
     chipText: {
         minHeight: 22,
@@ -59,5 +78,22 @@ const styles = StyleSheet.create({
     chip: {
         marginRight: 10,
         backgroundColor: palette.neutral[200]
-    }
+    },
+    iconHolder: {
+        marginTop: 12,
+        flexDirection: "row",
+    },
+    iconHolderLeft: {
+        marginLeft: "auto",
+        marginRight: 20,
+    },
+    body: {
+        marginTop: 26,
+    },
+    row: {
+        marginBottom: 30,
+    },
+    rowTitle: {
+        marginBottom: 6,
+    },
 })
