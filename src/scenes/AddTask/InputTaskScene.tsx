@@ -27,45 +27,59 @@ export const InputTaskScene = () => {
     }
 
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label} variant="titleSmall">リストを選ぶ</Text>
-                <Select onChange={(listIdList) => setTask({...task, listIdList})}>{selectItems}</Select>
+        <ScrollView>
+            <View style={styles.container}>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label} variant="titleSmall">リストを選ぶ</Text>
+                    <Select onChange={(listIdList) => setTask({...task, listIdList})}>{selectItems}</Select>
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label} variant="titleSmall">なにする？</Text>
+                    <TextInput
+                        style={styles.textInput}
+                        underlineColor={palette.neutral[300]}
+                        placeholder="夜パフェを食べに行く"
+                        onChangeText={(title) => setTask({...task, title})}
+                        error={task.title === ""}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label} variant="titleSmall">もうちょっと詳しく</Text>
+                    <TextInput
+                        style={styles.textInput}
+                        underlineColor={palette.neutral[300]}
+                        placeholder="〇〇ってとこが美味しいらしい"
+                        onChangeText={(subTitle) => setTask({...task, subTitle})}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label} variant="titleSmall">メモ</Text>
+                    <TextInput
+                        mode="outlined"
+                        style={styles.textArea}
+                        theme={{ roundness: 8 }}
+                        outlineColor={palette.neutral[300]}
+                        multiline
+                        placeholder={"友達におすすめしてもらったメニュー\n・ちんすこう\n・美らパフェ"}
+                        onChangeText={(description) => setTask({...task, description})}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label} variant="titleSmall">参考になるリンク（instagramやGoogleマップなど）</Text>
+                    <TextInput
+                        style={styles.textInput}
+                        underlineColor={palette.neutral[300]}
+                        placeholder="https://icocca.info"
+                        onChangeText={(url) => setTask({...task, url})}
+                    />
+                </View>
+                <Button
+                    mode="contained"
+                    style={styles.submit}
+                    disabled={!isTaskItem(task)}
+                    onPress={onSubmit}
+                >追加する</Button>
             </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label} variant="titleSmall">なにする？</Text>
-                <TextInput
-                    style={styles.textInput}
-                    underlineColor={palette.neutral[300]}
-                    placeholder="夜パフェを食べに行く"
-                    onChangeText={(title) => setTask({...task, title})}
-                    error={task.title === ""}
-                />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label} variant="titleSmall">もうちょっと詳しく</Text>
-                <TextInput
-                    style={styles.textInput}
-                    underlineColor={palette.neutral[300]}
-                    placeholder="〇〇ってとこが美味しいらしい"
-                    onChangeText={(description) => setTask({...task, description})}
-                />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label} variant="titleSmall">参考になるリンク（instagramやGoogleマップなど）</Text>
-                <TextInput
-                    style={styles.textInput}
-                    underlineColor={palette.neutral[300]}
-                    placeholder="https://icocca.info"
-                    onChangeText={(url) => setTask({...task, url})}
-                />
-            </View>
-            <Button
-                mode="contained"
-                style={styles.submit}
-                disabled={!isTaskItem(task)}
-                onPress={onSubmit}
-            >追加する</Button>
         </ScrollView>
     )
 }
@@ -73,6 +87,7 @@ export const InputTaskScene = () => {
 const styles = StyleSheet.create({
     container: {
         padding: 18,
+        paddingBottom: 60,
     },
     inputContainer: {
         marginBottom: 34,
@@ -82,6 +97,9 @@ const styles = StyleSheet.create({
     },
     textInput: {
         backgroundColor: "transparent",
+    },
+    textArea: {
+        maxHeight: 200
     },
     submit: {
         borderRadius: 50,
