@@ -22,11 +22,12 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({taskId}) => {
             <View style={styles.header}>
                 <Thumbnail src={task.thumbnail} size={60} borderRadius={50} />
                 <View>
-                    <Text variant="titleLarge" style={styles.title}>{task?.title}</Text>
-                    <View style={styles.listNames}>
-                        {filteredLists.map(({name, id}) => <Chip key={id} textStyle={styles.chipText} style={styles.chip} compact>{name}</Chip>)}
-                    </View>
+                    <Text variant="titleLarge" style={styles.title}>{task.title}</Text>
+                    <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{task.subTitle}</Text>
                 </View>
+            </View>
+            <View style={styles.listNames}>
+                {filteredLists.map(({name, id}) => <Chip key={id} textStyle={styles.chipText} style={styles.chip} compact>{name}</Chip>)}
             </View>
             <Text variant="titleSmall">{task?.description}</Text>
             <Text variant="titleSmall">{task?.url}</Text>

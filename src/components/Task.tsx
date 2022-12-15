@@ -9,7 +9,7 @@ export type TaskProps = {
     title: string
     checked: boolean,
     id: string,
-    description?: string
+    subTitle?: string
     thumbnail?: string
     onDelete?: () => void
     onPress?: () => void
@@ -26,7 +26,7 @@ const renderRightActions = (onDelete: TaskProps["onDelete"]) => {
 }
 
 export const Task: React.FC<TaskProps> = ({
-    title, description, thumbnail=sampleImage, onDelete, onPress, checked
+    title, subTitle, thumbnail=sampleImage, onDelete, onPress, checked
 }) => {
     return (
         <Swipeable
@@ -36,7 +36,7 @@ export const Task: React.FC<TaskProps> = ({
                 <Thumbnail src={thumbnail} />
                 <View style={styles.titleContainer}>
                     <Text variant="bodyLarge">{title}</Text>
-                    {description && <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{description}</Text>}
+                    {subTitle && <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{subTitle}</Text>}
                 </View>
                 <View style={styles.checkbox}>
                     <Checkbox status={checked ? "checked" : "unchecked"} />

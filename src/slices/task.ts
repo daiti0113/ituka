@@ -5,6 +5,7 @@ export type task = {
     id: string
     listIdList: Array<string>
     title: string
+    subTitle: string
     isDone: boolean
     description?: string
     url?: string
