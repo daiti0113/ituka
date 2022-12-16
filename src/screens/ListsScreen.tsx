@@ -103,8 +103,6 @@ export const ListsScreen = () => {
 
     if (lists.length === 0) return null
 
-    console.log({lists})
-
     return (
         <Tab.Navigator
             initialRouteName={lists[0].id}

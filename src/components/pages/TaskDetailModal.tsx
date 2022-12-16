@@ -6,6 +6,7 @@ import { task } from "../../slices/task"
 import { palette } from "../../styles/colorPalette"
 import { Thumbnail } from "../atoms/Thumbnail"
 import { IconLabel } from "../molecules/IconLabel"
+import { LinkPreview } from "../organisms/LinkPreview"
 
 type TaskDetailModalProps = {
     taskId: task["id"]
@@ -50,6 +51,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({taskId}) => {
                     <Text variant="titleMedium" style={styles.rowTitle}>参考リンク</Text>
                     <Text variant="titleSmall">{task?.url}</Text>
                 </View>
+                {task.url && <LinkPreview url={task.url} />}
             </View>
         </ScrollView>
     )
