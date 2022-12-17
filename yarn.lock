@@ -1381,6 +1381,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-8.2.1.tgz#a37362e630302da9ff820895ab8cf32acedd66dc"
   integrity sha512-wtSjKXKxxwntE7A98b4ry6rbTDidxF6taAZISLnJ9WYffFvgyreliKjg3e9IDuTBLCDpDYKUOqK9I/h4hMFnjg==
 
+"@react-native-masked-view/masked-view@^0.2.8":
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/@react-native-masked-view/masked-view/-/masked-view-0.2.8.tgz#34405a4361882dae7c81b1b771fe9f5fbd545a97"
+  integrity sha512-+1holBPDF1yi/y0uc1WB6lA5tSNHhM7PpTMapT3ypvSnKQ9+C6sy/zfjxNxRA/llBQ1Ci6f94EaK56UCKs5lTA==
+
 "@react-native-twitter-signin/twitter-signin@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-twitter-signin/twitter-signin/-/twitter-signin-1.2.0.tgz#37f050a544f97fb2cc28d039dc0d568ea1a806e8"
@@ -6282,6 +6287,11 @@ react-native-screens@^3.17.0:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-skeleton-placeholder@^5.2.4:
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-skeleton-placeholder/-/react-native-skeleton-placeholder-5.2.4.tgz#a654fa083ff274a39c763e086f8a850c556d4c95"
+  integrity sha512-OZntVq1hU1UX33FltxK2ezT2v9vHIhV8YnEbnMWUCvxT0N9OsgD1qxiHm6qb9YRJVgq2o5z3S7dNPsPnDF/jNg==
 
 react-native-svg@^13.1.0:
   version "13.6.0"

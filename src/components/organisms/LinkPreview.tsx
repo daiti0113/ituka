@@ -3,7 +3,8 @@ import { useEffect, useState } from "react"
 import { getLinkPreview } from "link-preview-js"
 import { Image, StyleSheet, View } from "react-native"
 import { palette } from "../../styles/colorPalette"
-import { ActivityIndicator, Text } from "react-native-paper"
+import { Text } from "react-native-paper"
+import SkeletonPlaceholder from "react-native-skeleton-placeholder"
 
 type previewInfo = {
     url: string;
@@ -52,13 +53,15 @@ const Loaded: React.FC<LoadedProps> = ({previewInfo}) => {
 
 const Loading = () => {
     return (
-        <View style={styles.container}>
-            <ActivityIndicator
-                animating={true}
-                color={palette.primary[500]}
-                style={styles.spinner}
-            />
-        </View>
+        <SkeletonPlaceholder>
+            <View style={styles.container}>
+                <View style={styles.thumbnail} />
+                <View style={styles.textContainer}>
+                    <SkeletonPlaceholder.Item marginBottom={8} width={120} height={20} />
+                    <SkeletonPlaceholder.Item width={180} height={14} />
+                </View>
+            </View>
+        </SkeletonPlaceholder>
     )
 }
 
