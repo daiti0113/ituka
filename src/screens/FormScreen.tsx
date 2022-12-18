@@ -3,11 +3,12 @@ import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { IconButton, Text } from "react-native-paper"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { useNavigation } from "@react-navigation/native"
-import { TaskForm } from "../components/pages/TaskForm"
+import { Mode, TaskForm } from "../components/pages/TaskForm"
 
 
 export type AddTaskStackParamList = {
-    InputTask: undefined
+    CreateTask: {mode: Mode},
+    UpdateTask: {mode: Mode},
 }
 
 const Stack = createNativeStackNavigator<AddTaskStackParamList>()
@@ -32,12 +33,13 @@ const Header = () => {
 export const FormScreen = () => {
     return (
         <Stack.Navigator
-            initialRouteName="InputTask"
+            initialRouteName="CreateTask"
             screenOptions={{
                 header: () => <Header />
             }}
         >
-            <Stack.Screen name="InputTask" component={TaskForm} />
+            <Stack.Screen name="CreateTask" component={TaskForm} initialParams={{ mode: "create" }} />
+            <Stack.Screen name="UpdateTask" component={TaskForm} initialParams={{ mode: "update" }} />
         </Stack.Navigator>
     )
 }
