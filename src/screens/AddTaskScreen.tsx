@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { IconButton, Text } from "react-native-paper"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { useNavigation } from "@react-navigation/native"
-import { InputTaskScene } from "../scenes/AddTask/InputTaskScene"
+import { TaskForm } from "../components/pages/TaskForm"
 
 
 export type AddTaskStackParamList = {
@@ -37,7 +37,7 @@ export const AddTaskScreen = () => {
                 header: () => <Header />
             }}
         >
-            <Stack.Screen name="InputTask" component={InputTaskScene} />
+            <Stack.Screen name="InputTask" component={TaskForm} />
         </Stack.Navigator>
     )
 }

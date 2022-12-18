@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native"
 import React, { useMemo, useState } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
-import { Select } from "../../components/Select"
+import { Select } from "../Select"
 import { useAddTask, useLists } from "../../helpers/request"
 import { LoggedInScreenNavigationProp } from "../../screens/LoggedInScreen"
 import { isTaskItem, task } from "../../slices/task"
@@ -12,7 +12,7 @@ const createSelectItems = (lists: Array<{name: string, id: string}>) => {
     return lists.map(({name, id}) => <Select.Item key={id} value={id}>{name}</Select.Item>)
 }
 
-export const InputTaskScene = () => {
+export const TaskForm = () => {
     const addTask = useAddTask()
     const lists = useLists()
     const selectItems = useMemo(() => createSelectItems(lists), [lists])
