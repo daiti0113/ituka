@@ -29,7 +29,7 @@ const Header = () => {
     )
 }
 
-export const AddTaskScreen = () => {
+export const FormScreen = () => {
     return (
         <Stack.Navigator
             initialRouteName="InputTask"

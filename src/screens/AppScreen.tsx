@@ -4,13 +4,13 @@ import { StyleSheet, View } from "react-native"
 import { Text } from "react-native-paper"
 import { LoginScreen } from "./LoginScreen"
 import { LoggedInScreen } from "./LoggedInScreen"
-import { AddTaskScreen } from "./AddTaskScreen"
+import { FormScreen } from "./FormScreen"
 import { useAppSelector } from "../helpers/store"
 
 export type RootStackParamList = {
     LoggedInScreen: undefined
     LoginScreen: undefined
-    AddTaskScreen: undefined
+    FormScreen: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -38,7 +38,7 @@ export const AppScreen = () => {
             {isLoggedIn ? (
                 <>
                     <Stack.Screen name="LoggedInScreen" component={LoggedInScreen} />
-                    <Stack.Screen name="AddTaskScreen" component={AddTaskScreen} />
+                    <Stack.Screen name="FormScreen" component={FormScreen} />
                 </>
             ) : (
                 <>
