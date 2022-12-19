@@ -1,5 +1,5 @@
 import React from "react"
-import { Keyboard, KeyboardAvoidingView, Modal, Platform, StatusBar, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
+import { Keyboard, KeyboardAvoidingView, Modal, Platform, Pressable, StatusBar, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import { Provider as PaperProvider, Text, MD3LightTheme as PaperDefaultTheme, Portal, Modal as PaperModal } from "react-native-paper"
 import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
 import { Provider as ReduxProvider } from "react-redux"
@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "./src/helpers/store"
 import { toggleModalVisible } from "./src/slices/app"
 import { AppScreen } from "./src/screens/AppScreen"
 import GestureRecognizer from "react-native-swipe-gestures"
+import { TouchableOpacity } from "react-native-gesture-handler"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -45,6 +46,7 @@ const App = () => {
                                 <NavigationContainer theme={theme}>
                                     <SafeAreaView style={{ flex: 1 }}>
                                         <PopUpModal />
+                                        <MenuModal />
                                         <SlideInModal />
                                         <AppScreen />
                                     </SafeAreaView>
@@ -107,6 +109,34 @@ const SlideInModal = () => {
     )
 }
 
+// TODO: ModalをNavigationに移動する。ルートの一つして開くようにする。
+const MenuModal = () => {
+    const {menuModalVisible, menuModalContent: ModalContent} = useAppSelector(({app: {menuModalVisible, menuModalContent}}) => ({menuModalVisible, menuModalContent}))
+    const dispatch = useAppDispatch()
+    const closeModal = () => dispatch(toggleModalVisible({type: "menu", visible: false}))
+
+    return (
+        <Portal>
+            {menuModalVisible && (
+                <TouchableOpacity style={styles.menuModalBackground} onPress={closeModal}>
+                    <Modal
+                        animationType="slide"
+                        visible={menuModalVisible}
+                        transparent={true}
+                        onDismiss={closeModal}
+                        onRequestClose={closeModal}
+                        style={{zIndex: 401}}
+                    >
+                        <View style={styles.menuModal}>
+                            {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
+                        </View>
+                    </Modal>
+                </TouchableOpacity>
+            )}
+        </Portal>
+    )
+}
+
 export default App
 
 const styles = StyleSheet.create({
@@ -130,6 +160,7 @@ const styles = StyleSheet.create({
         opacity: 0.7,
     },
     slideInModal: {
+        zIndex: 301,
         backgroundColor: palette.neutral[50],
         top: "10%",
         padding: 20,
@@ -137,5 +168,14 @@ const styles = StyleSheet.create({
         opacity: 1,
         borderTopLeftRadius: 12,
         borderTopRightRadius: 12,
+    },
+    menuModalBackground: {
+        zIndex: 400,
+        height: "100%",
+        backgroundColor: "#000",
+        opacity: 0.7,
+    },
+    menuModal: {
+
     }
 })

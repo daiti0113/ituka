@@ -5,6 +5,8 @@ export type appState = {
     popUpModalContent: () => JSX.Element | null,
     slideInModalVisible: boolean,
     slideInModalContent: () => JSX.Element | null,
+    menuModalVisible: boolean,
+    menuModalContent: () => JSX.Element | null,
 }
 
 export const appSlice = createSlice({
@@ -17,15 +19,19 @@ export const appSlice = createSlice({
         toggleModalVisible: (state, {payload: {type="popUp", visible}}) => {
             if (type === "popUp") {
                 state.popUpModalVisible = visible
-            } else {
+            } else if (type === "slideIn") {
                 state.slideInModalVisible = visible
+            } else {
+                state.menuModalVisible = visible
             }
         },
         setModalContent: (state, {payload: {type="popUp", content}}) => {
             if (type === "popUp") {
                 state.popUpModalContent = content
-            } else {
+            } else if (type === "slideIn") {
                 state.slideInModalContent = content
+            } else {
+                state.menuModalContent = content
             }
         }
     },

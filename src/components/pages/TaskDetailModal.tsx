@@ -1,12 +1,15 @@
 import React from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
-import { Chip, Text } from "react-native-paper"
+import { Chip, IconButton, Text } from "react-native-paper"
+import { useDispatch } from "react-redux"
 import { useLists, useTask } from "../../helpers/request"
+import { setModalContent, toggleModalVisible } from "../../slices/app"
 import { task } from "../../slices/task"
 import { palette } from "../../styles/colorPalette"
 import { Thumbnail } from "../atoms/Thumbnail"
 import { IconLabel } from "../molecules/IconLabel"
 import { LinkPreview } from "../organisms/LinkPreview"
+import { TaskMenu } from "./TaskMenu"
 
 type TaskDetailModalProps = {
     taskId: task["id"]
@@ -15,7 +18,12 @@ type TaskDetailModalProps = {
 export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({taskId}) => {
     const task = useTask(taskId)
     const lists = useLists()
+    const dispatch = useDispatch()
     const filteredLists = lists.filter(({id}) => task?.listIdList.includes(id))
+    const openMenu = () => {
+        dispatch(setModalContent({type: "menu", content: TaskMenu}))
+        dispatch(toggleModalVisible({type: "menu", visible: true}))
+    }
 
     if (!task) return null
 
@@ -23,10 +31,11 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({taskId}) => {
         <ScrollView>
             <View style={styles.header}>
                 <Thumbnail src={task.thumbnail} size={60} borderRadius={50} />
-                <View>
+                <View style={{flex: 1}}>
                     <Text variant="titleLarge" style={styles.title}>{task.title}</Text>
                     <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{task.subTitle}</Text>
                 </View>
+                <IconButton icon="dots-horizontal" iconColor={palette.neutral[900]} onPress={openMenu} />
             </View>
             <View style={styles.iconHolder}>
                 <IconLabel icon="heart" label="20" />
@@ -59,7 +68,7 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({taskId}) => {
 
 const styles = StyleSheet.create({
     header: {
-        flexDirection: "row"
+        flexDirection: "row",
     },
     title: {
         letterSpacing: 0.15,

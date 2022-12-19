@@ -24,7 +24,7 @@ const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, "app/setModalContent", "auth/login"],
-                ignoredPaths: ["app.popUpModalContent", "app.slideInModalContent", "auth.user"]
+                ignoredPaths: ["app.popUpModalContent", "app.slideInModalContent", "app.menuModalContent", "auth.user"]
             },
         }),
 })
