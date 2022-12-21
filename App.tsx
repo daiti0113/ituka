@@ -87,7 +87,7 @@ const SlideInModal = ({children}: {children?: React.ReactNode}) => {
     return (
         <Portal>
             <GestureRecognizer
-                onSwipeDown={() => dispatch(toggleModalVisible({type: "slideIn", visible: false}))}
+                onSwipeDown={closeModal}
             >
                 {slideInModalVisible && (
                     <View style={styles.slideInModalBackground}>
@@ -119,11 +119,12 @@ const MenuModal = () => {
     if (!menuModalVisible) return null
 
     return (
-        <TouchableOpacity style={styles.menuModalBackground} onPress={closeModal}>
+        <>
+            <TouchableOpacity style={styles.menuModalBackground} onPress={closeModal} />
             <View style={styles.menuModal}>
                 {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
             </View>
-        </TouchableOpacity>
+        </>
     )
 }
 
@@ -159,14 +160,19 @@ const styles = StyleSheet.create({
     },
     menuModalBackground: {
         position: "absolute",
-        top: 100,
+        top: 0,
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: "#300",
-        opacity: 0.7,
+        backgroundColor: "#000",
+        opacity: 0.6,
     },
     menuModal: {
-
+        position: "absolute",
+        height: 400,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: palette.neutral[50] + "FF",
     }
 })
