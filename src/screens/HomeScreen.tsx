@@ -1,7 +1,7 @@
 import React from "react"
-import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { ListsScreen } from "./ListsScreen"
 import { task } from "../slices/task"
+import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack"
 
 export type HomeStackParamList = {
     ListsScreen: undefined
@@ -10,9 +10,9 @@ export type HomeStackParamList = {
     }
 }
 
-const Stack = createNativeStackNavigator<HomeStackParamList>()
+const Stack = createStackNavigator<HomeStackParamList>()
 
-export type HomeScreenNavigationProp = NativeStackNavigationProp<HomeStackParamList>
+export type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList>
 
 export const HomeScreen = () => {
     return (

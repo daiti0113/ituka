@@ -1,9 +1,9 @@
 import React from "react"
 import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { IconButton, Text } from "react-native-paper"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { useNavigation } from "@react-navigation/native"
 import { Mode, TaskForm } from "../components/pages/TaskForm"
+import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack"
 
 
 export type AddTaskStackParamList = {
@@ -11,7 +11,9 @@ export type AddTaskStackParamList = {
     UpdateTask: {mode: Mode},
 }
 
-const Stack = createNativeStackNavigator<AddTaskStackParamList>()
+export type FormScreenNavigationProp = StackNavigationProp<AddTaskStackParamList>
+
+const Stack = createStackNavigator<AddTaskStackParamList>()
 
 
 const Header = () => {

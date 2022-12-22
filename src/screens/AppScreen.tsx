@@ -1,11 +1,11 @@
 import React from "react"
-import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { StyleSheet, View } from "react-native"
 import { Text } from "react-native-paper"
 import { LoginScreen } from "./LoginScreen"
 import { LoggedInScreen } from "./LoggedInScreen"
 import { FormScreen } from "./FormScreen"
 import { useAppSelector } from "../helpers/store"
+import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack"
 
 export type RootStackParamList = {
     LoggedInScreen: undefined
@@ -13,9 +13,9 @@ export type RootStackParamList = {
     FormScreen: undefined
 }
 
-const Stack = createNativeStackNavigator<RootStackParamList>()
+const Stack = createStackNavigator<RootStackParamList>()
 
-export type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>
+export type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList>
 
 const AppHeader = () => {
     return (

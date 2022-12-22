@@ -1,13 +1,13 @@
 import React from "react"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { Login } from "../scenes/Login/LoginScene"
+import { createStackNavigator } from "@react-navigation/stack"
 
 
 export type LoginStackParamList = {
     Login: undefined
 }
 
-const Stack = createNativeStackNavigator<LoginStackParamList>()
+const Stack = createStackNavigator<LoginStackParamList>()
 
 export const LoginScreen = () => {
     return (
