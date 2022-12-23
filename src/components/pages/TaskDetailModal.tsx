@@ -1,21 +1,19 @@
+import { RouteProp, useRoute } from "@react-navigation/native"
 import React from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { Chip, IconButton, Text } from "react-native-paper"
 import { useDispatch } from "react-redux"
 import { useLists, useTask } from "../../helpers/request"
+import { HomeStackParamList } from "../../screens/HomeScreen"
 import { setModalContent, toggleModalVisible } from "../../slices/app"
-import { task } from "../../slices/task"
 import { palette } from "../../styles/colorPalette"
 import { Thumbnail } from "../atoms/Thumbnail"
 import { IconLabel } from "../molecules/IconLabel"
 import { LinkPreview } from "../organisms/LinkPreview"
 import { TaskMenu } from "./TaskMenu"
 
-type TaskDetailModalProps = {
-    taskId: task["id"]
-}
-
-export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({taskId}) => {
+export const TaskDetailModal = () => {
+    const {params: {taskId}} = useRoute<RouteProp<HomeStackParamList, "TaskDetail">>()
     const task = useTask(taskId)
     const lists = useLists()
     const dispatch = useDispatch()
@@ -28,45 +26,62 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({taskId}) => {
     if (!task) return null
 
     return (
-        <ScrollView>
-            <View style={styles.header}>
-                <Thumbnail src={task.thumbnail} size={60} borderRadius={50} />
-                <View style={{flex: 1}}>
-                    <Text variant="titleLarge" style={styles.title}>{task.title}</Text>
-                    <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{task.subTitle}</Text>
+        <View>
+            <View style={styles.overlay} />
+            <ScrollView style={styles.container}>
+                <View style={styles.header}>
+                    <Thumbnail src={task.thumbnail} size={60} borderRadius={50} />
+                    <View style={{flex: 1}}>
+                        <Text variant="titleLarge" style={styles.title}>{task.title}</Text>
+                        <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{task.subTitle}</Text>
+                    </View>
+                    <IconButton icon="dots-horizontal" iconColor={palette.neutral[900]} onPress={openMenu} />
                 </View>
-                <IconButton icon="dots-horizontal" iconColor={palette.neutral[900]} onPress={openMenu} />
-            </View>
-            <View style={styles.iconHolder}>
-                <IconLabel icon="heart" label="20" />
-                <IconLabel icon="bookmark" label="20" />
-                <IconLabel icon="comment" label="20" />
-                <View style={styles.iconHolderLeft}>
-                    <IconLabel icon="eye" label="20" />
-                </View>
-            </View>
-            <View style={styles.body}>
-                <View style={styles.row}>
-                    <Text variant="titleMedium" style={styles.rowTitle}>やることリスト</Text>
-                    <View style={styles.listNames}>
-                        {filteredLists.map(({name, id}) => <Chip key={id} textStyle={styles.chipText} style={styles.chip} compact>{name}</Chip>)}
+                <View style={styles.iconHolder}>
+                    <IconLabel icon="heart" label="20" />
+                    <IconLabel icon="bookmark" label="20" />
+                    <IconLabel icon="comment" label="20" />
+                    <View style={styles.iconHolderLeft}>
+                        <IconLabel icon="eye" label="20" />
                     </View>
                 </View>
-                <View style={styles.row}>
-                    <Text variant="titleMedium" style={styles.rowTitle}>もうちょっと詳しく</Text>
-                    <Text variant="bodyMedium" style={{ color: palette.neutral[800]}}>{task?.description}</Text>
+                <View style={styles.body}>
+                    <View style={styles.row}>
+                        <Text variant="titleMedium" style={styles.rowTitle}>やることリスト</Text>
+                        <View style={styles.listNames}>
+                            {filteredLists.map(({name, id}) => <Chip key={id} textStyle={styles.chipText} style={styles.chip} compact>{name}</Chip>)}
+                        </View>
+                    </View>
+                    <View style={styles.row}>
+                        <Text variant="titleMedium" style={styles.rowTitle}>もうちょっと詳しく</Text>
+                        <Text variant="bodyMedium" style={{ color: palette.neutral[800]}}>{task?.description}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text variant="titleMedium" style={styles.rowTitle}>参考リンク</Text>
+                        <Text variant="titleSmall">{task?.url}</Text>
+                    </View>
+                    {task.url && <LinkPreview url={task.url} />}
                 </View>
-                <View style={styles.row}>
-                    <Text variant="titleMedium" style={styles.rowTitle}>参考リンク</Text>
-                    <Text variant="titleSmall">{task?.url}</Text>
-                </View>
-                {task.url && <LinkPreview url={task.url} />}
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    overlay: {
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: "#000",
+        opacity: 0.7,
+    },
+    container: {
+        marginTop: 30,
+        padding: 20,
+        backgroundColor: palette.neutral[50],
+    },
     header: {
         flexDirection: "row",
     },

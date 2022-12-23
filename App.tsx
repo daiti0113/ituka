@@ -1,5 +1,5 @@
 import React from "react"
-import { Keyboard, KeyboardAvoidingView, Modal, Platform, Pressable, StatusBar, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import { Keyboard, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 import { Provider as PaperProvider, Text, MD3LightTheme as PaperDefaultTheme, Portal, Modal as PaperModal } from "react-native-paper"
 import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
 import { Provider as ReduxProvider } from "react-redux"
@@ -10,7 +10,6 @@ import { PersistGate } from "redux-persist/integration/react"
 import { useAppDispatch, useAppSelector } from "./src/helpers/store"
 import { toggleModalVisible } from "./src/slices/app"
 import { AppScreen } from "./src/screens/AppScreen"
-import GestureRecognizer from "react-native-swipe-gestures"
 
 const theme = {
     ...PaperDefaultTheme,
@@ -45,9 +44,6 @@ const App = () => {
                                 <NavigationContainer theme={theme}>
                                     <SafeAreaView style={{ flex: 1 }}>
                                         <PopUpModal />
-                                        <SlideInModal>
-                                            <MenuModal />
-                                        </SlideInModal>
                                         <AppScreen />
                                     </SafeAreaView>
                                 </NavigationContainer>
@@ -74,38 +70,6 @@ const PopUpModal = () => {
             >
                 {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
             </PaperModal>
-        </Portal>
-    )
-}
-
-// TODO: 別ファイルに切り出す
-const SlideInModal = ({children}: {children?: React.ReactNode}) => {
-    const {slideInModalVisible, slideInModalContent: ModalContent} = useAppSelector(({app: {slideInModalVisible, slideInModalContent}}) => ({slideInModalVisible, slideInModalContent}))
-    const dispatch = useAppDispatch()
-    const closeModal = () => dispatch(toggleModalVisible({type: "slideIn", visible: false}))
-
-    return (
-        <Portal>
-            <GestureRecognizer
-                onSwipeDown={closeModal}
-            >
-                {slideInModalVisible && (
-                    <View style={styles.slideInModalBackground}>
-                        <Modal
-                            animationType="slide"
-                            visible={slideInModalVisible}
-                            transparent={true}
-                            onDismiss={closeModal}
-                            onRequestClose={closeModal}
-                        >
-                            <View style={styles.slideInModal}>
-                                {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
-                                {children}
-                            </View>
-                        </Modal>
-                    </View>
-                )}
-            </GestureRecognizer>
         </Portal>
     )
 }
