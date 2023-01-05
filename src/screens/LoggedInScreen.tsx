@@ -4,7 +4,7 @@ import { BottomTabBar } from "../components/BottomTabBar"
 import { View } from "react-native"
 import { Button, Text } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
-import { LoginScreenNavigationProp } from "./AppScreen"
+import { AppScreenNavigationProp } from "./AppScreen"
 import { useAppDispatch } from "../helpers/store"
 import { logout } from "../slices/auth"
 import { HomeScreen } from "./HomeScreen"
@@ -18,7 +18,7 @@ export type LoggedInScreenNavigationProp = BottomTabNavigationProp<BottomTabPara
 const Tab = createBottomTabNavigator<BottomTabParamList>()
 
 export const LoggedInScreen = () => {
-    const navigation = useNavigation<LoginScreenNavigationProp>()
+    const navigation = useNavigation<AppScreenNavigationProp>()
     const onPress = () => {
         navigation.navigate("FormScreen")
     }

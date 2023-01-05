@@ -1,14 +1,15 @@
 import React from "react"
 import { ListsScreen } from "./ListsScreen"
+import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack"
+import { TaskDetail } from "../components/pages/TaskDetailModal"
 import { task } from "../slices/task"
-import { CardStyleInterpolators, createStackNavigator, StackNavigationProp } from "@react-navigation/stack"
-import { TaskDetailModal } from "../components/pages/TaskDetailModal"
 
 export type HomeStackParamList = {
     ListsScreen: undefined
     TaskDetail: {
         taskId: task["id"]
     }
+
 }
 
 const Stack = createStackNavigator<HomeStackParamList>()
@@ -22,13 +23,7 @@ export const HomeScreen = () => {
             screenOptions={{headerShown: false}}
         >
             <Stack.Screen name="ListsScreen" component={ListsScreen} />
-            <Stack.Group screenOptions={{
-                gestureDirection: "vertical",
-                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                cardStyle: {backgroundColor: "transparent"}
-            }}>
-                <Stack.Screen name="TaskDetail" component={TaskDetailModal} />
-            </Stack.Group>
+            <Stack.Screen name="TaskDetail" component={TaskDetail} />
         </Stack.Navigator>
     )
 }

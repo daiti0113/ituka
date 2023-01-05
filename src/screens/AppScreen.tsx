@@ -15,7 +15,7 @@ export type RootStackParamList = {
 
 const Stack = createStackNavigator<RootStackParamList>()
 
-export type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList>
+export type AppScreenNavigationProp = StackNavigationProp<RootStackParamList>
 
 const AppHeader = () => {
     return (

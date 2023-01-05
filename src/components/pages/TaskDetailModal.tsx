@@ -12,7 +12,7 @@ import { IconLabel } from "../molecules/IconLabel"
 import { LinkPreview } from "../organisms/LinkPreview"
 import { TaskMenu } from "./TaskMenu"
 
-export const TaskDetailModal = () => {
+export const TaskDetail = () => {
     const {params: {taskId}} = useRoute<RouteProp<HomeStackParamList, "TaskDetail">>()
     const task = useTask(taskId)
     const lists = useLists()
@@ -26,9 +26,8 @@ export const TaskDetailModal = () => {
     if (!task) return null
 
     return (
-        <View>
-            <View style={styles.overlay} />
-            <ScrollView style={styles.container}>
+        <ScrollView>
+            <View style={styles.container}>
                 <View style={styles.header}>
                     <Thumbnail src={task.thumbnail} size={60} borderRadius={50} />
                     <View style={{flex: 1}}>
@@ -62,25 +61,17 @@ export const TaskDetailModal = () => {
                     </View>
                     {task.url && <LinkPreview url={task.url} />}
                 </View>
-            </ScrollView>
-        </View>
+            </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    overlay: {
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: "#000",
-        opacity: 0.7,
-    },
     container: {
-        marginTop: 30,
         padding: 20,
         backgroundColor: palette.neutral[50],
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
     },
     header: {
         flexDirection: "row",
