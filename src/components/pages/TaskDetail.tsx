@@ -1,4 +1,4 @@
-import { RouteProp, useRoute } from "@react-navigation/native"
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { Chip, IconButton, Text } from "react-native-paper"
@@ -18,8 +18,10 @@ export const TaskDetail = () => {
     const lists = useLists()
     const dispatch = useDispatch()
     const filteredLists = lists.filter(({id}) => task?.listIdList.includes(id))
+    const navigation = useNavigation()
+
     const openMenu = () => {
-        dispatch(setModalContent({type: "menu", content: TaskMenu}))
+        dispatch(setModalContent({type: "menu", content: () => <TaskMenu navigation={navigation} />}))
         dispatch(toggleModalVisible({type: "menu", visible: true}))
     }
 
