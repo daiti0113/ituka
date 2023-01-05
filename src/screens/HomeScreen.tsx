@@ -1,7 +1,7 @@
 import React from "react"
 import { ListsScreen } from "./ListsScreen"
 import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack"
-import { TaskDetail } from "../components/pages/TaskDetailModal"
+import { TaskDetail } from "../components/pages/TaskDetail"
 import { task } from "../slices/task"
 
 export type HomeStackParamList = {
