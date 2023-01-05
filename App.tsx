@@ -1,5 +1,5 @@
 import React from "react"
-import { Keyboard, KeyboardAvoidingView, Platform, StatusBar, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, StatusBar, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import { Provider as PaperProvider, Text, MD3LightTheme as PaperDefaultTheme, Portal, Modal as PaperModal } from "react-native-paper"
 import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native"
 import { Provider as ReduxProvider } from "react-redux"
@@ -44,6 +44,7 @@ const App = () => {
                                 <NavigationContainer theme={theme}>
                                     <SafeAreaView style={{ flex: 1 }}>
                                         <PopUpModal />
+                                        <MenuModal />
                                         <AppScreen />
                                     </SafeAreaView>
                                 </NavigationContainer>
@@ -74,7 +75,6 @@ const PopUpModal = () => {
     )
 }
 
-// TODO: ModalをNavigationに移動する。ルートの一つして開くようにする。
 const MenuModal = () => {
     const {menuModalVisible, menuModalContent: ModalContent} = useAppSelector(({app: {menuModalVisible, menuModalContent}}) => ({menuModalVisible, menuModalContent}))
     const dispatch = useAppDispatch()
@@ -83,12 +83,12 @@ const MenuModal = () => {
     if (!menuModalVisible) return null
 
     return (
-        <>
-            <TouchableOpacity style={styles.menuModalBackground} onPress={closeModal} />
+        <Portal>
+            <Pressable style={styles.menuModalBackground} onPress={closeModal} />
             <View style={styles.menuModal}>
                 {ModalContent ? <ModalContent /> : <Text>エラー... ごめんなさい...</Text>}
             </View>
-        </>
+        </Portal>
     )
 }
 
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         backgroundColor: "#000",
-        opacity: 0.6,
+        opacity: 0.7,
     },
     menuModal: {
         position: "absolute",
