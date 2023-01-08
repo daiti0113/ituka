@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
 import { Select } from "../Select"
-import { useAddTask, useLists, useTask } from "../../helpers/request"
+import { useAddTask, useLists, useTask, useUpdateTask } from "../../helpers/request"
 import { LoggedInScreenNavigationProp } from "../../screens/LoggedInScreen"
 import { isTaskItem, task } from "../../slices/task"
 import { palette } from "../../styles/colorPalette"
@@ -17,6 +17,7 @@ export const TaskForm = () => {
     const {params: {taskId}} = useRoute<RouteProp<AddTaskStackParamList>>()
     const initialValues = useTask(taskId)
     const addTask = useAddTask()
+    const updateTask = useUpdateTask()
     const lists = useLists()
     const selectItems = useMemo(() => createSelectItems(lists, initialValues), [lists])
     const navigation = useNavigation<LoggedInScreenNavigationProp>()
@@ -29,9 +30,8 @@ export const TaskForm = () => {
     }, [initialValues])
 
     const onSubmit = () => {
-        if (isTaskItem(task)) {
-            addTask(task)
-        }
+        if (!isTaskItem(task)) return null
+        taskId ? updateTask(taskId, task) : addTask(task)
         navigation.navigate("Home")
     }
 
