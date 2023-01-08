@@ -31,7 +31,7 @@ export const TaskDetail = () => {
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Thumbnail src={task.thumbnail} size={60} borderRadius={50} />
+                    {/* <Thumbnail src={task.thumbnail} size={60} borderRadius={50} /> */}
                     <View style={{flex: 1}}>
                         <Text variant="titleLarge" style={styles.title}>{task.title}</Text>
                         <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{task.subTitle}</Text>
