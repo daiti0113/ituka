@@ -18,7 +18,7 @@ export type FormScreenNavigationProp = StackNavigationProp<AddTaskStackParamList
 const Stack = createStackNavigator<AddTaskStackParamList>()
 
 
-const Header = () => {
+const Header = ({taskId}: {taskId?: task["id"]}) => {
     const navigation = useNavigation()
     return (
         <View style={styles.header}>
@@ -27,7 +27,7 @@ const Header = () => {
                 <Text>戻る</Text>
             </TouchableOpacity>
             <View style={styles.headerCenter}>
-                <Text variant="titleMedium">やりたいことを追加する</Text>
+                <Text variant="titleMedium">{taskId ? "やりたいことを編集する" : "やりたいことを追加する"}</Text>
             </View>
             <View style={styles.headerRight} />
         </View>
@@ -38,9 +38,9 @@ export const FormScreen = () => {
     return (
         <Stack.Navigator
             initialRouteName="TaskForm"
-            screenOptions={{
-                header: () => <Header />
-            }}
+            screenOptions={({route}) => ({
+                header: () => <Header taskId={route.params.taskId} />
+            })}
         >
             <Stack.Screen name="TaskForm" component={TaskForm} initialParams={{ taskId: "" }} />
         </Stack.Navigator>
