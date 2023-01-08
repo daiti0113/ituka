@@ -18,6 +18,7 @@ type SelectItemProps = Omit<ChipProps, "theme"> & {
 type SelectItem = React.FC<SelectItemProps>
 
 
+// TODO: selected は Select コンポーネント内で管理したほうが便利そう
 const Item: SelectItem = ({children, onPress, value, style, ...props}) => {
     const [selected, setSelected] = useState(false)
     const handlePress = () => {
