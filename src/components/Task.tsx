@@ -33,13 +33,14 @@ export const Task: React.FC<TaskProps> = ({
             renderRightActions={() => renderRightActions(onDelete)}
         >
             <Pressable style={styles.container} onPress={onPress}>
-                <Thumbnail src={thumbnail} />
+                {/* TODO: サムネイルを設定できるようにする */}
+                {/* <Thumbnail src={thumbnail} /> */}
+                <View style={styles.checkbox}>
+                    <Checkbox status="checked" color={checked ? palette.primary[500] : palette.neutral[300]}/>
+                </View>
                 <View style={styles.titleContainer}>
                     <Text variant="bodyLarge">{title}</Text>
                     {subTitle && <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{subTitle}</Text>}
-                </View>
-                <View style={styles.checkbox}>
-                    <Checkbox status={checked ? "checked" : "unchecked"} />
                 </View>
             </Pressable>
         </Swipeable>
@@ -49,16 +50,15 @@ export const Task: React.FC<TaskProps> = ({
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        marginBottom: 16,
+        marginBottom: 18,
         backgroundColor: palette.neutral[50],
     },
     titleContainer: {
         justifyContent: "center",
     },
     checkbox: {
-        alignSelf: "center",
-        marginLeft: "auto",
-        marginRight: 10,
+        marginTop: 2,
+        marginRight: 8,
     },
     deleteButton: {
         marginBottom: 16,

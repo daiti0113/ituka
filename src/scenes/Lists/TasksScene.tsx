@@ -18,7 +18,7 @@ export const TasksScene: React.FC<TasksSceneProps> = ({tasks}) => {
     }
 
     return (
-        <ScrollView style={{ padding: 10 }}>
+        <ScrollView style={{ padding: 20 }}>
             <View>
                 {tasks.map((task) => {
                     return (
