@@ -8,6 +8,8 @@ import { AppScreenNavigationProp } from "./AppScreen"
 import { useAppDispatch } from "../helpers/store"
 import { logout } from "../slices/auth"
 import { HomeScreen } from "./HomeScreen"
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+
 
 export type BottomTabParamList = {
     Home: undefined
@@ -30,8 +32,14 @@ export const LoggedInScreen = () => {
                 headerShown: false,
             }}
         >
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="MyPage" component={MyPageScreen} />
+            <Tab.Screen name="Home" component={HomeScreen} options={{
+                tabBarShowLabel: false,
+                tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="home" color={color} size={size} />
+            }} />
+            <Tab.Screen name="MyPage" component={MyPageScreen} options={{
+                tabBarShowLabel: false,
+                tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="account" color={color} size={size} />
+            }} />
         </Tab.Navigator>
     )
 }

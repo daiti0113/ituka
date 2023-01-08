@@ -56,6 +56,7 @@ const Tabs: React.FC<NavigationBottomTabBarProps> = ({state, descriptors, naviga
                 const { options } = descriptors[route.key]
                 const label = options.tabBarLabel ? options.tabBarLabel : options.title ? options.title : route.name
                 const isFocused = state.index === index
+                const Icon = options.tabBarIcon ? options.tabBarIcon : () => null
 
                 const onPress = () => {
                     const event = navigation.emit({
@@ -87,14 +88,18 @@ const Tabs: React.FC<NavigationBottomTabBarProps> = ({state, descriptors, naviga
                         onLongPress={onLongPress}
                         style={styles.tab}
                     >
-                        {typeof label === "string"
+                        {/* FIXME: 型エラーが起きてるので後で直す */}
+                        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                        {/* @ts-ignore */}
+                        <Icon color={isFocused ? palette.primary[500] : palette.neutral[500]} focused={isFocused} size={28} />
+                        {options.tabBarShowLabel && (typeof label === "string"
                             ? (
-                                <Text style={{color: isFocused ? palette.primary[500] : palette.neutral[500]}}>
+                                <Text variant="labelSmall" style={{color: isFocused ? palette.primary[500] : palette.neutral[500], margin: 0}}>
                                     {label}
                                 </Text>
                             )
                             : label({focused: isFocused, color: palette.primary[500], position: "below-icon"})
-                        }
+                        )}
                     </TouchableOpacity>
                 )
             })}
