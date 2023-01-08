@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
 import { Select } from "../Select"
-import { useAddTask, useLists, useUpdateTask } from "../../helpers/request"
+import { useAddTask, useLists, useTask } from "../../helpers/request"
 import { LoggedInScreenNavigationProp } from "../../screens/LoggedInScreen"
 import { isTaskItem, task } from "../../slices/task"
 import { palette } from "../../styles/colorPalette"
@@ -13,16 +13,14 @@ const createSelectItems = (lists: Array<{name: string, id: string}>) => {
     return lists.map(({name, id}) => <Select.Item key={id} value={id}>{name}</Select.Item>)
 }
 
-export type Mode = "create" | "update"
-
 export const TaskForm = () => {
-    const {params: {mode}} = useRoute<RouteProp<AddTaskStackParamList, "CreateTask" | "UpdateTask">>()
-    console.log({mode})
+    const {params: {taskId}} = useRoute<RouteProp<AddTaskStackParamList>>()
+    const initialValues = useTask(taskId)
     const addTask = useAddTask()
     const lists = useLists()
     const selectItems = useMemo(() => createSelectItems(lists), [lists])
     const navigation = useNavigation<LoggedInScreenNavigationProp>()
-    const [task, setTask] = useState<Partial<task>>({isDone: false})
+    const [task, setTask] = useState<Partial<task>>(initialValues ? initialValues : {isDone: false})
 
     const onSubmit = () => {
         if (isTaskItem(task)) {

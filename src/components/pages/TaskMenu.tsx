@@ -11,9 +11,8 @@ type TaskMenuProps = {
 export const TaskMenu: React.FC<TaskMenuProps> = ({navigation}) => {
     const dispatch = useDispatch()
     const openUpdateTask = () => {
-        navigation.navigate("FormScreen", {screen: "UpdateTask"})
+        navigation.navigate("FormScreen")
         dispatch(toggleModalVisible({type: "menu", visible: false}))
-
     }
     return (
         <ScrollView style={styles.container}>

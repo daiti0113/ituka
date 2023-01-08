@@ -2,13 +2,15 @@ import React from "react"
 import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { IconButton, Text } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
-import { Mode, TaskForm } from "../components/pages/TaskForm"
+import { TaskForm } from "../components/pages/TaskForm"
 import { createStackNavigator, StackNavigationProp } from "@react-navigation/stack"
+import { task } from "../slices/task"
 
 
 export type AddTaskStackParamList = {
-    CreateTask: {mode: Mode},
-    UpdateTask: {mode: Mode},
+    TaskForm: {
+        taskId?: task["id"]
+    }
 }
 
 export type FormScreenNavigationProp = StackNavigationProp<AddTaskStackParamList>
@@ -35,13 +37,12 @@ const Header = () => {
 export const FormScreen = () => {
     return (
         <Stack.Navigator
-            initialRouteName="CreateTask"
+            initialRouteName="TaskForm"
             screenOptions={{
                 header: () => <Header />
             }}
         >
-            <Stack.Screen name="CreateTask" component={TaskForm} initialParams={{ mode: "create" }} />
-            <Stack.Screen name="UpdateTask" component={TaskForm} initialParams={{ mode: "update" }} />
+            <Stack.Screen name="TaskForm" component={TaskForm} initialParams={{ taskId: "" }} />
         </Stack.Navigator>
     )
 }

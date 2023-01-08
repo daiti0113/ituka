@@ -30,7 +30,9 @@ export const useTasks = () => {
     return tasks
 }
 
-export const useTask = (taskId: task["id"]) => {
+export const useTask = (taskId?: task["id"]) => {
+    if (!taskId) return undefined
+
     const {uid} = useAppSelector(({auth: {user: {uid}}}) => ({uid}))
     const [task, setTask] = useState<task>()
 
