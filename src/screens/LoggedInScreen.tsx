@@ -9,6 +9,7 @@ import { useAppDispatch } from "../helpers/store"
 import { logout } from "../slices/auth"
 import { HomeScreen } from "./HomeScreen"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import { palette } from "../styles/colorPalette"
 
 
 export type BottomTabParamList = {
@@ -28,15 +29,15 @@ export const LoggedInScreen = () => {
     return (
         <Tab.Navigator
             tabBar={(props) => <BottomTabBar {...props} centerButtonProps={{icon: "plus", onPress: onPress}} />}
-            screenOptions={{
-                headerShown: false,
-            }}
         >
             <Tab.Screen name="Home" component={HomeScreen} options={{
+                headerShown: false,
                 tabBarShowLabel: false,
                 tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="home" color={color} size={size} />
             }} />
             <Tab.Screen name="MyPage" component={MyPageScreen} options={{
+                headerTitle: "マイページ",
+                headerTitleStyle: {color: palette.neutral[900], fontWeight: "normal"},
                 tabBarShowLabel: false,
                 tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="account" color={color} size={size} />
             }} />
@@ -49,7 +50,7 @@ const MyPageScreen = () => {
 
     return (
         <View>
-            <Text variant="headlineMedium">MyPage</Text>
+            <Text variant="bodyMedium">現在、開発中です...</Text>
             <Button onPress={() => dispatch(logout())}>ログアウト</Button>
         </View>
     )
