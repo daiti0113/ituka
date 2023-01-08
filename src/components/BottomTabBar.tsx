@@ -54,7 +54,7 @@ const Tabs: React.FC<NavigationBottomTabBarProps> = ({state, descriptors, naviga
             <TabsBackground />
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key]
-                const label = options.tabBarLabel ? options.tabBarLabel : options.title ? options.title : route.name
+                const label = options.tabBarLabel || options.title || route.name
                 const isFocused = state.index === index
                 const Icon = options.tabBarIcon ? options.tabBarIcon : () => null
 
