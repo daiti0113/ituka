@@ -21,7 +21,7 @@ export const TaskDetail = () => {
     const navigation = useNavigation()
 
     const openMenu = () => {
-        dispatch(setModalContent({type: "menu", content: () => <TaskMenu navigation={navigation} />}))
+        dispatch(setModalContent({type: "menu", content: () => <TaskMenu navigation={navigation} taskId={taskId} />}))
         dispatch(toggleModalVisible({type: "menu", visible: true}))
     }
 

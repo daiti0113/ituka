@@ -14,13 +14,14 @@ type SelectItemProps = Omit<ChipProps, "theme"> & {
     value: string
     children?: React.ReactNode
     onPress?: (selected: string) => void
+    selected?: boolean
 }
 type SelectItem = React.FC<SelectItemProps>
 
 
 // TODO: selected は Select コンポーネント内で管理したほうが便利そう
-const Item: SelectItem = ({children, onPress, value, style, ...props}) => {
-    const [selected, setSelected] = useState(false)
+const Item: SelectItem = ({children, onPress, value, style, selected: defaultSelected=false, ...props}) => {
+    const [selected, setSelected] = useState(defaultSelected)
     const handlePress = () => {
         setSelected(!selected)
         onPress && onPress(value)

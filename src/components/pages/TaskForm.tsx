@@ -1,5 +1,5 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
 import { Select } from "../Select"
@@ -9,8 +9,8 @@ import { isTaskItem, task } from "../../slices/task"
 import { palette } from "../../styles/colorPalette"
 import { AddTaskStackParamList } from "../../screens/FormScreen"
 
-const createSelectItems = (lists: Array<{name: string, id: string}>) => {
-    return lists.map(({name, id}) => <Select.Item key={id} value={id}>{name}</Select.Item>)
+const createSelectItems = (lists: Array<{name: string, id: string}>, initialValues: task | undefined) => {
+    return lists.map(({name, id}) => <Select.Item key={id} value={id} selected={initialValues?.listIdList.includes(id)}>{name}</Select.Item>)
 }
 
 export const TaskForm = () => {
@@ -18,9 +18,15 @@ export const TaskForm = () => {
     const initialValues = useTask(taskId)
     const addTask = useAddTask()
     const lists = useLists()
-    const selectItems = useMemo(() => createSelectItems(lists), [lists])
+    const selectItems = useMemo(() => createSelectItems(lists, initialValues), [lists])
     const navigation = useNavigation<LoggedInScreenNavigationProp>()
     const [task, setTask] = useState<Partial<task>>(initialValues ? initialValues : {isDone: false})
+
+    useEffect(() => {
+        if (initialValues) {
+            setTask(initialValues)
+        }
+    }, [initialValues])
 
     const onSubmit = () => {
         if (isTaskItem(task)) {
@@ -43,6 +49,7 @@ export const TaskForm = () => {
                         underlineColor={palette.neutral[300]}
                         placeholder="夜パフェを食べに行く"
                         onChangeText={(title) => setTask({...task, title})}
+                        defaultValue={task.title}
                         error={task.title === ""}
                     />
                 </View>
@@ -53,6 +60,7 @@ export const TaskForm = () => {
                         underlineColor={palette.neutral[300]}
                         placeholder="〇〇ってとこが美味しいらしい"
                         onChangeText={(subTitle) => setTask({...task, subTitle})}
+                        defaultValue={task.subTitle}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -65,6 +73,7 @@ export const TaskForm = () => {
                         multiline
                         placeholder={"友達におすすめしてもらったメニュー\n・ちんすこう\n・美らパフェ"}
                         onChangeText={(description) => setTask({...task, description})}
+                        defaultValue={task.description}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -74,6 +83,7 @@ export const TaskForm = () => {
                         underlineColor={palette.neutral[300]}
                         placeholder="https://icocca.info"
                         onChangeText={(url) => setTask({...task, url})}
+                        defaultValue={task.url}
                     />
                 </View>
                 <Button
