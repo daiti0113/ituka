@@ -91,7 +91,7 @@ export const TaskForm = () => {
                     style={styles.submit}
                     disabled={!isTaskItem(task)}
                     onPress={onSubmit}
-                >追加する</Button>
+                >{taskId ? "編集する" : "追加する"}</Button>
             </View>
         </ScrollView>
     )
