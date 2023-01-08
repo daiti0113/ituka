@@ -50,18 +50,19 @@ export const Task: React.FC<TaskProps> = ({
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        marginBottom: 18,
         backgroundColor: palette.neutral[50],
+        minHeight: 60,
     },
     titleContainer: {
         justifyContent: "center",
     },
     checkbox: {
-        marginTop: 2,
-        marginRight: 8,
+        alignSelf: "center",
+        marginTop: -2,
+        marginLeft: 16,
+        marginRight: 10,
     },
     deleteButton: {
-        marginBottom: 16,
         alignItems: "center",
         justifyContent: "center",
         width: 70,
