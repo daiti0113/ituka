@@ -1,9 +1,10 @@
 import React from "react"
 import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native"
-import { Checkbox, Text } from "react-native-paper"
+import { IconButton, Text } from "react-native-paper"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import { palette } from "../styles/colorPalette"
 import { Thumbnail } from "./atoms/Thumbnail"
+import { createUseStyles } from "../helpers/style"
 
 export type TaskProps = {
     title: string
@@ -28,6 +29,7 @@ const renderRightActions = (onDelete: TaskProps["onDelete"]) => {
 export const Task: React.FC<TaskProps> = ({
     title, subTitle, thumbnail=sampleImage, onDelete, onPress, checked
 }) => {
+    const buttonStyles = useButtonStyles({isDone: checked})
     return (
         <Swipeable
             renderRightActions={() => renderRightActions(onDelete)}
@@ -35,12 +37,18 @@ export const Task: React.FC<TaskProps> = ({
             <Pressable style={styles.container} onPress={onPress}>
                 {/* TODO: サムネイルを設定できるようにする */}
                 {/* <Thumbnail src={thumbnail} /> */}
-                <View style={styles.checkbox}>
-                    <Checkbox status="checked" color={checked ? palette.primary[500] : palette.neutral[300]}/>
-                </View>
                 <View style={styles.titleContainer}>
                     <Text variant="bodyLarge">{title}</Text>
                     {subTitle && <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{subTitle}</Text>}
+                </View>
+                <View style={styles.buttons}>
+                    <IconButton
+                        icon="check"
+                        mode="outlined"
+                        size={16}
+                        iconColor={checked ? palette.primary[500] : palette.neutral[300]}
+                        style={buttonStyles.checkbox}
+                    />
                 </View>
             </Pressable>
         </Swipeable>
@@ -55,12 +63,13 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         justifyContent: "center",
-    },
-    checkbox: {
-        alignSelf: "center",
-        marginTop: -2,
         marginLeft: 16,
-        marginRight: 10,
+    },
+    buttons: {
+        alignSelf: "center",
+        marginLeft: "auto",
+        marginTop: -2,
+        marginRight: 20,
     },
     deleteButton: {
         alignItems: "center",
@@ -69,3 +78,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#FF8A81"
     }
 })
+
+const useButtonStyles = createUseStyles(({isDone}) => ({
+    checkbox: {
+        borderRadius: 10,
+        borderColor: isDone ? palette.primary[500] : palette.neutral[300]
+    }
+}))
