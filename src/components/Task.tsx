@@ -5,10 +5,11 @@ import Swipeable from "react-native-gesture-handler/Swipeable"
 import { palette } from "../styles/colorPalette"
 import { Thumbnail } from "./atoms/Thumbnail"
 import { createUseStyles } from "../helpers/style"
+import { useUpdateTask } from "../helpers/request"
 
 export type TaskProps = {
     title: string
-    checked: boolean,
+    isDone: boolean,
     id: string,
     subTitle?: string
     thumbnail?: string
@@ -27,9 +28,12 @@ const renderRightActions = (onDelete: TaskProps["onDelete"]) => {
 }
 
 export const Task: React.FC<TaskProps> = ({
-    title, subTitle, thumbnail=sampleImage, onDelete, onPress, checked
+    id, title, subTitle, thumbnail=sampleImage, onDelete, onPress, isDone
 }) => {
-    const buttonStyles = useButtonStyles({isDone: checked})
+    const buttonStyles = useButtonStyles({isDone})
+    const updateTask = useUpdateTask()
+    const onCheck = () => updateTask(id, {isDone: !isDone})
+
     return (
         <Swipeable
             renderRightActions={() => renderRightActions(onDelete)}
@@ -40,8 +44,9 @@ export const Task: React.FC<TaskProps> = ({
                         icon="check"
                         mode="outlined"
                         size={16}
-                        iconColor={checked ? palette.primary[500] : palette.neutral[300]}
+                        iconColor={isDone ? palette.primary[500] : palette.neutral[300]}
                         style={buttonStyles.checkbox}
+                        onPress={onCheck}
                     />
                 </View>
                 {/* TODO: サムネイルを設定できるようにする */}

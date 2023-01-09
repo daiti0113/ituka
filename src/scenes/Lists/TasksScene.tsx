@@ -24,7 +24,6 @@ export const TasksScene: React.FC<TasksSceneProps> = ({tasks}) => {
                     return (
                         <Task
                             key={task.id}
-                            checked={task.isDone}
                             onDelete={() => deleteTask(task.id)}
                             onPress={onPress(task.id)}
                             {...task}
