@@ -50,14 +50,14 @@ export const Task: React.FC<TaskProps> = ({
                     <Text variant="bodyLarge">{title}</Text>
                     {subTitle && <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{subTitle}</Text>}
                 </View>
-                <View style={buttonStyles.menuContainer}>
+                {/* <View style={buttonStyles.menuContainer}>
                     <IconButton
                         icon="dots-vertical"
                         size={20}
                         iconColor={palette.neutral[700]}
                         style={buttonStyles.menu}
                     />
-                </View>
+                </View> */}
             </Pressable>
         </Swipeable>
     )
