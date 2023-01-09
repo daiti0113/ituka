@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>org.reactjs.native.example.Icocca</string>
+				<string>com.sunatti.Icocca</string>
 				<string>com.googleusercontent.apps.20446199492-a9b92v9ho7t2dhfnf9f87dbt0nvhcmif</string>
 				<string>twitterkit-k4BaGbp491g95WB9EAno9BMii</string>
 			</array>
@@ -39,13 +39,13 @@
 			<array/>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>twitter</string>
 		<string>twitterauth</string>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
