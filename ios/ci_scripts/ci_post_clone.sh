@@ -4,9 +4,7 @@ set -x
 
 export HOMEBREW_NO_INSTALL_CLEANUP=TRUE
 
-# Install Node.js
-NODE_VER=16
-VERSION=$(curl -s https://nodejs.org/dist/latest-v$NODE_VER.x/ | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')
+# Install Node.js (バージョンを16.19.0に固定)
 if [[ "$(arch)" == "arm64" ]]
 then
   ARCH="arm64"
@@ -14,10 +12,10 @@ else
   ARCH="x64"
 fi
 
-curl "https://nodejs.org/dist/latest-v$NODE_VER.x/node-$VERSION-darwin-$ARCH.tar.gz" -o $HOME/Downloads/node.tar.gz
-tar -xf "$HOME/Downloads/node.tar.gz"
-NODE_PATH="$PWD/node-$VERSION-darwin-$ARCH/bin"
-PATH+=":$NODE_PATH"
+curl "https://nodejs.org/dist/latest-v16.x/node-v16.19.0-darwin-x64.tar.gz" -o /Users/local/Downloads/node.tar.gz
+tar -xf "/Users/local/Downloads/node.tar.gz"
+NODE_PATH="/Volumes/workspace/repository/ios/ci_scripts/node-v16.19.0-darwin-x64/bin"
+PATH+=":/Volumes/workspace/repository/ios/ci_scripts/node-v16.19.0-darwin-x64/bin"
 export PATH
 node -v
 npm -v
