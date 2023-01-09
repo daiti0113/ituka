@@ -35,19 +35,27 @@ export const Task: React.FC<TaskProps> = ({
             renderRightActions={() => renderRightActions(onDelete)}
         >
             <Pressable style={styles.container} onPress={onPress}>
-                {/* TODO: サムネイルを設定できるようにする */}
-                {/* <Thumbnail src={thumbnail} /> */}
-                <View style={styles.titleContainer}>
-                    <Text variant="bodyLarge">{title}</Text>
-                    {subTitle && <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{subTitle}</Text>}
-                </View>
-                <View style={styles.buttons}>
+                <View style={buttonStyles.checkboxContainer}>
                     <IconButton
                         icon="check"
                         mode="outlined"
                         size={16}
                         iconColor={checked ? palette.primary[500] : palette.neutral[300]}
                         style={buttonStyles.checkbox}
+                    />
+                </View>
+                {/* TODO: サムネイルを設定できるようにする */}
+                {/* <Thumbnail src={thumbnail} /> */}
+                <View style={styles.titleContainer}>
+                    <Text variant="bodyLarge">{title}</Text>
+                    {subTitle && <Text variant="bodyMedium" style={{ color: palette.neutral[600]}}>{subTitle}</Text>}
+                </View>
+                <View style={buttonStyles.menuContainer}>
+                    <IconButton
+                        icon="dots-vertical"
+                        size={20}
+                        iconColor={palette.neutral[700]}
+                        style={buttonStyles.menu}
                     />
                 </View>
             </Pressable>
@@ -63,13 +71,6 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         justifyContent: "center",
-        marginLeft: 16,
-    },
-    buttons: {
-        alignSelf: "center",
-        marginLeft: "auto",
-        marginTop: -2,
-        marginRight: 20,
     },
     deleteButton: {
         alignItems: "center",
@@ -80,8 +81,23 @@ const styles = StyleSheet.create({
 })
 
 const useButtonStyles = createUseStyles(({isDone}) => ({
+    checkboxContainer: {
+        alignSelf: "center",
+        marginLeft: 16,
+        marginRight: 12,
+    },
     checkbox: {
         borderRadius: 10,
         borderColor: isDone ? palette.primary[500] : palette.neutral[300]
+    },
+    menuContainer: {
+        flexDirection: "row",
+        
+        alignItems: "center",
+        marginLeft: "auto",
+        marginRight: 4,
+    },
+    menu: {
+        borderRadius: 10,
     }
 }))
