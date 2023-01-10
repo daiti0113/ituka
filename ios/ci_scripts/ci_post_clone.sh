@@ -1,30 +1,16 @@
 #!/bin/sh
 
-set -x
-
 export HOMEBREW_NO_INSTALL_CLEANUP=TRUE
-
-# Install Node.js (バージョンを16.19.0に固定)
-if [[ "$(arch)" == "arm64" ]]
-then
-  ARCH="arm64"
-else
-  ARCH="x64"
-fi
-
-curl "https://nodejs.org/dist/latest-v16.x/node-v16.19.0-darwin-x64.tar.gz" -o /Users/local/Downloads/node.tar.gz
-tar -xf "/Users/local/Downloads/node.tar.gz"
-NODE_PATH="/Volumes/workspace/repository/ios/ci_scripts/node-v16.19.0-darwin-x64/bin"
-PATH+=":/Volumes/workspace/repository/ios/ci_scripts/node-v16.19.0-darwin-x64/bin"
-export PATH
-node -v
-npm -v
-
-
-# Install CocoaPods and yarn using Homebrew.
 brew install cocoapods
+# have to add node yourself
+brew install node@16
+# link it to the path
+brew link node@16
+
 brew install yarn
 
-# Install dependencies
-yarn install
+# Install dependencies you manage with CocoaPods.
+yarn
 pod install
+# the sed command from RN cant find the file... so we have to run it ourselves
+sed -i -e  $'s/ && (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0)//' /Volumes/workspace/repository/ios/Pods/RCT-Folly/folly/portability/Time.h
