@@ -11,7 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3041A0F40FCE60601B46C791 /* Pods_Icocca_IcoccaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D61BCB5E3AB57CF508A292 /* Pods_Icocca_IcoccaTests.framework */; };
-		4148D079296DC7790092C86C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4148D078296DC7790092C86C /* GoogleService-Info.plist */; };
+		4148D07A296DD0930092C86C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4148D078296DC7790092C86C /* GoogleService-Info.plist */; };
 		41AE45E828FC57FF00575961 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		41D7238028C1114E00D1F7EC /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41D7236F28C1114E00D1F7EC /* Fontisto.ttf */; };
 		41D7238228C1114E00D1F7EC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41D7237028C1114E00D1F7EC /* Octicons.ttf */; };
@@ -320,8 +320,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4148D07A296DD0930092C86C /* GoogleService-Info.plist in Resources */,
 				41AE45E828FC57FF00575961 /* Images.xcassets in Resources */,
-				4148D079296DC7790092C86C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
