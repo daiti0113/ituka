@@ -342,7 +342,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nNODE_BINARY=\"/Volumes/workspace/repository/ios/ci_scripts/node-v16.19.0-darwin-x64/bin\"\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$NODE_BINARY $WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+			shellScript = "set -e\n\nexport NODE_BINARY=\"/Volumes/workspace/repository/ios/ci_scripts/node-v16.19.0-darwin-x64/bin\"\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$NODE_BINARY $WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
 		3AC644A2F5A8E20EF3F5AF22 /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
