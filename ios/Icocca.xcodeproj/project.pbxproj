@@ -11,7 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3041A0F40FCE60601B46C791 /* Pods_Icocca_IcoccaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D61BCB5E3AB57CF508A292 /* Pods_Icocca_IcoccaTests.framework */; };
-		4148D07E296EF6600092C86C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4148D07D296EF6600092C86C /* GoogleService-Info.plist */; };
+		4148D086296F01650092C86C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4148D085296F01650092C86C /* GoogleService-Info.plist */; };
 		41AE45E828FC57FF00575961 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		41D7238028C1114E00D1F7EC /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41D7236F28C1114E00D1F7EC /* Fontisto.ttf */; };
 		41D7238228C1114E00D1F7EC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41D7237028C1114E00D1F7EC /* Octicons.ttf */; };
@@ -53,7 +53,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Icocca/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Icocca/main.m; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Icocca.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Icocca.debug.xcconfig"; path = "Target Support Files/Pods-Icocca/Pods-Icocca.debug.xcconfig"; sourceTree = "<group>"; };
-		4148D07D296EF6600092C86C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4148D085296F01650092C86C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		41AE45FC2900C65100575961 /* Icocca.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Icocca.entitlements; path = Icocca/Icocca.entitlements; sourceTree = "<group>"; };
 		41D7236F28C1114E00D1F7EC /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		41D7237028C1114E00D1F7EC /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
@@ -120,6 +120,7 @@
 		13B07FAE1A68108700A75B9A /* Icocca */ = {
 			isa = PBXGroup;
 			children = (
+				4148D085296F01650092C86C /* GoogleService-Info.plist */,
 				41AE45FC2900C65100575961 /* Icocca.entitlements */,
 				41D7236E28C1114E00D1F7EC /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -176,7 +177,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				4148D07D296EF6600092C86C /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Icocca */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* IcoccaTests */,
@@ -321,7 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41AE45E828FC57FF00575961 /* Images.xcassets in Resources */,
-				4148D07E296EF6600092C86C /* GoogleService-Info.plist in Resources */,
+				4148D086296F01650092C86C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
