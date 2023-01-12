@@ -14,7 +14,7 @@ yarn
 pod install
 
 # Create Google-ServiceInfo.plist
-echo -n $GOOGLE_SERVICEINFO_PLIST_BASE64 | base64 -D > Google-ServiceInfo.plist
+echo -n $GOOGLE_SERVICEINFO_PLIST_BASE64 | base64 -D > GoogleService-Info.plist
 
 # the sed command from RN cant find the file... so we have to run it ourselves
 sed -i -e $'s/ && (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0)//' /Volumes/workspace/repository/ios/Pods/RCT-Folly/folly/portability/Time.h
