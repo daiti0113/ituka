@@ -14,8 +14,8 @@ yarn
 pod install
 
 echo ">>> Create GoogleService-Info.plist"
-echo ">>># 環境変数が読めるか確認"
-echo $GOOGLE_SERVICEINFO_PLIST_BASE64
+echo ">>># エンコードがうまくいっているか確認"
+echo -n $GOOGLE_SERVICEINFO_PLIST_BASE64 | base64 -D
 echo -n $GOOGLE_SERVICEINFO_PLIST_BASE64 | base64 -D > /Volumes/workspace/repository/ios/GoogleService-Info.plist
 
 # the sed command from RN cant find the file... so we have to run it ourselves
