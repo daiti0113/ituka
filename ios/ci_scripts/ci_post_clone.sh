@@ -9,6 +9,8 @@ brew link node@16
 
 brew install yarn
 
+brew install nkf
+
 # Install dependencies you manage with CocoaPods.
 yarn
 pod install
