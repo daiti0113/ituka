@@ -97,11 +97,25 @@ export const useUpdateList = () => {
 export const useCreateUser = () => {
     return async (uid: string) => {
         const document = await firestore().collection("users").doc(uid).get()
-        if (!document.exists) {
         // Firestore にユーザー用のドキュメントが存在しなければ、新たに作成する
+        if (!document.exists) {
+            // ユーザー作成
             await firestore().collection("users").doc(uid).set({
                 name: "ユーザー名",
             })
+            // やりたいことリスト作成
+            const listId = await firestore().collection("users").doc(uid).collection("lists").add({
+                name: "雨の日にやりたいこと",
+                order: 0,
+            } as Partial<list>)
+            // やりたいこと作成
+            await firestore().collection("users").doc(uid).collection("tasks").add({
+                listIdList: [listId.id],
+                title: "猫カフェに行く",
+                subTitle: "ねこ丸カフェ行ってみたい",
+                description: "10分200円でフリードリンク350円らしい。",
+                isDone: false,
+            } as Partial<task>)
         }
     }
 }
