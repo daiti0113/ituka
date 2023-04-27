@@ -38,14 +38,14 @@ export const TaskDetail = () => {
                     </View>
                     <IconButton icon="dots-horizontal" iconColor={palette.neutral[900]} onPress={openMenu} />
                 </View>
-                <View style={styles.iconHolder}>
+                {/* <View style={styles.iconHolder}>
                     <IconLabel icon="heart" label="20" />
                     <IconLabel icon="bookmark" label="20" />
                     <IconLabel icon="comment" label="20" />
                     <View style={styles.iconHolderLeft}>
                         <IconLabel icon="eye" label="20" />
                     </View>
-                </View>
+                </View> */}
                 <View style={styles.body}>
                     <View style={styles.row}>
                         <Text variant="titleMedium" style={styles.rowTitle}>やることリスト</Text>
