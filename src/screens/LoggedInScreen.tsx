@@ -2,7 +2,7 @@ import React from "react"
 import { BottomTabNavigationProp, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { BottomTabBar } from "../components/BottomTabBar"
 import { View } from "react-native"
-import { Button, Text } from "react-native-paper"
+import { Button } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 import { AppScreenNavigationProp } from "./AppScreen"
 import { useAppDispatch } from "../helpers/store"
@@ -49,8 +49,7 @@ const MyPageScreen = () => {
     const dispatch = useAppDispatch()
 
     return (
-        <View>
-            <Text variant="bodyMedium">現在、開発中です...</Text>
+        <View style={{marginTop: 20}}>
             <Button onPress={() => dispatch(logout())}>ログアウト</Button>
         </View>
     )
