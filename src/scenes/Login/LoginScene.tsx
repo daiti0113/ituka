@@ -65,7 +65,6 @@ const Buttons = () => {
             >
                 Appleでログインする
             </Button>
-            <Text style={styles.link}>初めての方はこちら</Text>
         </View>
     )
 }
