@@ -57,11 +57,15 @@ export const TaskDetail = () => {
                         <Text variant="titleMedium" style={styles.rowTitle}>もうちょっと詳しく</Text>
                         <Text variant="bodyMedium" style={{ color: palette.neutral[800]}}>{task?.description}</Text>
                     </View>
-                    <View style={styles.row}>
-                        <Text variant="titleMedium" style={styles.rowTitle}>参考リンク</Text>
-                        <Text variant="titleSmall">{task?.url}</Text>
-                    </View>
-                    {task.url && <LinkPreview url={task.url} />}
+                    {task.url && (
+                        <>
+                            <View style={styles.row}>
+                                <Text variant="titleMedium" style={styles.rowTitle}>参考リンク</Text>
+                                <Text variant="titleSmall">{task?.url}</Text>
+                            </View>
+                            <LinkPreview url={task.url} />
+                        </>
+                    )}
                 </View>
             </View>
         </ScrollView>
