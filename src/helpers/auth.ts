@@ -11,6 +11,8 @@ GoogleSignin.configure({
     webClientId: "20446199492-5ml20n4qkpo21s4sso6b5bqdudfb2deg.apps.googleusercontent.com",
 })
 
+// TODO: エラー処理をすること
+
 export const useOnGoogleButtonPress = () => {
     const dispatch = useAppDispatch()
     const createUser = useCreateUser()
@@ -41,21 +43,35 @@ export const useOnGoogleButtonPress = () => {
 
 export const useOnAppleButtonPress = () => {
     const dispatch = useAppDispatch()
+    const createUser = useCreateUser()
 
     return async() => {
+        try {
         // performs login request
-        const appleAuthRequestResponse = await appleAuth.performRequest({
-            requestedOperation: appleAuth.Operation.LOGIN,
-            // Note: it appears putting FULL_NAME first is important, see issue #293
-            requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-        })
-        // Create a Firebase credential from the response
-        const { identityToken, nonce } = appleAuthRequestResponse
-        const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
+            const appleAuthRequestResponse = await appleAuth.performRequest({
+                requestedOperation: appleAuth.Operation.LOGIN,
+                // Note: it appears putting FULL_NAME first is important, see issue #293
+                requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+            })
+            // Create a Firebase credential from the response
+            const { identityToken, nonce } = appleAuthRequestResponse
+            const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
 
-        // Sign the user in with the credential
-        const {user} = await auth().signInWithCredential(appleCredential)
-        dispatch(login({user}))
+            // Sign the user in with the credential
+            const {user} = await auth().signInWithCredential(appleCredential)
+            await createUser(user.uid)
+            dispatch(login({user}))
+        } catch (error: any) {
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            // user cancelled the login flow
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+            // operation (e.g. sign in) is in progress already
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+            // play services not available or outdated
+            } else {
+            // some other error happened
+            }
+        }
     }
 }
 
@@ -78,6 +94,7 @@ So it is recommended when logging out to just clear all data you have from a use
 
 export const useOnTwitterButtonPress = () => {
     const dispatch = useAppDispatch()
+    const createUser = useCreateUser()
 
     return async () => {
         RNTwitterSignIn.init(
@@ -93,6 +110,7 @@ export const useOnTwitterButtonPress = () => {
             const twitterCredential = auth.TwitterAuthProvider.credential(authToken, authTokenSecret)
             // Sign-in the user with the credential
             const {user} = await auth().signInWithCredential(twitterCredential)
+            await createUser(user.uid)
             dispatch(login({user}))
         } catch (error) {
             console.log(error)
